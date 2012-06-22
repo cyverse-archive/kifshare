@@ -1,7 +1,3 @@
-pom.xml
-*jar
-/lib/
-/classes/
 /local-conf/
 .lein-deps-sum
 .cake
@@ -12,3 +8,4 @@ bin
 .lein*
 \#*\#
 target/
+
