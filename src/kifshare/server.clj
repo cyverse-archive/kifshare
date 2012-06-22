@@ -4,9 +4,8 @@
             [clj-jargon.jargon :as jargon]
             [clojure-commons.props :as prps]
             [clojure-commons.clavin-client :as cl]
-            [clojure.tools.logging :as log]))
-
-(server/load-views-ns 'kifshare.views)
+            [clojure.tools.logging :as log])
+  (:use [clojure-commons.error-codes]))
 
 (def props (atom nil))
 
@@ -45,8 +44,15 @@
   [args]
   (cli/cli
    args
-    ["-c" "--config" "Set the local config file to read from. Bypasses Zookeeper" :default nil]
-    ["-h" "--help" "Show help." :default false :flag true]))
+    ["-c" "--config" 
+     "Set the local config file to read from. Bypasses Zookeeper" 
+     :default nil]
+    ["-h" "--help" 
+     "Show help." 
+     :default false 
+     :flag true]))
+
+(server/load-views-ns 'kifshare.views)
 
 (defn -main [& args]
   (let [[opts args help-str] (parse-args args)]
