@@ -21,7 +21,8 @@
 
 (def css-includes
   {#_(:default (include-css "/css/default.css"))
-   :reset   (include-css "/css/reset.css")})
+   :reset   (include-css "/css/reset.css")
+   :960     (include-css "/css/960.css")})
 
 (defpartial html-head []
   [:head
@@ -33,5 +34,5 @@
             (html5
               (html-head)
               [:body
-               [:div#wrapper
+               [:div#wrapper {:class "container_12"}
                 content]]))
