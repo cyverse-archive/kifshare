@@ -10,9 +10,6 @@
 
 
 (defpage "/d/:ticket-id"
-  "Defines a direct download page that bypasses the
-   Accept header check. In other words, this is always
-   a direct download."
   {:keys [ticket-id]}
   (try+
     (jargon/with-jargon

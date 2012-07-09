@@ -25,7 +25,7 @@
         zkurl (get tmp-props "zookeeper")]
     (cl/with-zk
       zkurl
-      (when (not (cl/can-run?))
+      (when-not (cl/can-run?)
         (log/warn "THIS APPLICATION CANNOT RUN ON THIS MACHINE. SO SAYETH ZOOKEEPER.")
         (log/warn "THIS APPLICATION WILL NOT EXECUTE CORRECTLY."))
       

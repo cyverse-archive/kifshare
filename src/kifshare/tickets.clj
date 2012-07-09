@@ -26,6 +26,10 @@
                  :ticket-id ticket-id
                  :num-uses (str (.getUsesLimit ticket-obj))})))))
 
+(defn ticket-abs-path
+  [ticket-id]
+  (.getIrodsAbsolutePath (jargon/ticket-by-id @jargon/username ticket-id)))
+
 (defn download
   "Calls (check-ticket) and returns a response map containing an
    input-stream to the file associated with the ticket."
