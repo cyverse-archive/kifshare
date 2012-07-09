@@ -18,17 +18,50 @@
         unit (:unit mmap)]
     [:tr [:td attr] [:td val] [:td unit]]))
 
-(defpartial irods-avu
+(defpartial kif-irods-avu
   [metadata]
   [:table {:id "irods-avus"}
    [:tr [:th "Attribute"] [:th "Value"] [:th "Unit"]]
    (map irods-avu-row metadata)])
 
-(defpartial landing-page
-  [ticket-id metadata]
+(defpartial kif-usage-analytics
+  [ticket-info]
+  [:div {:id "usage-analytics"} 
+   "Usage Analytics"
+   [:div {:id "uses-limit"}
+    (str "Uses Limit: " (:useslimit ticket-info))]
+   [:div {:id "remaining-uses"} 
+    (str "Remaining: " (:remaining ticket-info))]])
+
+(defpartial kif-filename
+  [ticket-info]
+  [:div {:id "filename"}
+   (:filename ticket-info)])
+
+(defpartial kif-lastmod
+  [ticket-info]
+  [:div {:id "lastmod"}
+   (:lastmod ticket-info)])
+
+(defpartial kif-filesize
+  [ticket-info]
+  [:div {:id "filezize"}
+   (:filesize ticket-info)])
+
+(defpartial kif-download
+  [ticket-id filename]
   [:div {:id "download-link"}
-   [:a {:href (str "/d/" ticket-id)} ticket-id]]
-  (irods-avu metadata))
+   [:a {:href (str "/d/" ticket-id)} filename]])
+
+(defpartial landing-page
+  [ticket-id metadata ticket-info]
+  (common/layout
+    (kif-filename ticket-info)
+    (kif-lastmod ticket-info)
+    (kif-filesize ticket-info)
+    (kif-download ticket-id (:filename ticket-info))
+    (kif-usage-analytics ticket-info)
+    (kif-irods-avu metadata)))
 
 (defn show-landing-page
   "Handles error checking and decides whether to show the
@@ -36,7 +69,10 @@
   [ticket-id]
   (try+
     (tickets/check-ticket ticket-id)
-    (landing-page ticket-id (jargon/get-metadata (tickets/ticket-abs-path ticket-id)))
+    (landing-page 
+      ticket-id 
+      (jargon/get-metadata (tickets/ticket-abs-path ticket-id))
+      (tickets/ticket-info ticket-id))
     (catch error? err
       (log/warn err)
       (errors/error-response err))

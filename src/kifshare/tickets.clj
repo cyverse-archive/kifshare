@@ -1,5 +1,6 @@
 (ns kifshare.tickets
-  (:require [clj-jargon.jargon :as jargon])
+  (:require [clj-jargon.jargon :as jargon]
+            [clojure-commons.file-utils :as ft])
   (:use [slingshot.slingshot :only [try+ throw+]]
         [kifshare.errors]
         [noir.response :only [status]]
@@ -25,6 +26,19 @@
         (throw+ {:error_code ERR_TICKET_USED_UP 
                  :ticket-id ticket-id
                  :num-uses (str (.getUsesLimit ticket-obj))})))))
+
+(defn ticket-info
+  [ticket-id]
+  (let [ticket-obj (jargon/ticket-by-id @jargon/username ticket-id)
+        abs-path   (.getIrodsAbsolutePath ticket-obj)
+        jfile      (jargon/file abs-path)]
+    (hash-map
+      :abs-path  abs-path
+      :filename  (ft/basename abs-path)
+      :filesize  (str (.length jfile))
+      :lastmod   (str (.lastModified jfile))
+      :useslimit (str (.getUsesLimit ticket-obj))
+      :remaining (str (- (.getUsesLimit ticket-obj) (.getUsesCount ticket-obj))))))
 
 (defn ticket-abs-path
   [ticket-id]
