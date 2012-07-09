@@ -26,42 +26,70 @@
 
 (defpartial kif-usage-analytics
   [ticket-info]
-  [:div {:id "usage-analytics"} 
-   "Usage Analytics"
-   [:div {:id "uses-limit"}
-    (str "Uses Limit: " (:useslimit ticket-info))]
-   [:div {:id "remaining-uses"} 
-    (str "Remaining: " (:remaining ticket-info))]])
+  [:div#wrapper {:id "div-usage-analytics"}
+   [:div {:id "header-usage-analytics"}
+    "Usage Analytics"]
+   [:div#wrapper {:id "div-uses-limit"}
+    [:label {:id "label-useslimit" :for "useslimit"}
+     "Uses Limit"]
+    [:div {:id "useslimit"} 
+     (:useslimit ticket-info)]]
+   [:div#wrapper {:id "div-remaining-uses"}
+    [:label {:id "label-remaining" :for "remaining"}
+     "Remaining"]
+    [:div {:id "remaining"}
+     (:remaining ticket-info)]]])
 
 (defpartial kif-filename
   [ticket-info]
-  [:div {:id "filename"}
-   (:filename ticket-info)])
+  [:div#wrapper {:id "div-filename"}
+   [:label {:id "label-filename" :for "filename"} "Filename"]
+   [:div {:id "filename"} (:filename ticket-info)]])
 
 (defpartial kif-lastmod
   [ticket-info]
-  [:div {:id "lastmod"}
-   (:lastmod ticket-info)])
+  [:div#wrapper {:id "div-lastmod"}
+   [:label {:id "label-lastmod" :for "lastmod"} "Last Modified"]
+   [:div {:id "lastmod"} (:lastmod ticket-info)]])
 
 (defpartial kif-filesize
   [ticket-info]
-  [:div {:id "filezize"}
-   (:filesize ticket-info)])
+  [:div#wrapper {:id "div-filezize"}
+   [:label {:id "label-filesize" :for "filesize"} "File Size"]
+   [:div {:id "filesize"} (:filesize ticket-info)]])
 
 (defpartial kif-download
   [ticket-id filename]
-  [:div {:id "download-link"}
+  [:div {:id "div-download-link"}
    [:a {:href (str "/d/" ticket-id)} filename]])
+
+(defpartial kif-irods-instr
+  [ticket-info]
+  [:div {:id "div-irods-instructions"}
+   "Using the i-commands"
+   [:code
+    (str "iget " (:abspath ticket-info))]])
+
+(defpartial kif-downloader-instr
+  [ticket-id ticket-info]
+  [:div {:id "div-downloader-instructions"}
+   "Using wget or curl"
+   [:code
+    (str "curl -o " (:filename ticket-info) " http://thisurl.com/" ticket-id)]])
 
 (defpartial landing-page
   [ticket-id metadata ticket-info]
   (common/layout
-    (kif-filename ticket-info)
-    (kif-lastmod ticket-info)
-    (kif-filesize ticket-info)
+    [:div {:id "div-file-info"}
+     (kif-filename ticket-info)
+     (kif-lastmod ticket-info)
+     (kif-filesize ticket-info)]
+    
     (kif-download ticket-id (:filename ticket-info))
     (kif-usage-analytics ticket-info)
-    (kif-irods-avu metadata)))
+    (kif-irods-avu metadata)
+    (kif-irods-instr ticket-info)
+    (kif-downloader-instr ticket-id ticket-info)))
 
 (defn show-landing-page
   "Handles error checking and decides whether to show the
