@@ -9,7 +9,11 @@
         [clojure.data.json :only [json-str]]))
 
 
-(defpage "/d/:ticket-id" {:keys [ticket-id]}
+(defpage "/d/:ticket-id"
+  "Defines a direct download page that bypasses the
+   Accept header check. In other words, this is always
+   a direct download."
+  {:keys [ticket-id]}
   (try+
     (jargon/with-jargon
       (tickets/download ticket-id))

@@ -7,9 +7,15 @@
                  [org.iplantc/clojure-commons "1.2.0-SNAPSHOT"]
                  [slingshot "0.10.1"]]
   :iplant-rpm {:summary "kifshare",
-               :release 1,
                :dependencies ["iplant-service-config >= 0.1.0-5"],
                :config-files ["log4j.properties"],
                :config-path "conf"}
+  :plugins [[org.iplantc/lein-iplant-rpm "1.3.0-SNAPSHOT"]]
+  :repositories {"iplantCollaborative"
+                 "http://projects.iplantcollaborative.org/archiva/repository/internal/",
+                 "renci.repository"
+                 "http://ci-dev.renci.org/nexus/content/repositories/snapshots/",
+                 "sonatype"
+                 "http://oss.sonatype.org/content/repositories/releases"}
   :main kifshare.server)
 
