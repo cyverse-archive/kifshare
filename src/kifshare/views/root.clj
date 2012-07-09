@@ -11,6 +11,10 @@
         [slingshot.slingshot :only [try+]]
         [clojure-commons.error-codes]))
 
+(defpartial clear
+  []
+  [:div {:class "clear"}])
+
 (defpartial irods-avu-row
   [mmap]
   (let [attr (:attr mmap)
@@ -20,7 +24,8 @@
 
 (defpartial kif-irods-avu
   [metadata]
-  [:table {:id "irods-avus"}
+  [:table {:id "irods-avus"
+           :class "grid_8"}
    [:tr [:th "Attribute"] [:th "Value"] [:th "Unit"]]
    (map irods-avu-row metadata)])
 
@@ -29,9 +34,11 @@
   [:div#wrapper {:id "div-usage-analytics"}
    [:div {:id "header-usage-analytics"
           :class "grid_4"}
-    "Usage Analytics"]
+    [:label {:id "label-usage-analytics"
+             :class "grid_4"}     
+     "Usage Analytics"]]
    
-   [:div {:class "clear"}]
+   (clear)
    
    [:div#wrapper {:id "div-uses-limit"}
     [:label {:id "label-useslimit" 
@@ -42,7 +49,7 @@
            :class "grid_2 omega"} 
      (:useslimit ticket-info)]]
    
-   [:div {:class "clear"}]
+   (clear)
    
    [:div#wrapper {:id "div-remaining-uses"}
     [:label {:id "label-remaining" 
@@ -52,7 +59,7 @@
     [:div {:id "remaining"
            :class "grid_2 omega"}
      (:remaining ticket-info)]]
-   [:div {:class "clear"}]])
+   (clear)])
 
 (defpartial kif-filename
   [ticket-info]
@@ -92,7 +99,8 @@
 
 (defpartial kif-download
   [ticket-id filename]
-  [:div {:id "div-download-link"}
+  [:div {:id "div-download-link"
+         :class "grid_4"}
    [:a {:href (str "/d/" ticket-id)} filename]])
 
 (defpartial kif-irods-instr
@@ -120,11 +128,14 @@
     [:div {:id "div-usage" :class "grid_4 push_4"}
      (kif-usage-analytics ticket-info)] 
     
-    [:div {:class "clear"}]
+    (clear)
+    
+    (kif-irods-avu metadata)
     
     (kif-download ticket-id (:filename ticket-info))
     
-    (kif-irods-avu metadata)
+    (clear)
+    
     (kif-irods-instr ticket-info)
     (kif-downloader-instr ticket-id ticket-info)))
 
