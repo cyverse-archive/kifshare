@@ -20,14 +20,22 @@
   (let [attr (:attr mmap)
         val  (:value mmap)
         unit (:unit mmap)]
-    [:tr [:td attr] [:td val] [:td unit]]))
+    [:tr 
+     [:td attr] 
+     [:td val] 
+     [:td unit]]))
 
 (defpartial kif-irods-avu
   [metadata]
-  [:table {:id "irods-avus"
-           :class "grid_8"}
-   [:tr [:th "Attribute"] [:th "Value"] [:th "Unit"]]
-   (map irods-avu-row metadata)])
+  [:table {:id "irods_avus"
+           :class "grid_8 kif_section"}
+   [:thead
+    [:tr 
+     [:th "Attribute"] 
+     [:th "Value"] 
+     [:th "Unit"]]]
+   [:tbody
+    (map irods-avu-row metadata)]])
 
 (defpartial kif-usage-analytics
   [ticket-info]
@@ -65,13 +73,13 @@
   [ticket-info]
   [:div#wrapper {:id "div-filename"}
    [:label {:id "label-filename" 
-            :for "filename" 
+            :for "filename"
             :class "grid_2 alpha"} 
     "Filename"]
    [:div {:id "filename" 
           :class "grid_2 omega"} 
     (:filename ticket-info)]
-   [:div {:class "clear"}]])
+   (clear)])
 
 (defpartial kif-lastmod
   [ticket-info]
@@ -83,11 +91,11 @@
    [:div {:id "lastmod"
           :class "grid_2 omega"} 
     (:lastmod ticket-info)]
-   [:div {:class "clear"}]])
+   (clear)])
 
 (defpartial kif-filesize
   [ticket-info]
-  [:div#wrapper {:id "div-filesize"}
+  [:div {:id "div-filesize"}
    [:label {:id "label-filesize" 
             :for "filesize"
             :class "grid_2 alpha"} 
@@ -95,7 +103,7 @@
    [:div {:id "filesize"
           :class "grid_2 omega"} 
     (:filesize ticket-info)]
-   [:div {:class "clear"}]])
+   (clear)])
 
 (defpartial kif-download
   [ticket-id filename]
@@ -105,27 +113,36 @@
 
 (defpartial kif-irods-instr
   [ticket-info]
-  [:div {:id "div-irods-instructions"}
-   "Using the i-commands"
-   [:code
-    (str "iget " (:abspath ticket-info))]])
+  [:div {:id "div-irods-instructions"
+         :class "grid_12 kif_section"}
+   [:h3 {:id "header-irods-instr"
+         :class "grid_4"} "Using the i-commands"]
+   (clear)
+   [:code {:id "code-irods-instr" :class "grid_8 push_2"}
+    (str "iget " (:abspath ticket-info))]]
+  (clear))
 
 (defpartial kif-downloader-instr
   [ticket-id ticket-info]
-  [:div {:id "div-downloader-instructions"}
-   "Using wget or curl"
-   [:code
-    (str "curl -o " (:filename ticket-info) " http://thisurl.com/" ticket-id)]])
+  [:div {:id "div-downloader-instructions"
+         :class "grid_12 kif_section"}
+   [:h3 {:id "header-downloader-instr"
+         :class "grid_4"} "Using wget or curl"]
+   (clear)
+   [:code {:id "code-downloader-instr" 
+           :class "grid_8 push_2"}
+    (str "curl -o " (:filename ticket-info) " http://thisurl.com/" ticket-id)]]
+  (clear))
 
 (defpartial landing-page
   [ticket-id metadata ticket-info]
   (common/layout
-    [:div {:id "div-file-info" :class "grid_4"}
+    [:div {:id "div-file-info" :class "kif_section grid_4"}
      (kif-filename ticket-info)
      (kif-lastmod ticket-info)
      (kif-filesize ticket-info)]
     
-    [:div {:id "div-usage" :class "grid_4 push_4"}
+    [:div {:id "div-usage" :class "grid_4 push_4 kif_section"}
      (kif-usage-analytics ticket-info)] 
     
     (clear)
