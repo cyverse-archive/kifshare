@@ -28,9 +28,10 @@
 
 (defpartial kif-irods-avu
   [metadata]
-  [:div {:id "irods_avus_container"}
+  [:div {:id "irods_avus_header"}
    [:h3 {:id "irods_avus_header kif_header"} 
-    "Metadata"]
+    "Metadata"]]
+  [:div {:id "irods_avus_container"}
    [:table {:id "irods_avus"}
     [:thead
      [:tr 
