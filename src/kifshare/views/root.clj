@@ -27,8 +27,7 @@
 
 (defpartial kif-irods-avu
   [metadata]
-  [:div {:id "irods_avus_container"
-         :class "grid_8 kif_section"}
+  [:div {:id "irods_avus_container"}
    [:table {:id "irods_avus"}
     [:thead
      [:tr 
@@ -68,7 +67,17 @@
     [:div {:id "remaining"
            :class "grid_2 omega"}
      (:remaining ticket-info)]]
-   (clear)])
+   
+   (clear)
+   
+   [:div#wrapper {:id "div-test01"}
+    [:label {:id "label-test01"
+             :for "test01"
+             :class "grid_2 alpha"}
+     "test01 label"]
+    [:div {:id "test01"
+           :class "grid_2 omega"}
+     "test01"]]])
 
 (defpartial kif-filename
   [ticket-info]
@@ -115,47 +124,45 @@
 (defpartial kif-irods-instr
   [ticket-info]
   [:div {:id "div-irods-instructions"
-         :class "grid_12 kif_section"}
+         :class "grid_8 kif_section"}
    [:h3 {:id "header-irods-instr"
          :class "grid_4"} "Using the i-commands"]
    (clear)
-   [:code {:id "code-irods-instr" :class "grid_8 push_2"}
+   [:code {:id "code-irods-instr" 
+           :class "grid_6 push_1"}
     (str "iget " (:abspath ticket-info))]]
   (clear))
 
 (defpartial kif-downloader-instr
   [ticket-id ticket-info]
   [:div {:id "div-downloader-instructions"
-         :class "grid_12 kif_section"}
+         :class "grid_8 kif_section"}
    [:h3 {:id "header-downloader-instr"
          :class "grid_4"} "Using wget or curl"]
    (clear)
    [:code {:id "code-downloader-instr" 
-           :class "grid_8 push_2"}
+           :class "grid_6 push_1"}
     (str "curl -o " (:filename ticket-info) " http://thisurl.com/" ticket-id)]]
   (clear))
 
 (defpartial landing-page
   [ticket-id metadata ticket-info]
   (common/layout
-    [:div {:id "div-file-info" :class "kif_section grid_4"}
+    [:div {:id "div-file-info" :class "grid_8"}
      (kif-filename ticket-info)
      (kif-lastmod ticket-info)
-     (kif-filesize ticket-info)]
+     (kif-filesize ticket-info)
+     (clear)
+     (kif-irods-avu metadata)
+     (clear)
+     (kif-irods-instr ticket-info)
+     (clear)
+     (kif-downloader-instr ticket-id ticket-info)]
     
-    [:div {:id "div-usage" :class "grid_4 push_4 kif_section"}
-     (kif-usage-analytics ticket-info)] 
-    
-    (clear)
-    
-    (kif-irods-avu metadata)
-    
-    (kif-download ticket-id (:filename ticket-info))
-    
-    (clear)
-    
-    (kif-irods-instr ticket-info)
-    (kif-downloader-instr ticket-id ticket-info)))
+    [:div {:id "div-usage" :class "grid_4"}
+     (kif-usage-analytics ticket-info)
+     (clear)
+     (kif-download ticket-id (:filename ticket-info))]))
 
 (defn show-landing-page
   "Handles error checking and decides whether to show the
