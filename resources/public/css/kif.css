@@ -1,0 +1,51 @@
+body, label, textarea, select, button
+{
+    font-family: "Helvetica Neue", Arial, sans-serif;
+}
+
+#wrapper_filename
+{
+    text-align: center;
+}
+
+div#download_link_div
+{
+    padding-top: 20px;
+    padding-bottom: 20px;
+    margin-left: 0px;
+    margin-right: 0px;
+}
+
+#download_link
+{
+    padding: 0px;
+    margin: 0px;
+    width: 100%;
+}
+
+#irods_avus_container
+{
+    padding-bottom: 20px;
+}
+
+label
+{
+    text-align: right;
+}
+
+h1
+{
+    font-size: 200%;
+}
+
+h3
+{
+    font-size: 125%;
+    padding: 0px;
+    margin: 0px;
+}
+
+.css_right
+{
+    float: right;
+}

@@ -9,7 +9,8 @@
         [noir.response :only [status redirect]]
         [clojure.data.json :only [json-str]]
         [slingshot.slingshot :only [try+]]
-        [clojure-commons.error-codes]))
+        [clojure-commons.error-codes])
+  (:import [org.apache.commons.io FileUtils]))
 
 (defpartial clear
   []
@@ -28,6 +29,8 @@
 (defpartial kif-irods-avu
   [metadata]
   [:div {:id "irods_avus_container"}
+   [:h3 {:id "irods_avus_header kif_header"} 
+    "Metadata"]
    [:table {:id "irods_avus"}
     [:thead
      [:tr 
@@ -37,110 +40,97 @@
     [:tbody
      (map irods-avu-row metadata)]]])
 
-(defpartial kif-usage-analytics
+(defpartial kif-uses-limit
   [ticket-info]
-  [:div#wrapper {:id "div-usage-analytics"}
-   [:div {:id "header-usage-analytics"
-          :class "grid_4"}
-    [:label {:id "label-usage-analytics"
-             :class "grid_4"}     
-     "Usage Analytics"]]
-   
-   (clear)
-   
-   [:div#wrapper {:id "div-uses-limit"}
-    [:label {:id "label-useslimit" 
+  [:div#wrapper {:id "wrapper_useslimit"}
+    [:label {:id "label_useslimit" 
              :for "useslimit"
              :class "grid_2 alpha"}
      "Uses Limit"]
     [:div {:id "useslimit"
-           :class "grid_2 omega"} 
-     (:useslimit ticket-info)]]
-   
-   (clear)
-   
-   [:div#wrapper {:id "div-remaining-uses"}
-    [:label {:id "label-remaining" 
-             :for "remaining"
-             :class "grid_2 alpha"}
-     "Remaining"]
-    [:div {:id "remaining"
-           :class "grid_2 omega"}
-     (:remaining ticket-info)]]
-   
-   (clear)
-   
-   [:div#wrapper {:id "div-test01"}
-    [:label {:id "label-test01"
-             :for "test01"
-             :class "grid_2 alpha"}
-     "test01 label"]
-    [:div {:id "test01"
-           :class "grid_2 omega"}
-     "test01"]]])
+           :class "grid_6 omega"} 
+     (:useslimit ticket-info)]])
+
+(defpartial kif-remaining-uses
+  [ticket-info]
+  [:div#wrapper {:id "wrapper_remaining"}
+   [:label {:id "label_remaining" 
+            :for "remaining"
+            :class "grid_2 alpha"}
+    "Remaining"]
+   [:div {:id "remaining"
+          :class "grid_6 omega"}
+    (:remaining ticket-info)]])
 
 (defpartial kif-filename
   [ticket-info]
-  [:div#wrapper {:id "div-filename"}
-   [:label {:id "label-filename" 
+  [:div#wrapper {:id "wrapper_filename"
+                 :class "grid_6 push_3"}
+   #_([:label {:id "label_filename" 
             :for "filename"
             :class "grid_2 alpha"} 
-    "Filename"]
-   [:div {:id "filename" 
-          :class "grid_2 omega"} 
+    "Filename"])
+   [:h1 {:id "filename"} 
     (:filename ticket-info)]
    (clear)])
 
 (defpartial kif-lastmod
   [ticket-info]
-  [:div#wrapper {:id "div-lastmod"}
-   [:label {:id "label-lastmod" 
+  [:div#wrapper {:id "wrapper_lastmod"}
+   [:label {:id "label_lastmod" 
             :for "lastmod"
             :class "grid_2 alpha"} 
     "Last Modified"]
    [:div {:id "lastmod"
-          :class "grid_2 omega"} 
+          :class "grid_6 omega"} 
     (:lastmod ticket-info)]
    (clear)])
 
 (defpartial kif-filesize
   [ticket-info]
-  [:div {:id "div-filesize"}
-   [:label {:id "label-filesize" 
+  [:div {:id "wrapper_filesize"}
+   [:label {:id "label_filesize" 
             :for "filesize"
             :class "grid_2 alpha"} 
     "File Size"]
    [:div {:id "filesize"
-          :class "grid_2 omega"} 
-    (:filesize ticket-info)]
+          :class "grid_6 omega"} 
+    (FileUtils/byteCountToDisplaySize 
+      (Long/parseLong (:filesize ticket-info)))]
    (clear)])
 
 (defpartial kif-download
   [ticket-id filename]
-  [:div {:id "div-download-link"
-         :class "grid_4"}
-   [:a {:href (str "/d/" ticket-id)} filename]])
+  [:div {:id "download_link_div"
+         :class "grid_12"}
+   [:div {:id "wrapper_download_link"
+          :class "grid_4 push_4"}
+    [:a {:href (str "/d/" ticket-id)
+        :id "download_link"} 
+    "Download!"]]])
 
 (defpartial kif-irods-instr
   [ticket-info]
-  [:div {:id "div-irods-instructions"
-         :class "grid_8 kif_section"}
-   [:h3 {:id "header-irods-instr"
-         :class "grid_4"} "Using the i-commands"]
+  [:div {:id "irods_instructions"
+         :class "grid_8"}
+   [:div {:id "header_irods_instr"
+         :class "grid_4"} 
+    "Using the i-commands"]
    (clear)
-   [:code {:id "code-irods-instr" 
+   [:code {:id "code_irods_instr" 
            :class "grid_6 push_1"}
     (str "iget " (:abspath ticket-info))]]
   (clear))
 
 (defpartial kif-downloader-instr
   [ticket-id ticket-info]
-  [:div {:id "div-downloader-instructions"
-         :class "grid_8 kif_section"}
-   [:h3 {:id "header-downloader-instr"
-         :class "grid_4"} "Using wget or curl"]
+  [:div {:id "downloader_instructions"
+         :class "grid_8"}
+   [:div {:id "header_downloader_instr"
+         :class "grid_4"} 
+    "Using wget or curl"]
    (clear)
-   [:code {:id "code-downloader-instr" 
+   [:code {:id "code_downloader_instr" 
            :class "grid_6 push_1"}
     (str "curl -o " (:filename ticket-info) " http://thisurl.com/" ticket-id)]]
   (clear))
@@ -148,21 +138,32 @@
 (defpartial landing-page
   [ticket-id metadata ticket-info]
   (common/layout
-    [:div {:id "div-file-info" :class "grid_8"}
-     (kif-filename ticket-info)
-     (kif-lastmod ticket-info)
-     (kif-filesize ticket-info)
-     (clear)
-     (kif-irods-avu metadata)
-     (clear)
-     (kif-irods-instr ticket-info)
-     (clear)
-     (kif-downloader-instr ticket-id ticket-info)]
+    (kif-filename ticket-info)
     
-    [:div {:id "div-usage" :class "grid_4"}
-     (kif-usage-analytics ticket-info)
+    [:div {:id "file_info" :class "grid_8 push_2"}
+     (kif-lastmod ticket-info)
+     (kif-filesize ticket-info)]
+    
+    [:div {:id "usage_analytics" :class "grid_8 push_2"}
+     (kif-uses-limit ticket-info)
      (clear)
-     (kif-download ticket-id (:filename ticket-info))]))
+     (kif-remaining-uses ticket-info)]
+    
+    (clear)
+    
+    (kif-download ticket-id (:filename ticket-info))
+    
+    (clear)
+    (kif-irods-avu metadata)
+    (clear)
+    [:div {:id "alternative_downloads"}
+     [:h3 {:id "alternative_downloads_header"} 
+      "Other ways to download this file..."]
+     (kif-irods-instr ticket-info)
+    (clear)
+    (kif-downloader-instr ticket-id ticket-info)]
+     
+    (clear)))
 
 (defn show-landing-page
   "Handles error checking and decides whether to show the
