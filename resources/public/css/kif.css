@@ -1,0 +1,11 @@
+div.kif_section
+{
+    border: 1px solid;
+    border-radius: 5px;
+    -moz-border-radius:5px;
+}
+
+label
+{
+    align: center;
+}
