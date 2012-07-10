@@ -27,15 +27,16 @@
 
 (defpartial kif-irods-avu
   [metadata]
-  [:table {:id "irods_avus"
-           :class "grid_8 kif_section"}
-   [:thead
-    [:tr 
-     [:th "Attribute"] 
-     [:th "Value"] 
-     [:th "Unit"]]]
-   [:tbody
-    (map irods-avu-row metadata)]])
+  [:div {:id "irods_avus_container"
+         :class "grid_8 kif_section"}
+   [:table {:id "irods_avus"}
+    [:thead
+     [:tr 
+      [:th "Attribute"] 
+      [:th "Value"] 
+      [:th "Unit"]]]
+    [:tbody
+     (map irods-avu-row metadata)]]])
 
 (defpartial kif-usage-analytics
   [ticket-info]

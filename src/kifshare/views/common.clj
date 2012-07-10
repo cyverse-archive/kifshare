@@ -17,6 +17,7 @@
 
 (def js-includes
   {:jquery (include-js "https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js")
+   :jqui   (include-js "https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js")
    :dtable (include-js "http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.8.2/jquery.dataTables.min.js")
    :kif.js (include-js "/js/kif.js")})
 
@@ -25,7 +26,8 @@
    :reset   (include-css "/css/reset.css")
    :960     (include-css "/css/960.css")
    :kif     (include-css "/css/kif.css")
-   :dtable  (include-css "http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.8.2/css/jquery.dataTables.css")})
+   :dtable  (include-css "http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.8.2/css/jquery.dataTables.css")
+   :jqui    (include-css "/css/jquery-ui-1.8.21.custom.css")})
 
 (defpartial html-head []
   [:head
