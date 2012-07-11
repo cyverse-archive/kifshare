@@ -25,9 +25,9 @@
   {#_(:default (include-css "/css/default.css"))
    :reset   (include-css "/css/reset.css")
    :960     (include-css "/css/960.css")
-   :kif     (include-css "/css/kif.css")
    :dtable  (include-css "http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.8.2/css/jquery.dataTables.css")
-   :jqui    (include-css "/css/jquery-ui-1.8.21.custom.css")})
+   :jqui    (include-css "/css/jquery-ui-1.8.21.custom.css")
+   :kif     (include-css "/css/kif.css")})
 
 (defpartial html-head []
   [:head
