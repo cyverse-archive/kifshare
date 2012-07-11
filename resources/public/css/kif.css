@@ -23,9 +23,21 @@ div#download_link_div
     width: 100%;
 }
 
-#irods_avus_container
+#wrapper_irods_avus
 {
-    padding-bottom: 20px;
+    margin-bottom: 20px;
+}
+
+td, th
+{
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+code
+{
+    font-family: monospace, monospace;
+    font-size: 1em;
 }
 
 label
