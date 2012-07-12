@@ -26,16 +26,31 @@ div#download_link_div
 #wrapper_irods_avus
 {
     margin-bottom: 20px;
+    background: rgb(240, 240, 240) none repeat scroll;
+    padding: 4px;
+    border-radius: 4px;
 }
 
-#irods_avus_header
+#irods_avus_wrapper
 {
-    padding: 3px;
+    padding-right: 3px;
+    padding-left: 3px;
+}
+
+#wrapper_irods_avus_inner
+{
+    border: 1px rgb(215,215,215) solid;
+    background: rgb(240,240,240) none repeat scroll;
 }
 
 .ui-toolbar
 {
     padding-left: 3px;
+}
+
+.ui-buttonset
+{
+    margin-right: 2px;
 }
 
 td, th
@@ -44,9 +59,43 @@ td, th
     padding-right: 5px;
 }
 
-th
+td
 {
-    background: rgb(0, 0, 0) repeat scroll 0% 0%;
+    background-color: rgb(255,255,255);
+    border-right: 1px rgb(210, 210, 210) solid;
+    border-left: 1px rgb(210, 210, 210) solid;
+}
+
+.ui-widget-content, .ui-state-default, .ui-widget-header
+{
+    background: rgb(240,240,240) none repeat scroll;
+}
+
+.ui-widget-header
+{
+    padding-top: 2px;
+    padding-bottom: 4px;
+    border: 0px;
+}
+
+.ui-corner-tl
+{
+    border-top-left-radius: 0px;
+}
+
+.ui-corner-tr
+{
+    border-top-right-radius: 0px;
+}
+
+.ui-corner-br
+{
+    border-bottom-right-radius: 0px;
+}
+
+.ui-corner-bl
+{
+    border-bottom-left-radius: 0px;
 }
 
 code
@@ -70,8 +119,9 @@ h1
 h3
 {
     font-size: 125%;
-    padding: 0px;
+    padding-left: 5px;
     margin: 0px;
+    background-color: rgb(240,240,240);
 }
 
 .css_right
@@ -87,10 +137,7 @@ h3
     padding: 0px 6px;
 }
 
-.ui-widget-header
+tbody
 {
-    background: rgb(240, 240, 240) repeat scroll 0% 0%;
-    padding-right: 5px;
-    padding-bottom: 2px;
+    border-bottom: 1px rgb(210,210, 210) solid;
 }
-

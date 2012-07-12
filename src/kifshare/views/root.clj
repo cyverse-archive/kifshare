@@ -28,16 +28,17 @@
 (defpartial kif-irods-avu
   [metadata]
   [:div {:id "wrapper_irods_avus"}
-   [:div {:id "irods_avus_header"}
-    [:h3 "Metadata"]]
-   [:table {:id "irods_avus"}
-    [:thead
-     [:tr 
-      [:th "Attribute"] 
-      [:th "Value"] 
-      [:th "Unit"]]]
-    [:tbody
-     (map irods-avu-row metadata)]]])
+   [:div {:id "wrapper_irods_avus_inner"} 
+    [:div {:id "irods_avus_header"}
+     [:h3 "Metadata"]]
+    [:table {:id "irods_avus"}
+     [:thead
+      [:tr 
+       [:th "Attribute"] 
+       [:th "Value"] 
+       [:th "Unit"]]]
+     [:tbody
+      (map irods-avu-row metadata)]]]])
 
 (defpartial kif-uses-limit
   [ticket-info]
