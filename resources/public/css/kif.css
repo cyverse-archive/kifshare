@@ -28,16 +28,31 @@ div#download_link_div
     margin-bottom: 20px;
 }
 
+#irods_avus_header
+{
+    padding: 3px;
+}
+
+.ui-toolbar
+{
+    padding-left: 3px;
+}
+
 td, th
 {
     padding-left: 5px;
     padding-right: 5px;
 }
 
+th
+{
+    background: rgb(0, 0, 0) repeat scroll 0% 0%;
+}
+
 code
 {
     font-family: monospace, monospace;
-    font-size: 1em;
+    font-size: 75%;
 }
 
 label
@@ -74,6 +89,8 @@ h3
 
 .ui-widget-header
 {
+    background: rgb(240, 240, 240) repeat scroll 0% 0%;
     padding-right: 5px;
     padding-bottom: 2px;
 }
+

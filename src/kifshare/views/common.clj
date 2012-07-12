@@ -1,5 +1,6 @@
 (ns kifshare.views.common
-  (:require [clojure.string :as string])
+  (:require [clojure.string :as string]
+            [kifshare.config :as cfg])
   (:use [noir.core :only [defpartial]]
         [hiccup.page :only [include-css include-js html5]]))
 
@@ -15,25 +16,11 @@
   [request]
   (contains? (set (parse-accept-headers request)) "text/html"))
 
-(def js-includes
-  {:jquery (include-js "https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js")
-   :jqui   (include-js "https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js")
-   :dtable (include-js "http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.8.2/jquery.dataTables.min.js")
-   :kif.js (include-js "/js/kif.js")})
-
-(def css-includes
-  {#_(:default (include-css "/css/default.css"))
-   :reset   (include-css "/css/reset.css")
-   :960     (include-css "/css/960.css")
-   :dtable  (include-css "http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.8.2/css/jquery.dataTables.css")
-   :jqui    (include-css "/css/jquery-ui-1.8.21.custom.css")
-   :kif     (include-css "/css/kif.css")})
-
 (defpartial html-head []
   [:head
    [:title "iPlant Public Downloads"]
-   (map #(get css-includes %) (keys css-includes))
-   (map #(get js-includes %) (keys js-includes))])
+   (map include-css (cfg/css-files))
+   (map include-js (cfg/javascript-files))])
 
 (defpartial layout [& content]
             (html5

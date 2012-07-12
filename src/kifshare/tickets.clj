@@ -33,7 +33,8 @@
         abs-path   (.getIrodsAbsolutePath ticket-obj)
         jfile      (jargon/file abs-path)]
     (hash-map
-      :abs-path  abs-path
+      :ticket-id ticket-id
+      :abspath  abs-path
       :filename  (ft/basename abs-path)
       :filesize  (str (.length jfile))
       :lastmod   (str (.lastModified jfile))

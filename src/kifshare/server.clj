@@ -4,7 +4,8 @@
             [clj-jargon.jargon :as jargon]
             [clojure-commons.props :as prps]
             [clojure-commons.clavin-client :as cl]
-            [clojure.tools.logging :as log])
+            [clojure.tools.logging :as log]
+            [kifshare.config :as cfg])
   (:use [clojure-commons.error-codes]))
 
 (def props (atom nil))
@@ -32,13 +33,15 @@
       (reset! props (cl/properties "kifshare")))) 
   
   ; Sets up the connection to iRODS through jargon-core.
-  (jargon-init))
+  (jargon-init)
+  (cfg/init-config @props))
 
 (defn local-init
   [local-config-path]
   (let [main-props (prps/read-properties local-config-path)]
     (reset! props main-props)
-    (jargon-init)))
+    (jargon-init)
+    (cfg/init-config @props)))
 
 (defn parse-args
   [args]
