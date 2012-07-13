@@ -3,6 +3,33 @@ body, label, textarea, select, button
     font-family: "Helvetica Neue", Arial, sans-serif;
 }
 
+#file-info-wrapper
+{
+    margin-bottom: 5px;
+    padding: 5px;
+    background: rgb(240,240,240) none repeat scroll;
+    border-radius: 4px;
+}
+
+#file-info-wrapper-inner
+{
+    border: 1px rgb(215,215,215) solid;
+    background-color: rgb(255,255,255);
+}
+
+#lastmod, #filesize, #remaining, #useslimit
+{
+    float: right;
+    width: 66%;
+}
+
+#lastmod-label, #filesize-label, #remaining-label, #useslimit-label 
+{
+    float: left;
+    width: 33%;
+    text-align: right;
+}
+
 #wrapper_filename
 {
     text-align: center;

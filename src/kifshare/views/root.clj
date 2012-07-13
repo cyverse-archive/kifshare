@@ -43,61 +43,52 @@
 (defpartial kif-uses-limit
   [ticket-info]
   [:div {:id "wrapper_useslimit"}
-   [:label {:id "label_useslimit" 
-            :for "useslimit"
-            :class "grid_2 alpha"}
+   [:div {:id "useslimit-label"}
     "Uses Limit"]
-   [:div {:id "useslimit"
-          :class "grid_6 omega"} 
-    (:useslimit ticket-info)]])
+   [:div {:id "useslimit"} 
+    (:useslimit ticket-info)]]
+  (clear))
 
 (defpartial kif-remaining-uses
   [ticket-info]
   [:div {:id "wrapper_remaining"}
-   [:label {:id "label_remaining" 
-            :for "remaining"
-            :class "grid_2 alpha"}
+   [:div {:id "remaining-label"}
     "Remaining"]
-   [:div {:id "remaining"
-          :class "grid_6 omega"}
-    (:remaining ticket-info)]])
+   [:div {:id "remaining"}
+    (:remaining ticket-info)]]
+  (clear))
 
 (defpartial kif-filename
   [ticket-info]
-  [:div {:id "wrapper_filename"
-         :class "grid_6 push_3"}
+  [:div {:id "wrapper_filename"}
    [:h1 {:id "filename"} 
     (:filename ticket-info)]])
 
 (defpartial kif-lastmod
   [ticket-info]
   [:div {:id "wrapper_lastmod"}
-   [:label {:id "label_lastmod" 
-            :for "lastmod"
-            :class "grid_2 alpha"} 
-    "Last Modified"]
-   [:div {:id "lastmod"
-          :class "grid_6 omega"} 
-    (:lastmod ticket-info)]])
+   [:div {:id "lastmod-label"} 
+     "Last Modified"]
+   [:div {:id "lastmod"} 
+    (:lastmod ticket-info)]]
+  (clear))
 
 (defpartial kif-filesize
   [ticket-info]
   [:div {:id "wrapper_filesize"}
-   [:label {:id "label_filesize" 
-            :for "filesize"
-            :class "grid_2 alpha"} 
+   [:div {:id "filesize-label"} 
     "File Size"]
-   [:div {:id "filesize"
-          :class "grid_6 omega"} 
+   [:div {:id "filesize"} 
     (FileUtils/byteCountToDisplaySize 
-      (Long/parseLong (:filesize ticket-info)))]])
+      (Long/parseLong (:filesize ticket-info)))]]
+  (clear))
 
 (defpartial kif-download
   [ticket-id filename]
   [:div {:id "download_link_div"
-         :class "grid_12"}
+         #_(:class "grid_12")}
    [:div {:id "wrapper_download_link"
-          :class "grid_4 push_4"}
+          #_(:class "grid_4 push_4")}
     [:a {:href (str "/d/" ticket-id)
         :id "download_link"} 
     "Download!"]]])
@@ -150,28 +141,11 @@
     [:code {:id "wget_instr"}
      (wget-str ticket-info)]]
    
-   #_(clear)
-   
    [:div {:id "clippy-curl-wrapper"} 
     [:div {:class "clippy-curl"} 
      (curl-str ticket-info)]
     [:code {:id "code_downloader_instr"}
      (curl-str ticket-info)]]])
-
-(defpartial kif-file-info
-  [ticket-info]
-  [:div {:id "file_info" :class "grid_8 push_2"}
-   (kif-lastmod ticket-info)
-   (clear)
-   (kif-filesize ticket-info)
-   (clear)])
-
-(defpartial kif-usage-analytics
-  [ticket-info]
-  [:div {:id "usage_analytics" :class "grid_8 push_2"}
-   (kif-uses-limit ticket-info)
-   (clear)
-   (kif-remaining-uses ticket-info)])
 
 (defpartial kif-alt-downloads
   [ticket-id ticket-info]
@@ -185,10 +159,18 @@
 (defpartial landing-page
   [ticket-id metadata ticket-info]
   (common/layout
-    (kif-filename ticket-info)
-    (clear)
-    (kif-file-info ticket-info)
-    (kif-usage-analytics ticket-info)
+    [:div {:id "file-info-wrapper"}
+     [:div {:id "file-info-wrapper-inner"} 
+      (kif-filename ticket-info)
+      (clear)
+      (kif-lastmod ticket-info)
+      (clear)
+      (kif-filesize ticket-info)
+      (clear)
+      (kif-uses-limit ticket-info)
+      (clear)
+      (kif-remaining-uses ticket-info)]]
+    
     (clear)
     (kif-download ticket-id (:filename ticket-info))
     (clear)
