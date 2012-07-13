@@ -128,37 +128,35 @@
 
 (defpartial kif-irods-instr
   [ticket-info]
-  [:div {:id "irods_instructions"
-         :class "grid_12"}
+  [:div {:id "irods_instructions"}
    [:div {:id "header_irods_instr"} 
     "Using the i-commands"]
-   (clear)
-   [:code {:id "code_irods_instr" 
-           :class "grid_8"}
-    (irods-str ticket-info)]
-   [:span {:class "clippy-irods grid_4"}
-    (irods-str ticket-info)]])
+   
+   [:div {:id "clippy-irods-wrapper"} 
+    [:div {:class "clippy-irods"}
+     (irods-str ticket-info)]
+    [:code {:id "code_irods_instr"}
+     (irods-str ticket-info)]]])
 
 (defpartial kif-downloader-instr
   [ticket-id ticket-info]
-  [:div {:id "downloader_instructions"
-         :class "grid_12"}
+  [:div {:id "downloader_instructions"}
    [:div {:id "header_downloader_instr"} 
     "Using wget or curl"]
-   (clear)
    
-   [:code {:id "wget_instr"
-           :class "grid_8"}
-    (wget-str ticket-info)]
-   [:span {:class "clippy-wget grid_4"}
-    (wget-str ticket-info)]
-   (clear)
+   [:div {:id "clippy-wget-wrapper"} 
+    [:div {:class "clippy-wget"}
+     (wget-str ticket-info)]
+    [:code {:id "wget_instr"}
+     (wget-str ticket-info)]]
    
-   [:code {:id "code_downloader_instr"
-           :class "grid_8"}
-    (curl-str ticket-info)]
-   [:div {:class "clippy-curl grid_4"} 
-    (curl-str ticket-info)]])
+   #_(clear)
+   
+   [:div {:id "clippy-curl-wrapper"} 
+    [:div {:class "clippy-curl"} 
+     (curl-str ticket-info)]
+    [:code {:id "code_downloader_instr"}
+     (curl-str ticket-info)]]])
 
 (defpartial kif-file-info
   [ticket-info]
@@ -178,11 +176,11 @@
 (defpartial kif-alt-downloads
   [ticket-id ticket-info]
   [:div {:id "alternative_downloads"}
-   [:h3 {:id "alternative_downloads_header"} 
+   [:div {:id "alternative_downloads_inner"}
+    [:h3 {:id "alternative_downloads_header"} 
     "Other ways to download this file..."]
-   (kif-irods-instr ticket-info)
-   (clear)
-   (kif-downloader-instr ticket-id ticket-info)])
+    (kif-irods-instr ticket-info)
+    (kif-downloader-instr ticket-id ticket-info)]])
 
 (defpartial landing-page
   [ticket-id metadata ticket-info]

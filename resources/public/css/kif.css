@@ -43,6 +43,31 @@ div#download_link_div
     background: rgb(240,240,240) none repeat scroll;
 }
 
+#alternative_downloads
+{
+    background: rgb(240,240,240) none repeat scroll;
+    padding: 4px;
+    border-radius: 4px;
+    margin: 0px;
+}
+
+#alternative_downloads_header
+{
+    border-bottom: 1px rgb(215,215,215) solid;
+}
+
+#header_irods_instr, #clippy-irods-wrapper, #header_downloader_instr,
+#clippy-wget-wrapper, #clippy-curl-wrapper
+{
+    padding-left: 5px;
+}
+
+#alternative_downloads_inner
+{
+    background: rgb(255,255,255) none repeat scroll;
+    border: 1px rgb(215,215,215) solid;
+}
+
 .ui-toolbar
 {
     padding-left: 3px;
@@ -100,8 +125,9 @@ td
 
 code
 {
+    margin-left: 5px;
     font-family: monospace, monospace;
-    font-size: 75%;
+    font-size: 100%;
 }
 
 label
@@ -141,3 +167,4 @@ tbody
 {
     border-bottom: 1px rgb(210,210, 210) solid;
 }
+
