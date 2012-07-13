@@ -3,6 +3,12 @@ body, label, textarea, select, button
     font-family: "Helvetica Neue", Arial, sans-serif;
 }
 
+#page-wrapper
+{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
 #file-info-wrapper
 {
     margin-bottom: 5px;

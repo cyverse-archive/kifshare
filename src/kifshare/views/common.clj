@@ -26,5 +26,5 @@
             (html5
               (html-head)
               [:body
-               [:div#wrapper {:class "container_12"}
+               [:div#wrapper {:id "page-wrapper" :class "container_12"}
                 content]]))
