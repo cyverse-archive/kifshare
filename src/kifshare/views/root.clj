@@ -86,9 +86,9 @@
 (defpartial kif-download
   [ticket-id filename]
   [:div {:id "download_link_div"
-         #_(:class "grid_12")}
+         :class "grid_12"}
    [:div {:id "wrapper_download_link"
-          #_(:class "grid_4 push_4")}
+          :class "grid_4 push_4"}
     [:a {:href (str "/d/" ticket-id)
         :id "download_link"} 
     "Download!"]]])

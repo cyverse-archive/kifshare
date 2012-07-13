@@ -17,6 +17,12 @@ body, label, textarea, select, button
     background-color: rgb(255,255,255);
 }
 
+#filename
+{
+    border-bottom: 1px rgb(215,215,215) solid;
+    background-color: rgb(240,240,240);
+}
+
 #lastmod, #filesize, #remaining, #useslimit
 {
     float: right;
