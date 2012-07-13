@@ -21,6 +21,7 @@ body, label, textarea, select, button
 {
     border: 1px rgb(215,215,215) solid;
     background-color: rgb(255,255,255);
+    border-radius: 4px;
 }
 
 #filename
@@ -80,6 +81,7 @@ div#download_link_div
 {
     border: 1px rgb(215,215,215) solid;
     background: rgb(240,240,240) none repeat scroll;
+    border-radius: 4px;
 }
 
 #alternative_downloads
@@ -105,6 +107,7 @@ div#download_link_div
 {
     background: rgb(255,255,255) none repeat scroll;
     border: 1px rgb(215,215,215) solid;
+    border-radius: 4px;
 }
 
 .ui-toolbar
