@@ -8,7 +8,8 @@
                  [slingshot "0.10.1"]
                  [org.clojure/tools.logging "0.2.3"]
                  [de.ubercode.clostache/clostache "1.3.0"]
-                 [log4j/log4j "1.2.16"]]
+                 [log4j/log4j "1.2.16"]
+                 [com.cemerick/url "0.0.6"]]
   :iplant-rpm {:summary "kifshare",
                :dependencies ["iplant-service-config >= 0.1.0-5"],
                :config-files ["log4j.properties"],

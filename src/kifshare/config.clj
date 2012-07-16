@@ -23,6 +23,27 @@
   []
   (get @props "kifshare.app.external-url"))
 
+(defn username
+  []
+  (or (get @props "kifshare.app.username")
+      "public"))
+
+(defn prov-url
+  []
+  (get @props "kifshare.provenance.base-url"))
+
+(defn prov-lookup-endpoint
+  []
+  (get @props "kifshare.provenance.lookup"))
+
+(defn prov-register-endpoint
+  []
+  (get @props "kifshare.provenance.register"))
+
+(defn prov-logging-endpoint
+  []
+  (get @props "kifshare.provenance.logging"))
+
 (defn css-files
   []
   (mapv 
