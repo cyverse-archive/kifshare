@@ -59,10 +59,10 @@
    :category_name category
    :request_ipaddress (.getHostAddress (java.net.InetAddress/getLocalHost))})
 
-(defn basic-prov-log
+(defn prov-log
   [event category uuid]
   (do-get 
-    (str (assoc (logging-url) :query (prov-event))) 
+    (str (assoc (logging-url) :query (prov-event event category uuid))) 
     #(get-in % [:result :Status])))
 
 (defn lookupsert
@@ -71,6 +71,16 @@
     (if-not maybe-uuid
       (basic-register irods-id name desc)
       maybe-uuid)))
+
+(defn prov-uuid
+  [ticket-info]
+  (lookupsert
+    (:ticket-id ticket-info)
+    (:filename ticket-info)
+    (:abspath ticket-info)))
+
+(defn VIEW [uuid] (prov-log "view" "kifshare" uuid))
+(defn DOWNLOAD [uuid] (prov-log "download" "kifshare" uuid))
 
 
 

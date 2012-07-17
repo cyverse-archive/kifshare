@@ -3,6 +3,7 @@
             [kifshare.tickets :as tickets]
             [kifshare.config :as cfg]
             [kifshare.errors :as errors]
+            [kifshare.provenance :as prov]
             [clj-jargon.jargon :as jargon]
             [clojure.tools.logging :as log]
             [clostache.parser :as prs])
@@ -170,7 +171,6 @@
       (kif-uses-limit ticket-info)
       (clear)
       (kif-remaining-uses ticket-info)]]
-    
     (clear)
     (kif-download ticket-id (:filename ticket-info))
     (clear)
@@ -179,16 +179,21 @@
     (kif-alt-downloads ticket-id ticket-info)
     (clear)))
 
+
+
 (defn show-landing-page
   "Handles error checking and decides whether to show the
    landing page or an error page."
   [ticket-id]
   (try+
-    (tickets/check-ticket ticket-id)
-    (landing-page 
-      ticket-id 
-      (jargon/get-metadata (tickets/ticket-abs-path ticket-id))
-      (tickets/ticket-info ticket-id))
+    (let [ticket-info (tickets/ticket-info ticket-id)
+          prov-uuid   (prov/prov-uuid ticket-info)]
+      (prov/VIEW prov-uuid)
+      (tickets/check-ticket ticket-id)
+      (landing-page 
+        ticket-id 
+        (jargon/get-metadata (tickets/ticket-abs-path ticket-id))
+        ticket-info))
     (catch error? err
       (log/warn err)
       (errors/error-response err))
@@ -201,7 +206,10 @@
    This is a direct download of a file associated with a ticket.."
   [ticket-id]
   (try+
-    (tickets/download ticket-id)
+    (let [ticket-info (tickets/ticket-info ticket-id)
+          prov-uuid   (prov/prov-uuid ticket-info)]
+      (prov/DOWNLOAD prov-uuid)
+      (tickets/download ticket-id))
     (catch error? err
       (log/warn (json-str err))
       (status 500 (json-str err)))

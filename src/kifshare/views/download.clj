@@ -1,5 +1,6 @@
 (ns kifshare.views.download
   (:require [kifshare.views.common :as common]
+            [kifshare.provenance :as prov]
             [kifshare.tickets :as tickets]
             [clj-jargon.jargon :as jargon])
   (:use [noir.core :only [defpage]]
@@ -12,8 +13,11 @@
 (defpage "/d/:ticket-id"
   {:keys [ticket-id]}
   (try+
-    (jargon/with-jargon
-      (tickets/download ticket-id))
+    (let [ticket-info (tickets/ticket-info ticket-id)
+          prov-uuid   (prov/prov-uuid ticket-info)]
+      (prov/DOWNLOAD prov-uuid)
+      (jargon/with-jargon
+        (tickets/download ticket-id)))
     (catch error? err
       (status 500 (json-str err)))
     (catch Exception e
