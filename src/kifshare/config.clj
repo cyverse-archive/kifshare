@@ -1,11 +1,13 @@
 (ns kifshare.config
-  (:require [clojure.string :as string]))
+  (:require [clojure.string :as string]
+            [clojure-commons.props :as prps]))
 
 (def props (atom nil))
 
-(defn init-config
-  [new-props]
-  (reset! props new-props))
+(defn local-init
+  [local-config-path]
+  (let [main-props (prps/read-properties local-config-path)]
+    (reset! props main-props)))
 
 (defn curl-flags
   []

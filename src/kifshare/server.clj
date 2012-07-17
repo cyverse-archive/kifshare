@@ -2,8 +2,8 @@
   (:require [noir.server :as server]
             [clojure.tools.cli :as cli]
             [clj-jargon.jargon :as jargon]
-            [clojure-commons.props :as prps]
             [clojure-commons.clavin-client :as cl]
+            [clojure-commons.props :as prps]
             [clojure.tools.logging :as log]
             [kifshare.config :as cfg])
   (:use [clojure-commons.error-codes]))
@@ -13,13 +13,13 @@
 (defn jargon-init
   []
   (jargon/init
-    (get @props "kifshare.irods.host")
-    (get @props "kifshare.irods.port")
-    (get @props "kifshare.irods.user")
-    (get @props "kifshare.irods.password")
-    (get @props "kifshare.irods.home")
-    (get @props "kifshare.irods.zone")
-    (get @props "kifshare.irods.defaultResource")))
+    (get @cfg/props "kifshare.irods.host")
+    (get @cfg/props "kifshare.irods.port")
+    (get @cfg/props "kifshare.irods.user")
+    (get @cfg/props "kifshare.irods.password")
+    (get @cfg/props "kifshare.irods.home")
+    (get @cfg/props "kifshare.irods.zone")
+    (get @cfg/props "kifshare.irods.defaultResource")))
 
 (defn init []
   (let [tmp-props (prps/parse-properties "zkhosts.properties")
@@ -30,18 +30,10 @@
         (log/warn "THIS APPLICATION CANNOT RUN ON THIS MACHINE. SO SAYETH ZOOKEEPER.")
         (log/warn "THIS APPLICATION WILL NOT EXECUTE CORRECTLY."))
       
-      (reset! props (cl/properties "kifshare")))) 
+      (reset! cfg/props (cl/properties "kifshare")))) 
   
   ; Sets up the connection to iRODS through jargon-core.
-  (jargon-init)
-  (cfg/init-config @props))
-
-(defn local-init
-  [local-config-path]
-  (let [main-props (prps/read-properties local-config-path)]
-    (reset! props main-props)
-    (jargon-init)
-    (cfg/init-config @props)))
+  (jargon-init))
 
 (defn parse-args
   [args]
@@ -65,11 +57,13 @@
         (System/exit 0)))
 
     (if (:config opts)
-      (local-init (:config opts))
+      (do
+        (cfg/local-init (:config opts))
+        (jargon-init))
       (init))
   
-    (let [port (Integer/parseInt (get @props "kifshare.app.port"))
-          mode (get @props "kifshare.app.mode")] 
+    (let [port (Integer/parseInt (get @cfg/props "kifshare.app.port"))
+          mode (get @cfg/props "kifshare.app.mode")] 
       (server/start 
         port 
         {:mode (keyword mode)
