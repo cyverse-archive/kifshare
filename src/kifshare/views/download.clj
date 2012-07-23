@@ -21,10 +21,10 @@
         (prov/DOWNLOAD prov-uuid)
         (tickets/download ticket-id)))
     (catch error? err
-      (println (format-exception (:throwable &throw-context)))
+      (log/error (format-exception (:throwable &throw-context)))
       (status 500 (json-str err)))
     (catch Exception e
-      (println (format-exception (:throwable &throw-context)))
+      (log/error (format-exception (:throwable &throw-context)))
       (status 500 (json-str (unchecked &throw-context))))))
 
 (defpage "/d/:ticket-id"

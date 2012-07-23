@@ -193,10 +193,10 @@
         (jargon/get-metadata (tickets/ticket-abs-path ticket-id))
         ticket-info))
     (catch error? err
-      (log/warn err)
+      (log/error (format-exception (:throwable &throw-context)))
       (errors/error-response err))
     (catch Exception e
-      (log/warn e)
+      (log/error (format-exception (:throwable &throw-context)))
       (errors/error-response (unchecked &throw-context)))))
 
 (defn bare-download
