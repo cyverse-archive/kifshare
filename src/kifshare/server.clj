@@ -1,4 +1,5 @@
 (ns kifshare.server
+  (:gen-class)
   (:require [noir.server :as server]
             [clojure.tools.cli :as cli]
             [clj-jargon.jargon :as jargon]

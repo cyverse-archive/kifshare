@@ -22,5 +22,6 @@
                  "http://ci-dev.renci.org/nexus/content/repositories/snapshots/",
                  "sonatype"
                  "http://oss.sonatype.org/content/repositories/releases"}
+  :aot [kifshare.server]
   :main kifshare.server)
 
