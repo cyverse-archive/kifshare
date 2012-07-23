@@ -6,7 +6,8 @@
             [clojure-commons.clavin-client :as cl]
             [clojure-commons.props :as prps]
             [clojure.tools.logging :as log]
-            [kifshare.config :as cfg])
+            [kifshare.config :as cfg]
+            [clojure.string :as string])
   (:use [clojure-commons.error-codes]))
 
 (def props (atom nil))
@@ -65,7 +66,7 @@
       :else
       (init))
     
-    (let [port (Integer/parseInt (get @cfg/props "kifshare.app.port"))
+    (let [port (Integer/parseInt (string/trim (get @cfg/props "kifshare.app.port")))
           mode (get @cfg/props "kifshare.app.mode")] 
       (server/start 
         port 

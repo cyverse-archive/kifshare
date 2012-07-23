@@ -124,10 +124,10 @@
    [:div {:id "header_irods_instr"} 
     "Using the i-commands"]
    
-   [:div {:id "clippy-irods-wrapper"} 
-    [:div {:class "clippy-irods"}
-     (irods-str ticket-info)]
+   [:div {:id "clippy-irods-instrs"} 
     [:code {:id "code_irods_instr"}
+     (irods-str ticket-info)]
+    [:div {:id "clippy-irods-wrapper" :class "clippy-irods"}
      (irods-str ticket-info)]]])
 
 (defpartial kif-downloader-instr
@@ -135,25 +135,24 @@
   [:div {:id "downloader_instructions"}
    [:div {:id "header_downloader_instr"} 
     "Using wget or curl"]
-   
-   [:div {:id "clippy-wget-wrapper"} 
-    [:div {:class "clippy-wget"}
-     (wget-str ticket-info)]
+   [:div {:id "clippy-wget-instrs"} 
     [:code {:id "wget_instr"}
+     (wget-str ticket-info)]
+    [:div {:id "clippy-wget-wrapper" :class "clippy-wget"}
      (wget-str ticket-info)]]
    
-   [:div {:id "clippy-curl-wrapper"} 
-    [:div {:class "clippy-curl"} 
-     (curl-str ticket-info)]
+   [:div {:id "clippy-curl-instrs"} 
     [:code {:id "code_downloader_instr"}
+     (curl-str ticket-info)]
+    [:div {:id "clippy-curl-wrapper" :class "clippy-curl"} 
      (curl-str ticket-info)]]])
 
 (defpartial kif-alt-downloads
   [ticket-id ticket-info]
+  [:div {:id "alternative_downloads_header"} 
+    "Other ways to download this file..."]
   [:div {:id "alternative_downloads"}
    [:div {:id "alternative_downloads_inner"}
-    [:h3 {:id "alternative_downloads_header"} 
-    "Other ways to download this file..."]
     (kif-irods-instr ticket-info)
     (kif-downloader-instr ticket-id ticket-info)]])
 
@@ -184,10 +183,10 @@
    landing page or an error page."
   [ticket-id]
   (try+
+    (tickets/check-ticket ticket-id)
     (let [ticket-info (tickets/ticket-info ticket-id)
           prov-uuid   (prov/prov-uuid ticket-info)]
       (prov/VIEW prov-uuid)
-      (tickets/check-ticket ticket-id)
       (landing-page 
         ticket-id 
         (jargon/get-metadata (tickets/ticket-abs-path ticket-id))
@@ -199,18 +198,11 @@
       (log/error (format-exception (:throwable &throw-context)))
       (errors/error-response (unchecked &throw-context)))))
 
-(defn bare-download
-  "Handles a bare ticket, no HTML involved. 
-   This is a direct download of a file associated with a ticket.."
-  [ticket-id]
-  (jargon/with-jargon
-    (let [ticket-info (tickets/ticket-info ticket-id)]
-      (redirect (str "/d/" ticket-id "/" (:filename ticket-info))))))
-
 (defpage "/:ticket-id"
   {:keys [ticket-id]}
   (jargon/with-jargon
-    (if (common/show-html? (ring-request))
-      (show-landing-page ticket-id)
-      (bare-download ticket-id))))
+    (show-landing-page ticket-id)
+    #_(if (common/show-html? (ring-request))
+      
+      (redirect (str "/d/" ticket-id)))))
 

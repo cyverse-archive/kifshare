@@ -92,14 +92,19 @@ div#download_link_div
     margin: 0px;
 }
 
-#alternative_downloads_header
+#clippy-irods-instrs, #clippy-wget-instrs, #clippy-curl-instrs
 {
-    border-bottom: 1px rgb(215,215,215) solid;
+    padding-left: 5px;
 }
 
-#header_irods_instr, #clippy-irods-wrapper, #header_downloader_instr,
-#clippy-wget-wrapper, #clippy-curl-wrapper
+#clippy-irods-wrapper, #clippy-wget-wrapper, #clippy-curl-wrapper
 {
+    padding-left: 5px;
+}
+
+#alternative_downloads_header
+{
+    font-size: 125%;
     padding-left: 5px;
 }
 
@@ -108,6 +113,24 @@ div#download_link_div
     background: rgb(255,255,255) none repeat scroll;
     border: 1px rgb(215,215,215) solid;
     border-radius: 4px;
+}
+
+#header_irods_instr, #header_downloader_instr
+{
+    padding-left: 5px;
+    background:rgb(240,240,240);
+}
+
+#header_irods_instr
+{
+    border-bottom: 1px rgb(215,215,215) solid;
+}
+
+#header_downloader_instr
+{
+    margin-top: 5px;
+    border-top: 1px rgb(215,215,215) solid;
+    border-bottom: 1px rgb(215,215,215) solid;
 }
 
 .ui-toolbar
