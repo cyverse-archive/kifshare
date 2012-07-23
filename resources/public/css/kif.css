@@ -95,17 +95,12 @@ div#download_link_div
 #clippy-irods-instrs, #clippy-wget-instrs, #clippy-curl-instrs
 {
     padding-left: 5px;
-}
-
-#clippy-irods-wrapper, #clippy-wget-wrapper, #clippy-curl-wrapper
-{
-    padding-left: 5px;
+    margin-right: 5px;
 }
 
 #alternative_downloads_header
 {
     font-size: 125%;
-    padding-left: 5px;
 }
 
 #alternative_downloads_inner
