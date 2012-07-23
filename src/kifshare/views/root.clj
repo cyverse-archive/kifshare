@@ -90,7 +90,7 @@
          :class "grid_12"}
    [:div {:id "wrapper_download_link"
           :class "grid_4 push_4"}
-    [:a {:href (str "/d/" ticket-id)
+    [:a {:href (str "/d/" ticket-id "/" filename)
         :id "download_link"} 
     "Download!"]]])
 
@@ -179,8 +179,6 @@
     (kif-alt-downloads ticket-id ticket-info)
     (clear)))
 
-
-
 (defn show-landing-page
   "Handles error checking and decides whether to show the
    landing page or an error page."
@@ -205,17 +203,9 @@
   "Handles a bare ticket, no HTML involved. 
    This is a direct download of a file associated with a ticket.."
   [ticket-id]
-  (try+
-    (let [ticket-info (tickets/ticket-info ticket-id)
-          prov-uuid   (prov/prov-uuid ticket-info)]
-      (prov/DOWNLOAD prov-uuid)
-      (tickets/download ticket-id))
-    (catch error? err
-      (log/warn (json-str err))
-      (status 500 (json-str err)))
-    (catch Exception e
-      (log/warn e)
-      (status 500 (json-str (unchecked &throw-context))))))
+  (jargon/with-jargon
+    (let [ticket-info (tickets/ticket-info ticket-id)]
+      (redirect (str "/d/" ticket-id "/" (:filename ticket-info))))))
 
 (defpage "/:ticket-id"
   {:keys [ticket-id]}

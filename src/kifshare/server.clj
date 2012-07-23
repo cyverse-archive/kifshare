@@ -54,14 +54,16 @@
     (cond      
       (:help opts)
       (do (println help-str)
-        (System/exit 0)))
-
-    (if (:config opts)
+        (System/exit 0))
+      
+      (:config opts)
       (do
         (cfg/local-init (:config opts))
         (jargon-init))
+      
+      :else
       (init))
-  
+    
     (let [port (Integer/parseInt (get @cfg/props "kifshare.app.port"))
           mode (get @cfg/props "kifshare.app.mode")] 
       (server/start 
