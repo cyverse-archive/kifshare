@@ -147,7 +147,8 @@
    [:div {:id "clippy-wget-instrs"}
     "sh> "
     (input-display "wget_instr" (wget-str ticket-info))
-    [:div {:id "clippy-wget-wrapper" :class "clippy-wget"}
+    [:div {:id "clippy-wget-wrapper"       
+           :class "clippy-wget"}
      (wget-str ticket-info)]]
    
    [:div {:id "clippy-curl-instrs"}
@@ -190,11 +191,10 @@
 (defn show-landing-page
   "Handles error checking and decides whether to show the
    landing page or an error page."
-  [ticket-id]
+  [ticket-id ticket-info]
   (try+
     (tickets/check-ticket ticket-id)
-    (let [ticket-info (tickets/ticket-info ticket-id)
-          prov-uuid   (prov/prov-uuid ticket-info)]
+    (let [prov-uuid   (prov/prov-uuid ticket-info)]
       (prov/VIEW prov-uuid)
       (landing-page 
         ticket-id 
@@ -210,5 +210,8 @@
 (defpage "/:ticket-id"
   {:keys [ticket-id]}
   (jargon/with-jargon
-    (show-landing-page ticket-id)))
+    (let [ticket-info (tickets/ticket-info ticket-id)] 
+      (if (common/show-html? (ring-request))
+        (show-landing-page ticket-id ticket-info)
+        (redirect (str "/d/" ticket-id "/" (:filename ticket-info)))))))
 
