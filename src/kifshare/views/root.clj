@@ -26,7 +26,7 @@
    [:td (:value mmap)] 
    [:td (:unit mmap)]])
 
-(defpartial kif-irods-avu
+(defpartial irods-avu-table
   [metadata]
   [:div {:id "wrapper_irods_avus"}
    [:div {:id "wrapper_irods_avus_inner"} 
@@ -41,7 +41,7 @@
      [:tbody
       (map irods-avu-row metadata)]]]])
 
-(defpartial kif-uses-limit
+(defpartial uses-limit
   [ticket-info]
   [:div {:id "wrapper_useslimit"}
    [:div {:id "useslimit-label"}
@@ -50,7 +50,7 @@
     (:useslimit ticket-info)]]
   (clear))
 
-(defpartial kif-remaining-uses
+(defpartial remaining-uses
   [ticket-info]
   [:div {:id "wrapper_remaining"}
    [:div {:id "remaining-label"}
@@ -59,13 +59,13 @@
     (:remaining ticket-info)]]
   (clear))
 
-(defpartial kif-filename
+(defpartial filename
   [ticket-info]
   [:div {:id "wrapper_filename"}
    [:h1 {:id "filename"} 
     (:filename ticket-info)]])
 
-(defpartial kif-lastmod
+(defpartial lastmod
   [ticket-info]
   [:div {:id "wrapper_lastmod"}
    [:div {:id "lastmod-label"} 
@@ -74,7 +74,7 @@
     (:lastmod ticket-info)]]
   (clear))
 
-(defpartial kif-filesize
+(defpartial filesize
   [ticket-info]
   [:div {:id "wrapper_filesize"}
    [:div {:id "filesize-label"} 
@@ -84,7 +84,7 @@
       (Long/parseLong (:filesize ticket-info)))]]
   (clear))
 
-(defpartial kif-download
+(defpartial download-button
   [ticket-id filename]
   [:div {:id "download_link_div"
          :class "grid_12"}
@@ -127,7 +127,7 @@
            :readonly false
            :value value}])
 
-(defpartial kif-irods-instr
+(defpartial irods-instr
   [ticket-info]
   [:div {:id "irods_instructions"}
    [:div {:id "header_irods_instr"} 
@@ -139,7 +139,7 @@
     [:div {:id "clippy-irods-wrapper" :class "clippy-irods"}
      (irods-str ticket-info)]]])
 
-(defpartial kif-downloader-instr
+(defpartial downloader-instr
   [ticket-id ticket-info]
   [:div {:id "downloader_instructions"}
    [:div {:id "header_downloader_instr"} 
@@ -156,35 +156,35 @@
     [:div {:id "clippy-curl-wrapper" :class "clippy-curl"} 
      (curl-str ticket-info)]]])
 
-(defpartial kif-alt-downloads
+(defpartial alt-downloads
   [ticket-id ticket-info]
   [:div {:id "alternative_downloads_header"} 
     "Other ways to download this file..."]
   [:div {:id "alternative_downloads"}
    [:div {:id "alternative_downloads_inner"}
-    (kif-irods-instr ticket-info)
-    (kif-downloader-instr ticket-id ticket-info)]])
+    (irods-instr ticket-info)
+    (downloader-instr ticket-id ticket-info)]])
 
 (defpartial landing-page
   [ticket-id metadata ticket-info]
   (common/layout
     [:div {:id "file-info-wrapper"}
      [:div {:id "file-info-wrapper-inner"} 
-      (kif-filename ticket-info)
+      (filename ticket-info)
       (clear)
-      (kif-lastmod ticket-info)
+      (lastmod ticket-info)
       (clear)
-      (kif-filesize ticket-info)
+      (filesize ticket-info)
       (clear)
-      (kif-uses-limit ticket-info)
+      (uses-limit ticket-info)
       (clear)
-      (kif-remaining-uses ticket-info)]]
+      (remaining-uses ticket-info)]]
     (clear)
-    (kif-download ticket-id (:filename ticket-info))
+    (download-button ticket-id (:filename ticket-info))
     (clear)
-    (kif-irods-avu metadata)
+    (irods-avu-table metadata)
     (clear)
-    (kif-alt-downloads ticket-id ticket-info)
+    (alt-downloads ticket-id ticket-info)
     (clear)))
 
 (defn show-landing-page
@@ -210,8 +210,5 @@
 (defpage "/:ticket-id"
   {:keys [ticket-id]}
   (jargon/with-jargon
-    (show-landing-page ticket-id)
-    #_(if (common/show-html? (ring-request))
-      
-      (redirect (str "/d/" ticket-id)))))
+    (show-landing-page ticket-id)))
 
