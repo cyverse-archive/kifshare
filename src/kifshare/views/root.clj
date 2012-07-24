@@ -118,15 +118,24 @@
     (cfg/iget-flags) 
     (template-map ticket-info)))
 
+(defpartial input-display
+  [id value]
+  [:input {:id id
+           :type "text"
+           :size 70
+           :maxlength 500
+           :readonly false
+           :value value}])
+
 (defpartial kif-irods-instr
   [ticket-info]
   [:div {:id "irods_instructions"}
    [:div {:id "header_irods_instr"} 
     "Using the i-commands"]
    
-   [:div {:id "clippy-irods-instrs"} 
-    [:code {:id "code_irods_instr"}
-     (irods-str ticket-info)]
+   [:div {:id "clippy-irods-instrs"}
+    "sh> "
+    (input-display "code_irods_instr" (irods-str ticket-info))
     [:div {:id "clippy-irods-wrapper" :class "clippy-irods"}
      (irods-str ticket-info)]]])
 
@@ -135,15 +144,15 @@
   [:div {:id "downloader_instructions"}
    [:div {:id "header_downloader_instr"} 
     "Using wget or curl"]
-   [:div {:id "clippy-wget-instrs"} 
-    [:code {:id "wget_instr"}
-     (wget-str ticket-info)]
+   [:div {:id "clippy-wget-instrs"}
+    "sh> "
+    (input-display "wget_instr" (wget-str ticket-info))
     [:div {:id "clippy-wget-wrapper" :class "clippy-wget"}
      (wget-str ticket-info)]]
    
-   [:div {:id "clippy-curl-instrs"} 
-    [:code {:id "code_downloader_instr"}
-     (curl-str ticket-info)]
+   [:div {:id "clippy-curl-instrs"}
+    "sh> "
+    (input-display "curl_instr" (curl-str ticket-info))
     [:div {:id "clippy-curl-wrapper" :class "clippy-curl"} 
      (curl-str ticket-info)]]])
 
