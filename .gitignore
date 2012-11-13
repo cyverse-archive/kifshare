@@ -1,10 +1,13 @@
-.lein-deps-sum
-.cake
+pom.xml
+*jar
+lib
+classes
 *~
 bin
 .classpath
 .project
 .lein*
 \#*\#
+nibblonian.log
 target/
-
+.settings/
