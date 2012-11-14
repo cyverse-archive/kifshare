@@ -9,17 +9,16 @@
         [clojure-commons.error-codes]
         [slingshot.slingshot :only [try+]]
         [clojure.data.json :only [json-str]]
-        [clojure-commons.error-codes]))
+        [clojure-commons.error-codes]
+        [kifshare.config :only [jargon-config]]))
 
 
 (defpage "/d/:ticket-id/:filename"
   {:keys [ticket-id filename]}
   (try+
-    (jargon/with-jargon
-      (let [ticket-info (tickets/ticket-info ticket-id)
-            prov-uuid   (prov/prov-uuid ticket-info)]
-        (prov/DOWNLOAD prov-uuid)
-        (tickets/download ticket-id)))
+    (jargon/with-jargon (jargon-config) [cm]
+      (let [ticket-info (tickets/ticket-info cm ticket-id)]
+        (tickets/download cm ticket-id)))
     (catch error? err
       (log/error (format-exception (:throwable &throw-context)))
       (status 500 (json-str err)))
@@ -29,7 +28,7 @@
 
 (defpage "/d/:ticket-id"
   {:keys [ticket-id]}
-  (jargon/with-jargon
-    (let [ticket-info (tickets/ticket-info ticket-id)]
+  (jargon/with-jargon (jargon-config) [cm]
+    (let [ticket-info (tickets/ticket-info cm ticket-id)]
       (redirect (str "/d/" ticket-id "/" (:filename ticket-info))))))
 

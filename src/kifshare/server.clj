@@ -10,19 +10,6 @@
             [clojure.string :as string])
   (:use [clojure-commons.error-codes]))
 
-(def props (atom nil))
-
-(defn jargon-init
-  []
-  (jargon/init
-    (get @cfg/props "kifshare.irods.host")
-    (get @cfg/props "kifshare.irods.port")
-    (get @cfg/props "kifshare.irods.user")
-    (get @cfg/props "kifshare.irods.password")
-    (get @cfg/props "kifshare.irods.home")
-    (get @cfg/props "kifshare.irods.zone")
-    (get @cfg/props "kifshare.irods.defaultResource")))
-
 (defn init []
   (let [tmp-props (prps/parse-properties "zkhosts.properties")
         zkurl (get tmp-props "zookeeper")]
@@ -35,7 +22,7 @@
       (reset! cfg/props (cl/properties "kifshare")))) 
   
   ; Sets up the connection to iRODS through jargon-core.
-  (jargon-init))
+  (cfg/jargon-init))
 
 (defn parse-args
   [args]
@@ -61,7 +48,7 @@
       (:config opts)
       (do
         (cfg/local-init (:config opts))
-        (jargon-init))
+        (cfg/jargon-init))
       
       :else
       (init))

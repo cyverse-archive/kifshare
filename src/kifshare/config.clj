@@ -1,5 +1,6 @@
 (ns kifshare.config
   (:require [clojure.string :as string]
+            [clj-jargon.jargon :as jargon]
             [clojure-commons.props :as prps]))
 
 (def props (atom nil))
@@ -27,7 +28,7 @@
 
 (defn username
   []
-  (or (get @props "kifshare.app.username")
+  (or (get @props "kifshare.irods.user")
       "public"))
 
 (defn prov-url
@@ -45,6 +46,22 @@
 (defn prov-logging-endpoint
   []
   (get @props "kifshare.provenance.logging"))
+
+(def jgcfg (atom nil))
+
+(defn jargon-config [] @jgcfg)
+
+(defn jargon-init
+  []
+  (reset! jgcfg
+          (jargon/init
+           (get @props "kifshare.irods.host")
+           (get @props "kifshare.irods.port")
+           (get @props "kifshare.irods.user")
+           (get @props "kifshare.irods.password")
+           (get @props "kifshare.irods.home")
+           (get @props "kifshare.irods.zone")
+           (get @props "kifshare.irods.defaultResource"))))
 
 (defn css-files
   []

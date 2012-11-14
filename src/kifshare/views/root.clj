@@ -12,7 +12,8 @@
         [noir.response :only [status redirect]]
         [clojure.data.json :only [json-str]]
         [slingshot.slingshot :only [try+]]
-        [clojure-commons.error-codes])
+        [clojure-commons.error-codes]
+        [kifshare.config :only [jargon-config]])
   (:import [org.apache.commons.io FileUtils]))
 
 (defpartial clear
@@ -191,15 +192,13 @@
 (defn show-landing-page
   "Handles error checking and decides whether to show the
    landing page or an error page."
-  [ticket-id ticket-info]
+  [cm ticket-id ticket-info]
   (try+
-    (tickets/check-ticket ticket-id)
-    (let [prov-uuid   (prov/prov-uuid ticket-info)]
-      (prov/VIEW prov-uuid)
-      (landing-page 
-        ticket-id 
-        (jargon/get-metadata (tickets/ticket-abs-path ticket-id))
-        ticket-info))
+   (tickets/check-ticket cm ticket-id)
+   (landing-page
+    ticket-id
+    (jargon/get-metadata cm (tickets/ticket-abs-path cm ticket-id))
+    ticket-info)
     (catch error? err
       (log/error (format-exception (:throwable &throw-context)))
       (errors/error-response err))
@@ -209,9 +208,9 @@
 
 (defpage "/:ticket-id"
   {:keys [ticket-id]}
-  (jargon/with-jargon
-    (let [ticket-info (tickets/ticket-info ticket-id)] 
+  (jargon/with-jargon (jargon-config) [cm]
+    (let [ticket-info (tickets/ticket-info cm ticket-id)] 
       (if (common/show-html? (ring-request))
-        (show-landing-page ticket-id ticket-info)
+        (show-landing-page cm ticket-id ticket-info)
         (redirect (str "/d/" ticket-id "/" (:filename ticket-info)))))))
 
