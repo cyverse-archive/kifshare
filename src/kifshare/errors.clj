@@ -6,6 +6,7 @@
 (def ERR_TICKET_EXPIRED "ERR_TICKET_EXPIRED")
 (def ERR_TICKET_USED_UP "ERR_TICKET_USED_UP")
 (def ERR_TICKET_NOT_FOUND "ERR_TICKET_NOT_FOUND")
+(def ERR_TICKET_NOT_PUBLIC "ERR_TICKET_NOT_PUBLIC")
 
 (defpartial ticket-expired [{:keys [ticket-id expired-date]}]
   [:div {:id "err-ticket-expired"}
