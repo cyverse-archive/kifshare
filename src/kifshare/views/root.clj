@@ -29,18 +29,19 @@
 
 (defpartial irods-avu-table
   [metadata]
-  [:div {:id "wrapper_irods_avus"}
-   [:div {:id "wrapper_irods_avus_inner"} 
-    [:div {:id "irods_avus_header"}
-     [:h3 "Metadata"]]
-    [:table {:id "irods_avus"}
-     [:thead
-      [:tr 
-       [:th "Attribute"] 
-       [:th "Value"] 
-       [:th "Unit"]]]
-     [:tbody
-      (map irods-avu-row metadata)]]]])
+  (if (pos? (count metadata))
+    [:div {:id "wrapper_irods_avus"}
+     [:div {:id "wrapper_irods_avus_inner"} 
+      [:div {:id "irods_avus_header"}
+       [:h3 "Metadata"]]
+      [:table {:id "irods_avus"}
+       [:thead
+        [:tr 
+         [:th "Attribute"] 
+         [:th "Value"] 
+         [:th "Unit"]]]
+       [:tbody
+        (map irods-avu-row metadata)]]]]))
 
 (defpartial uses-limit
   [ticket-info]
@@ -189,6 +190,12 @@
     (alt-downloads ticket-id ticket-info)
     (clear)))
 
+(defn object-metadata
+  [cm abspath]
+  (filterv
+   #(not= (:unit %1) "ipc-system-avu")
+   (jargon/get-metadata cm abspath)))
+
 (defn show-landing-page
   "Handles error checking and decides whether to show the
    landing page or an error page."
@@ -197,7 +204,7 @@
    (tickets/check-ticket cm ticket-id)
    (landing-page
     ticket-id
-    (jargon/get-metadata cm (tickets/ticket-abs-path cm ticket-id))
+    (object-metadata cm (tickets/ticket-abs-path cm ticket-id))
     ticket-info)
     (catch error? err
       (log/error (format-exception (:throwable &throw-context)))
