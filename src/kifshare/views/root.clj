@@ -138,8 +138,10 @@
    [:div {:id "clippy-irods-instrs"}
     "sh> "
     (input-display "code_irods_instr" (irods-str ticket-info))
-    [:div {:id "clippy-irods-wrapper" :class "clippy-irods"}
-     (irods-str ticket-info)]]])
+    [:span {:title "copy to clipboard"}
+     [:div {:id "clippy-irods-wrapper"
+            :class "clippy-irods"}
+      (irods-str ticket-info)]]]])
 
 (defpartial downloader-instr
   [ticket-id ticket-info]
@@ -149,15 +151,18 @@
    [:div {:id "clippy-wget-instrs"}
     "sh> "
     (input-display "wget_instr" (wget-str ticket-info))
-    [:div {:id "clippy-wget-wrapper"       
-           :class "clippy-wget"}
-     (wget-str ticket-info)]]
+    [:span  {:title "copy to clipboard"}
+     [:div {:id "clippy-wget-wrapper"
+            :class "clippy-wget"}
+      (wget-str ticket-info)]]]
    
    [:div {:id "clippy-curl-instrs"}
     "sh> "
     (input-display "curl_instr" (curl-str ticket-info))
-    [:div {:id "clippy-curl-wrapper" :class "clippy-curl"} 
-     (curl-str ticket-info)]]])
+    [:span {:title "copy to clipboard"}
+     [:div {:id "clippy-curl-wrapper"
+            :class "clippy-curl"}
+      (curl-str ticket-info)]]]])
 
 (defpartial alt-downloads
   [ticket-id ticket-info]
