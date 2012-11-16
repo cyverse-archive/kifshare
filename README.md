@@ -9,40 +9,7 @@ You'll want Leiningen 2 installed as well. See http://leiningen.org for more det
 
 # Configuring kifshare
 
-Create a .properties file that looks like this:
-
-{code}
-kifshare.irods.host = <irods-host>
-kifshare.irods.port = <irods-port>
-kifshare.irods.user = <irods-user>
-kifshare.irods.password = <irods-password>
-kifshare.irods.home = <irods-home>
-kifshare.irods.zone = <irods-zone>
-kifshare.irods.defaultResource = <irods-resource>
-
-kifshare.app.port = <listen-port>
-kifshare.app.mode = dev
-
-kifshare.app.curl-flags = curl -o {{filename}} {{url}}/d/{{ticket-id}}/{{filename}}
-kifshare.app.wget-flags = wget {{url}}/d/{{ticket-id}}/{{filename}}}
-kifshare.app.iget-flags = iget {{abspath}}
-kifshare.app.external-url = http://localhost:8080
-
-kifshare.app.css-files = /css/reset.css,\
-                         /css/960.css,\
-                         http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.8.2/css/jquery.dataTables.css,\
-                         /css/jquery-ui-1.8.21.custom.css,\
-                         /css/kif.css
-                         
-                         
-kifshare.app.javascript-files = https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js,\
-                                https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js,\
-                                http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.8.2/jquery.dataTables.min.js,\
-                                /js/jquery.clippy.min.js,\
-				                        /js/jquery.dimensions.js,\
-				                        /js/jquery.tooltip.min.js,\
-                                /js/kif.js
-{code}
+Create a .properties file using docs/sample.properties as a template.
 
 Worth noting is that the "kifshare.app.external-url" option is used when doing redirects. If you have multiple instances of kifshare set up behind HAProxy, then set this value to the URL that HAProxy is listening on.
 
