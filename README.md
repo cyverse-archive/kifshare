@@ -45,5 +45,11 @@ You can also hit another URL, but this one requires you to know the name of the 
 
     curl http://<kifshare-host>:<kifshare-port>/<ticket-name>/<filename>
 
+If you want to download the download page and not the file, then you need to set the Accept header in the curl command to allow "text/html".
+
+    curl -H "Accept:text/html" http://<kifshare-host>:<kifshare-port>/<ticket-name>
+
+
+
 
 
