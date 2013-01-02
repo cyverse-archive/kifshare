@@ -13,6 +13,20 @@ Create a .properties file using docs/sample.properties as a template.
 
 Worth noting is that the "kifshare.app.external-url" option is used when doing redirects. If you have multiple instances of kifshare set up behind HAProxy, then set this value to the URL that HAProxy is listening on.
 
+# Configuring mod_proxy in Apache for kifshare
+
+All downloads flow through the /d/ endpoint in kifshare. So, to proxy download requests to another box, try the following in one of the httpd config files.
+
+    ProxyPass /quickshare/d http://kifshare.example.org:31380/d
+    ProxyPassReverse /quickshare/d http://kifshare.example.org:31380/d
+
+Next, you need to set up ProxyPass entries for the UI:
+
+    ProxyPass /quickshare http://kifshare.example.org:31380
+    ProxyPassReverse /quickshare http://kifshare.example.org:31380
+
+The entries must be in that order.
+
 # Running kifshare
 
 If you're working out of a git checkout, then you can run the following:
