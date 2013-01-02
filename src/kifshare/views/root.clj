@@ -92,7 +92,7 @@
          :class "grid_12"}
    [:div {:id "wrapper_download_link"
           :class "grid_4 push_4"}
-    [:a {:href (str "/d/" ticket-id "/" filename)
+    [:a {:href (str "d/" ticket-id "/" filename)
         :id "download_link"} 
     "Download!"]]])
 
