@@ -224,5 +224,5 @@
     (let [ticket-info (tickets/ticket-info cm ticket-id)] 
       (if (common/show-html? (ring-request))
         (show-landing-page cm ticket-id ticket-info)
-        (redirect (str "/d/" ticket-id "/" (:filename ticket-info)))))))
+        (redirect (str "d/" ticket-id "/" (:filename ticket-info)))))))
 
