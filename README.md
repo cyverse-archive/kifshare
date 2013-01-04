@@ -17,12 +17,12 @@ Worth noting is that the "kifshare.app.external-url" option is used when doing r
 
 All downloads flow through the /d/ endpoint in kifshare. So, to proxy download requests to another box, try the following in one of the httpd config files.
 
-    ProxyPass /quickshare/d http://kifshare-downloads.example.org:31380/d
+    ProxyPass /quickshare/d http://kifshare-downloads.example.org:31380/d retry=0
     ProxyPassReverse /quickshare/d http://kifshare-downloads.example.org:31380/d
 
 Next, you need to set up ProxyPass entries for the UI:
 
-    ProxyPass /quickshare http://kifshare.example.org:31380
+    ProxyPass /quickshare http://kifshare.example.org:31380 retry=0
     ProxyPassReverse /quickshare http://kifshare.example.org:31380
 
 The entries must be in that order.
