@@ -1,7 +1,8 @@
 (ns kifshare.config
   (:require [clojure.string :as string]
             [clj-jargon.jargon :as jargon]
-            [clojure-commons.props :as prps]))
+            [clojure-commons.props :as prps]
+            [clojure.tools.logging :as log]))
 
 (def props (atom nil))
 
@@ -78,3 +79,10 @@
     (string/split 
       (get @props "kifshare.app.javascript-files") 
       #",")))
+
+(defn log-config
+  []
+  (log/warn "Configuration:")
+  (doseq [k (keys @props)]
+    (when-not (= k "kifshare.irods.password")
+      (log/warn k " = " (get @props k)))))

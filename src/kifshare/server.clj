@@ -11,8 +11,10 @@
   (:use [clojure-commons.error-codes]))
 
 (defn init []
+  (log/debug "entered kifshare.server/init")
   (let [tmp-props (prps/parse-properties "zkhosts.properties")
         zkurl (get tmp-props "zookeeper")]
+    (log/debug "zookeeper URL: " zkurl)
     (cl/with-zk
       zkurl
       (when-not (cl/can-run?)
@@ -20,12 +22,16 @@
         (log/warn "THIS APPLICATION WILL NOT EXECUTE CORRECTLY."))
       
       (reset! cfg/props (cl/properties "kifshare")))) 
+
+  (cfg/log-config)
   
   ; Sets up the connection to iRODS through jargon-core.
   (cfg/jargon-init))
 
 (defn parse-args
   [args]
+  (log/debug "entered kifshare.server/parse-args")
+  
   (cli/cli
    args
     ["-c" "--config" 
@@ -47,6 +53,7 @@
       
       (:config opts)
       (do
+        (log/warn "Reading local config: " (:config opts))
         (cfg/local-init (:config opts))
         (cfg/jargon-init))
       
@@ -54,7 +61,10 @@
       (init))
     
     (let [port (Integer/parseInt (string/trim (get @cfg/props "kifshare.app.port")))
-          mode (get @cfg/props "kifshare.app.mode")] 
+          mode (get @cfg/props "kifshare.app.mode")]
+      (log/warn "Configured listen port is: " port)
+      (log/warn "Configured mode is: " mode)
+      
       (server/start 
         port 
         {:mode (keyword mode)

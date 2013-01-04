@@ -98,27 +98,23 @@
 
 (defn template-map
   [ticket-info]
-  (merge
-    ticket-info
-    {:url (cfg/external-url)}))
+  (log/debug "kifshare.views.root/template-map")
+  (merge ticket-info {:url (cfg/external-url)}))
 
 (defn wget-str
   [ticket-info]
-  (prs/render 
-    (cfg/wget-flags) 
-    (template-map ticket-info)))
+  (log/debug "entered kifshare.views.root/wget-str")
+  (prs/render (cfg/wget-flags) (template-map ticket-info)))
 
 (defn curl-str
   [ticket-info]
-  (prs/render 
-    (cfg/curl-flags) 
-    (template-map ticket-info)))
+  (log/debug "entered kifshare.views.root/curl-str")
+  (prs/render (cfg/curl-flags) (template-map ticket-info)))
 
 (defn irods-str
   [ticket-info]
-  (prs/render 
-    (cfg/iget-flags) 
-    (template-map ticket-info)))
+  (log/debug "entered kifshare.views.root/irods-str")
+  (prs/render (cfg/iget-flags) (template-map ticket-info)))
 
 (defpartial input-display
   [id value]
@@ -197,6 +193,8 @@
 
 (defn object-metadata
   [cm abspath]
+  (log/debug "kifshare.views.root/object-metadata")
+  
   (filterv
    #(not= (:unit %1) "ipc-system-avu")
    (jargon/get-metadata cm abspath)))
@@ -205,23 +203,31 @@
   "Handles error checking and decides whether to show the
    landing page or an error page."
   [cm ticket-id ticket-info]
+  (log/debug "entered kifshare.views.root/show-landing-page")
+  
   (try+
    (tickets/check-ticket cm ticket-id)
    (landing-page
     ticket-id
     (object-metadata cm (tickets/ticket-abs-path cm ticket-id))
     ticket-info)
-    (catch error? err
-      (log/error (format-exception (:throwable &throw-context)))
-      (errors/error-response err))
-    (catch Exception e
-      (log/error (format-exception (:throwable &throw-context)))
-      (errors/error-response (unchecked &throw-context)))))
+
+   (catch error? err
+     (log/error (format-exception (:throwable &throw-context)))
+     (errors/error-response err))
+
+   (catch Exception e
+     (log/error (format-exception (:throwable &throw-context)))
+     (errors/error-response (unchecked &throw-context)))))
 
 (defpage "/:ticket-id"
   {:keys [ticket-id]}
+  (log/debug "entered page kifshare.views.root /:ticket-id")
+  
   (jargon/with-jargon (jargon-config) [cm]
-    (let [ticket-info (tickets/ticket-info cm ticket-id)] 
+    (let [ticket-info (tickets/ticket-info cm ticket-id)]
+      (log/debug "Ticket Info:\n" ticket-info)
+      
       (if (common/show-html? (ring-request))
         (show-landing-page cm ticket-id ticket-info)
         (redirect (str "d/" ticket-id "/" (:filename ticket-info)))))))

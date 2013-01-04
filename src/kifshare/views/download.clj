@@ -15,20 +15,28 @@
 
 (defpage "/d/:ticket-id/:filename"
   {:keys [ticket-id filename]}
+  (log/debug "entered page kifshare.views.download /d/:ticket-id/:filename")
+  
   (try+
     (jargon/with-jargon (jargon-config) [cm]
       (let [ticket-info (tickets/ticket-info cm ticket-id)]
+        (log/warn "Downloading " ticket-id " as " filename)
         (tickets/download cm ticket-id)))
+    
     (catch error? err
       (log/error (format-exception (:throwable &throw-context)))
       (status 500 (json-str err)))
+    
     (catch Exception e
       (log/error (format-exception (:throwable &throw-context)))
       (status 500 (json-str (unchecked &throw-context))))))
 
 (defpage "/d/:ticket-id"
   {:keys [ticket-id]}
+  (log/debug "entered page kifshare.views.download /d/:ticket-id")
+  
   (jargon/with-jargon (jargon-config) [cm]
     (let [ticket-info (tickets/ticket-info cm ticket-id)]
+      (log/warn "Redirecting download for " ticket-id " to the /d/:ticket-id/:filename page.")
       (redirect (str "/d/" ticket-id "/" (:filename ticket-info))))))
 
