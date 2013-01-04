@@ -63,4 +63,8 @@
    input-stream to the file associated with the ticket."
   [cm ticket-id]
   (check-ticket cm ticket-id)
-  (status 200 (jargon/ticket-input-stream cm (username) ticket-id)))
+
+  (let [ti (ticket-info cm ticket-id)]
+    (assoc-in
+     (status 200 (jargon/ticket-input-stream cm (username) ticket-id))
+     [:headers "Content-Disposition"] (str "attachment; filename=\"" (:filename ti)  "\""))))
