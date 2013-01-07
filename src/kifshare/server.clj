@@ -5,21 +5,21 @@
             [clj-jargon.jargon :as jargon]
             [clojure-commons.clavin-client :as cl]
             [clojure-commons.props :as prps]
-            [clojure.tools.logging :as log]
+            #_([clojure.tools.logging :as log])
             [kifshare.config :as cfg]
             [clojure.string :as string])
   (:use [clojure-commons.error-codes]))
 
 (defn init []
-  (log/debug "entered kifshare.server/init")
+  #_(log/debug "entered kifshare.server/init")
   (let [tmp-props (prps/parse-properties "zkhosts.properties")
         zkurl (get tmp-props "zookeeper")]
-    (log/debug "zookeeper URL: " zkurl)
+    #_(log/debug "zookeeper URL: " zkurl)
     (cl/with-zk
       zkurl
       (when-not (cl/can-run?)
-        (log/warn "THIS APPLICATION CANNOT RUN ON THIS MACHINE. SO SAYETH ZOOKEEPER.")
-        (log/warn "THIS APPLICATION WILL NOT EXECUTE CORRECTLY."))
+        #_(log/warn "THIS APPLICATION CANNOT RUN ON THIS MACHINE. SO SAYETH ZOOKEEPER.")
+        #_(log/warn "THIS APPLICATION WILL NOT EXECUTE CORRECTLY."))
       
       (reset! cfg/props (cl/properties "kifshare")))) 
 
@@ -30,7 +30,7 @@
 
 (defn parse-args
   [args]
-  (log/debug "entered kifshare.server/parse-args")
+  #_(log/debug "entered kifshare.server/parse-args")
   
   (cli/cli
    args
@@ -45,6 +45,7 @@
 (server/load-views-ns 'kifshare.views)
 
 (defn -main [& args]
+  (println "WTF")
   (let [[opts args help-str] (parse-args args)]
     (cond      
       (:help opts)
@@ -53,7 +54,7 @@
       
       (:config opts)
       (do
-        (log/warn "Reading local config: " (:config opts))
+        #_(log/warn "Reading local config: " (:config opts))
         (cfg/local-init (:config opts))
         (cfg/jargon-init))
       
@@ -62,8 +63,8 @@
     
     (let [port (Integer/parseInt (string/trim (get @cfg/props "kifshare.app.port")))
           mode (get @cfg/props "kifshare.app.mode")]
-      (log/warn "Configured listen port is: " port)
-      (log/warn "Configured mode is: " mode)
+      #_(log/warn "Configured listen port is: " port)
+      #_(log/warn "Configured mode is: " mode)
       
       (server/start 
         port 

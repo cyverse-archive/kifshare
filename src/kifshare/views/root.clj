@@ -5,7 +5,7 @@
             [kifshare.errors :as errors]
             [kifshare.provenance :as prov]
             [clj-jargon.jargon :as jargon]
-            [clojure.tools.logging :as log]
+            #_([clojure.tools.logging :as log])
             [clostache.parser :as prs])
   (:use [noir.core :only [defpage defpartial]]
         [noir.request :only [ring-request]]
@@ -98,22 +98,22 @@
 
 (defn template-map
   [ticket-info]
-  (log/debug "kifshare.views.root/template-map")
+  #_(log/debug "kifshare.views.root/template-map")
   (merge ticket-info {:url (cfg/external-url)}))
 
 (defn wget-str
   [ticket-info]
-  (log/debug "entered kifshare.views.root/wget-str")
+  #_(log/debug "entered kifshare.views.root/wget-str")
   (prs/render (cfg/wget-flags) (template-map ticket-info)))
 
 (defn curl-str
   [ticket-info]
-  (log/debug "entered kifshare.views.root/curl-str")
+  #_(log/debug "entered kifshare.views.root/curl-str")
   (prs/render (cfg/curl-flags) (template-map ticket-info)))
 
 (defn irods-str
   [ticket-info]
-  (log/debug "entered kifshare.views.root/irods-str")
+  #_(log/debug "entered kifshare.views.root/irods-str")
   (prs/render (cfg/iget-flags) (template-map ticket-info)))
 
 (defpartial input-display
@@ -193,7 +193,7 @@
 
 (defn object-metadata
   [cm abspath]
-  (log/debug "kifshare.views.root/object-metadata")
+  #_(log/debug "kifshare.views.root/object-metadata")
   
   (filterv
    #(not= (:unit %1) "ipc-system-avu")
@@ -203,7 +203,7 @@
   "Handles error checking and decides whether to show the
    landing page or an error page."
   [cm ticket-id ticket-info]
-  (log/debug "entered kifshare.views.root/show-landing-page")
+  #_(log/debug "entered kifshare.views.root/show-landing-page")
   
   (try+
    (tickets/check-ticket cm ticket-id)
@@ -213,20 +213,20 @@
     ticket-info)
 
    (catch error? err
-     (log/error (format-exception (:throwable &throw-context)))
+     #_(log/error (format-exception (:throwable &throw-context)))
      (errors/error-response err))
 
    (catch Exception e
-     (log/error (format-exception (:throwable &throw-context)))
+     #_(log/error (format-exception (:throwable &throw-context)))
      (errors/error-response (unchecked &throw-context)))))
 
 (defpage "/:ticket-id"
   {:keys [ticket-id]}
-  (log/debug "entered page kifshare.views.root /:ticket-id")
+  #_(log/debug "entered page kifshare.views.root /:ticket-id")
   
   (jargon/with-jargon (jargon-config) [cm]
     (let [ticket-info (tickets/ticket-info cm ticket-id)]
-      (log/debug "Ticket Info:\n" ticket-info)
+      #_(log/debug "Ticket Info:\n" ticket-info)
       
       (if (common/show-html? (ring-request))
         (show-landing-page cm ticket-id ticket-info)

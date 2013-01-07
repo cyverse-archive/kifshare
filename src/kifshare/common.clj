@@ -1,7 +1,7 @@
-(ns kifshare.views.common
+(ns kifshare.common
   (:require [clojure.string :as string]
             [kifshare.config :as cfg])
-  (:use [noir.core :only [defpartial]]
+  (:use [hiccup.core :only [html]]
         [hiccup.page :only [include-css include-js html5]]))
 
 (defn parse-accept-headers
@@ -16,15 +16,16 @@
   [request]
   (contains? (set (parse-accept-headers request)) "text/html"))
 
-(defpartial html-head []
-  [:head
-   [:title "iPlant Public Downloads"]
-   (map include-css (cfg/css-files))
-   (map include-js (cfg/javascript-files))])
+(defn html-head []
+  (html
+   [:head
+    [:title "iPlant Public Downloads"]
+    (map include-css (cfg/css-files))
+    (map include-js (cfg/javascript-files))]))
 
-(defpartial layout [& content]
-            (html5
-              (html-head)
-              [:body
-               [:div#wrapper {:id "page-wrapper" :class "container_12"}
-                content]]))
+(defn layout [& content]
+  (html5
+   (html-head)
+   [:body
+    [:div#wrapper {:id "page-wrapper" :class "container_12"}
+     content]]))

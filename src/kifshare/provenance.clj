@@ -3,7 +3,7 @@
   (:require [kifshare.config :as cfg]
             [cemerick.url :as url]
             [clj-http.client :as cl]
-            [clojure.tools.logging :as log]
+            #_([clojure.tools.logging :as log])
             [clojure.data.json :as json]))
 
 (defn- join-lookup-url
@@ -35,10 +35,10 @@
     (try+
       (extractor (json-get full-url excepts))
       (catch #(contains? % :status) {:keys [status body]}
-        (log/warn (str "Received " status " doing a lookup on " full-url))
+        #_(log/warn (str "Received " status " doing a lookup on " full-url))
         nil)
       (catch Exception e
-        (log/warn (str e))
+        #_(log/warn (str e))
         nil))))
 
 (defn basic-lookup
