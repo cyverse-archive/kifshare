@@ -35,6 +35,8 @@
   
   (GET "/:ticket-id" [ticket-id :as request]
        (controllers/get-ticket ticket-id request))
+
+  (route/resources "/")
   
   (route/not-found "Not found!"))
 
