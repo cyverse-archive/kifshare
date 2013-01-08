@@ -82,5 +82,5 @@
   (let [ti (ticket-info cm ticket-id)]
     (log/warn "Dowloading file associated with ticket " ticket-id)
     (assoc-in
-     (status 200 (jargon/ticket-input-stream cm (username) ticket-id))
+     {:status 200 :body (jargon/ticket-input-stream cm (username) ticket-id)}
      [:headers "Content-Disposition"] (str "attachment; filename=\"" (:filename ti)  "\""))))
