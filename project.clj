@@ -5,6 +5,7 @@
                  [org.clojure/tools.logging "0.2.3"]
                  [org.iplantc/clj-jargon "0.2.2-SNAPSHOT"]
                  [org.iplantc/clojure-commons "1.3.0-SNAPSHOT"]
+                 [org.slf4j/slf4j-log4j12 "1.6.6"]
                  [slingshot "0.10.1"]
                  [compojure "1.1.3"]
                  [ring/ring-jetty-adapter "1.1.6"]
@@ -20,7 +21,8 @@
                :config-files ["log4j.properties"],
                :config-path "conf"}
   
-  :plugins [[org.iplantc/lein-iplant-rpm "1.4.0-SNAPSHOT"]]
+  :plugins [[lein-ring "0.7.5"]
+            [org.iplantc/lein-iplant-rpm "1.4.0-SNAPSHOT"]]
   
   :repositories {"iplantCollaborative"
                  "http://projects.iplantcollaborative.org/archiva/repository/internal/",
