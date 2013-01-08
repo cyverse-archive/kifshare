@@ -87,4 +87,4 @@
   (jargon/with-jargon (jargon-config) [cm]
     (let [ticket-info (tickets/ticket-info cm ticket-id)]
       (log/warn "Redirecting download for " ticket-id " to the /d/:ticket-id/:filename page.")
-      (redirect (str "d/" ticket-id "/" (:filename ticket-info))))))
+      (redirect (str "../d/" ticket-id "/" (:filename ticket-info))))))
