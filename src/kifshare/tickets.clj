@@ -10,7 +10,7 @@
 
 (defn public-ticket?
   [cm user ticket-id]
-  #_(log/debug "entered kifshare.tickets/public-ticket?")
+  (log/debug "entered kifshare.tickets/public-ticket?")
   
   (let [tas    (jargon/ticket-admin-service cm user)
         groups (.listAllGroupRestrictionsForSpecifiedTicket tas ticket-id 0)]
@@ -23,7 +23,9 @@
    and is not used up. Returns nil on success, throws an error
    on failure."
   [cm ticket-id]
-  #_(log/debug "entered kifshare.tickets/check-ticket")
+  (log/debug "entered kifshare.tickets/check-ticket")
+  (log/warn "username: " (username))
+
   
   (if-not (jargon/ticket? cm (username) ticket-id)
     (throw+ {:error_code ERR_TICKET_NOT_FOUND 
@@ -47,7 +49,7 @@
 
 (defn ticket-info
   [cm ticket-id]
-  #_(log/debug "entered kifshare.tickets/ticket-info")
+  (log/debug "entered kifshare.tickets/ticket-info")
   
   (let [ticket-obj (jargon/ticket-by-id cm (username) ticket-id)
         abs-path   (.getIrodsAbsolutePath ticket-obj)
@@ -60,24 +62,25 @@
                     :lastmod   (str (.lastModified jfile))
                     :useslimit (str (.getUsesLimit ticket-obj))
                     :remaining (str (- (.getUsesLimit ticket-obj) (.getUsesCount ticket-obj))))]
-    #_(log/debug "Ticket Info:\n" retval)
+    (println (str "TicketInfo:\n" retval))
+    (log/debug "Ticket Info:\n" retval)
     retval))
 
 (defn ticket-abs-path
   [cm ticket-id]
-  #_(log/debug "entered kifshare.tickets/ticket-abs-path")
+  (log/debug "entered kifshare.tickets/ticket-abs-path")
   (.getIrodsAbsolutePath (jargon/ticket-by-id cm (username) ticket-id)))
 
 (defn download
   "Calls (check-ticket) and returns a response map containing an
    input-stream to the file associated with the ticket."
   [cm ticket-id]
-  #_(log/debug "entered kifshare.tickets/download")
+  (log/debug "entered kifshare.tickets/download")
   
   (check-ticket cm ticket-id)
 
   (let [ti (ticket-info cm ticket-id)]
-    #_(log/warn "Dowloading file associated with ticket " ticket-id)
+    (log/warn "Dowloading file associated with ticket " ticket-id)
     (assoc-in
      (status 200 (jargon/ticket-input-stream cm (username) ticket-id))
      [:headers "Content-Disposition"] (str "attachment; filename=\"" (:filename ti)  "\""))))

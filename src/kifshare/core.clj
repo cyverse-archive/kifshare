@@ -25,16 +25,18 @@
   (:use [clojure-commons.error-codes]))
 
 (defroutes kifshare-routes
-  (GET "/:ticket-id" [ticket-id :as request]
-       (controllers/get-ticket ticket-id request))
-
+  (GET "/favicon.ico" [] {:status 404 :body "No favicon for you!"})
+  
   (GET "/d/:ticket-id/:filename" [ticket-id filename]
        (controllers/download-file ticket-id filename))
 
   (GET "/d/:ticket-id" [ticket-id]
        (controllers/download-ticket ticket-id))
-
-  (route/not-found "Not Found!"))
+  
+  (GET "/:ticket-id" [ticket-id :as request]
+       (controllers/get-ticket ticket-id request))
+  
+  (route/not-found "Not found!"))
 
 (defn site-handler [routes]
   (-> routes

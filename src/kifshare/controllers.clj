@@ -27,6 +27,7 @@
   
   (try+
    (tickets/check-ticket cm ticket-id)
+
    (landing-page
     ticket-id
     (object-metadata cm (tickets/ticket-abs-path cm ticket-id))
@@ -40,6 +41,12 @@
      (log/error (format-exception (:throwable &throw-context)))
      (errors/error-response (unchecked &throw-context)))))
 
+(defn decide-on-page
+  [cm ring-request ticket-id ticket-info]
+  (if (common/show-html? ring-request)
+    {:status 200 :body (show-landing-page cm ticket-id ticket-info)}
+    (redirect (str "d/" ticket-id "/" (:filename ticket-info)))))
+
 (defn get-ticket
   "Determines whether to redirect to a download or show the landing page."
   [ticket-id ring-request]
@@ -49,9 +56,9 @@
     (let [ticket-info (tickets/ticket-info cm ticket-id)]
       (log/debug "Ticket Info:\n" ticket-info)
       
-      (if (common/show-html? ring-request)
-        (show-landing-page cm ticket-id ticket-info)
-        (redirect (str "d/" ticket-id "/" (:filename ticket-info)))))))
+      (let [resp (decide-on-page cm ring-request ticket-id ticket-info)]
+        (log/debug "get-ticket response: " resp)
+        resp))))
 
 (defn download-file
   "Allows the caller to download a file associated with a ticket."
@@ -66,11 +73,11 @@
     
     (catch error? err
       (log/error (format-exception (:throwable &throw-context)))
-      (status 500 (json-str err)))
+      {:status 500 :body (json-str err)})
     
     (catch Exception e
       (log/error (format-exception (:throwable &throw-context)))
-      (status 500 (json-str (unchecked &throw-context))))))
+      {:status 500 :body (json-str (unchecked &throw-context))})))
 
 (defn download-ticket
   "Redirects the caller to the endpoint that allows them to download a ticket."
@@ -80,4 +87,4 @@
   (jargon/with-jargon (jargon-config) [cm]
     (let [ticket-info (tickets/ticket-info cm ticket-id)]
       (log/warn "Redirecting download for " ticket-id " to the /d/:ticket-id/:filename page.")
-      (redirect (str "/d/" ticket-id "/" (:filename ticket-info))))))
+      (redirect (str "d/" ticket-id "/" (:filename ticket-info))))))

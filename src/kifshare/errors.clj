@@ -30,14 +30,14 @@
   [err-map]
   (let [err-code (:error_code err-map)] 
     (cond
-      (= err-code ERR_TICKET_NOT_FOUND)
-      (status 500 (ticket-not-found err-map))
-      
-      (= err-code ERR_TICKET_EXPIRED)
-      (status 500 (ticket-expired err-map))
-      
-      (= err-code ERR_TICKET_USED_UP)
-      (status 500 (ticket-used-up err-map))
-      
-      :else
-      (status 500 (default-error err-map)))))
+     (= err-code ERR_TICKET_NOT_FOUND)
+     {:status 500 :body (ticket-not-found err-map)}
+     
+     (= err-code ERR_TICKET_EXPIRED)
+     {:status 500 :body (ticket-expired err-map)}
+     
+     (= err-code ERR_TICKET_USED_UP)
+     {:status 500 :body (ticket-used-up err-map)}
+     
+     :else
+     {:status 500 :body (default-error err-map)})))

@@ -174,10 +174,11 @@
 
 (defn landing-page
   [ticket-id metadata ticket-info]
+  (log/warn "in landing-page")
   (layout
    (html
     [:div {:id "file-info-wrapper"}
-     [:div {:id "file-info-wrapper-inner"} 
+     [:div {:id "file-info-wrapper-inner"}
       (filename ticket-info)
       (clear)
       (lastmod ticket-info)
