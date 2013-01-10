@@ -89,17 +89,17 @@
       (println (str k " = " (get @props k))))))
 
 (defn init []
-  (log/debug "entered kifshare.server/init")
+  (log/debug "entered kifshare.config/init")
   
   (let [tmp-props (prps/parse-properties "zkhosts.properties")
         zkurl (get tmp-props "zookeeper")]
-    (log/debug "zookeeper URL: " zkurl)
+    (log/warn "zookeeper URL: " zkurl)
 
     (cl/with-zk
       zkurl
       (when-not (cl/can-run?)
-        (log/warn "THIS APPLICATION CANNOT RUN ON THIS MACHINE. SO SAYETH ZOOKEEPER.")
-        (log/warn "THIS APPLICATION WILL NOT EXECUTE CORRECTLY."))
+        (log/error "THIS APPLICATION CANNOT RUN ON THIS MACHINE. SO SAYETH ZOOKEEPER.")
+        (log/error "THIS APPLICATION WILL NOT EXECUTE CORRECTLY."))
       
       (reset! props (cl/properties "kifshare")))) 
 

@@ -8,10 +8,13 @@
 
 (defn clear
   []
+  (log/debug "entered kifshare.ui-template/clear")
   (html [:div {:class "clear"}]))
 
 (defn irods-avu-row
   [mmap]
+  (log/debug "entered kifshare.ui-template/irods-avu-row")
+  
   (html
    [:tr 
     [:td (:attr mmap)] 
@@ -20,6 +23,8 @@
 
 (defn irods-avu-table
   [metadata]
+  (log/debug "entered kifshare.ui-template/irods-avu-table")
+  
   (if (pos? (count metadata))
     (html
      [:div {:id "wrapper_irods_avus"}
@@ -37,6 +42,8 @@
 
 (defn uses-limit
   [ticket-info]
+  (log/debug "entered kifshare.ui-template/uses-limit")
+  
   (html
    [:div {:id "wrapper_useslimit"}
     [:div {:id "useslimit-label"}
@@ -47,6 +54,8 @@
 
 (defn remaining-uses
   [ticket-info]
+  (log/debug "entered kifshare.ui-template/remaining-uses")
+  
   (html
    [:div {:id "wrapper_remaining"}
     [:div {:id "remaining-label"}
@@ -57,6 +66,8 @@
 
 (defn filename
   [ticket-info]
+  (log/debug "entered kifshare.ui-template/filename")
+  
   (html
    [:div {:id "wrapper_filename"}
     [:h1 {:id "filename"} 
@@ -64,6 +75,8 @@
 
 (defn lastmod
   [ticket-info]
+  (log/debug "entered kifshare.ui-template/lastmod")
+  
   (html
    [:div {:id "wrapper_lastmod"}
     [:div {:id "lastmod-label"} 
@@ -74,6 +87,8 @@
 
 (defn filesize
   [ticket-info]
+  (log/debug "entered kifshare.ui-template/filesize")
+  
   (html
    [:div {:id "wrapper_filesize"}
     [:div {:id "filesize-label"} 
@@ -85,6 +100,8 @@
 
 (defn download-button
   [ticket-id filename]
+  (log/debug "entered kifshare.ui-template/download-button")
+  
   (html
    [:div {:id "download_link_div"
           :class "grid_12"}
@@ -96,26 +113,28 @@
 
 (defn template-map
   [ticket-info]
-  (log/debug "kifshare.views.root/template-map")
+  (log/debug "entered kifshare.ui-template/template-map")
   (merge ticket-info {:url (cfg/external-url)}))
 
 (defn wget-str
   [ticket-info]
-  (log/debug "entered kifshare.views.root/wget-str")
+  (log/debug "entered kifshare.ui-template/wget-str")
   (prs/render (cfg/wget-flags) (template-map ticket-info)))
 
 (defn curl-str
   [ticket-info]
-  (log/debug "entered kifshare.views.root/curl-str")
+  (log/debug "entered kifshare.ui-template/curl-str")
   (prs/render (cfg/curl-flags) (template-map ticket-info)))
 
 (defn irods-str
   [ticket-info]
-  (log/debug "entered kifshare.views.root/irods-str")
+  (log/debug "entered kifshare.ui-template/irods-str")
   (prs/render (cfg/iget-flags) (template-map ticket-info)))
 
 (defn input-display
   [id value]
+  (log/debug "entered kifshare.ui-template/input-display")
+  
   (html
    [:input
     {:id id
@@ -127,6 +146,8 @@
 
 (defn irods-instr
   [ticket-info]
+  (log/debug "entered kifshare.ui-template/irods-instr")
+  
   (html
    [:div {:id "irods_instructions"}
     [:div {:id "header_irods_instr"} 
@@ -142,6 +163,8 @@
 
 (defn downloader-instr
   [ticket-id ticket-info]
+  (log/debug "entered kifshare.ui-template/downloader-instr")
+  
   (html
    [:div {:id "downloader_instructions"}
     [:div {:id "header_downloader_instr"} 
@@ -164,6 +187,8 @@
 
 (defn alt-downloads
   [ticket-id ticket-info]
+  (log/debug "entered kifshare.ui-template/alt-downloads")
+  
   (html
    [:div {:id "alternative_downloads_header"} 
     "Other ways to download this file..."]
@@ -174,7 +199,8 @@
 
 (defn landing-page
   [ticket-id metadata ticket-info]
-  (log/warn "in landing-page")
+  (log/debug "entered kifshare.ui-template/landing-page")
+  
   (layout
    (html
     [:div {:id "file-info-wrapper"}

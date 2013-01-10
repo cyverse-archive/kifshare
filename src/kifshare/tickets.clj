@@ -24,9 +24,7 @@
    on failure."
   [cm ticket-id]
   (log/debug "entered kifshare.tickets/check-ticket")
-  (log/warn "username: " (username))
 
-  
   (if-not (jargon/ticket? cm (username) ticket-id)
     (throw+ {:error_code ERR_TICKET_NOT_FOUND 
              :ticket-id ticket-id})

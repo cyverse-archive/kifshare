@@ -50,7 +50,7 @@
 
 (defn parse-args
   [args]
-  (log/debug "entered kifshare.server/parse-args")
+  (log/debug "entered kifshare.core/parse-args")
   
   (cli/cli
    args
@@ -67,6 +67,8 @@
 
 (defn -main
   [& args]
+  (log/debug "entered kifshare.core/-main")
+  
   (let [[opts args help-str] (parse-args args)]
     (cond      
       (:help opts)

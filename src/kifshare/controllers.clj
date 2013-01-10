@@ -13,7 +13,7 @@
 
 (defn object-metadata
   [cm abspath]
-  (log/debug "kifshare.views.root/object-metadata")
+  (log/debug "kifshare.controllers/object-metadata")
   
   (filterv
    #(not= (:unit %1) "ipc-system-avu")
@@ -23,7 +23,7 @@
   "Handles error checking and decides whether to show the
    landing page or an error page."
   [cm ticket-id ticket-info]
-  (log/debug "entered kifshare.views.root/show-landing-page")
+  (log/debug "entered kifshare.controllers/show-landing-page")
   
   (try+
    (tickets/check-ticket cm ticket-id)
@@ -43,6 +43,7 @@
 
 (defn decide-on-page
   [cm ring-request ticket-id ticket-info]
+  (log/debug "entered kifshare.controllers/decide-on-page")
   (if (common/show-html? ring-request)
     {:status 200 :body (show-landing-page cm ticket-id ticket-info)}
     (redirect (str "d/" ticket-id "/" (:filename ticket-info)))))
@@ -50,7 +51,7 @@
 (defn get-ticket
   "Determines whether to redirect to a download or show the landing page."
   [ticket-id ring-request]
-  (log/debug "entered page kifshare.views.root /:ticket-id")
+  (log/debug "entered page kifshare.controllers/get-ticket")
   
   (jargon/with-jargon (jargon-config) [cm]
     (let [ticket-info (tickets/ticket-info cm ticket-id)]
@@ -63,7 +64,7 @@
 (defn download-file
   "Allows the caller to download a file associated with a ticket."
   [ticket-id filename]
-  (log/debug "entered page kifshare.views.download /d/:ticket-id/:filename")
+  (log/debug "entered page kifshare.controllers/download-file")
   
   (try+
     (jargon/with-jargon (jargon-config) [cm]
@@ -82,7 +83,7 @@
 (defn download-ticket
   "Redirects the caller to the endpoint that allows them to download a ticket."
   [ticket-id]
-  (log/debug "entered page kifshare.views.download /d/:ticket-id")
+  (log/debug "entered page kifshare.controllers/download-ticket")
   
   (jargon/with-jargon (jargon-config) [cm]
     (let [ticket-info (tickets/ticket-info cm ticket-id)]
