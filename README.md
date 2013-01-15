@@ -25,7 +25,7 @@ Next, you need to set up ProxyPass entries for the UI:
     ProxyPass /quickshare http://kifshare.example.org:31380 retry=0
     ProxyPassReverse /quickshare http://kifshare.example.org:31380
 
-The entries must be in that order.
+The entries must be in that order. The lack of trailing slashes is important.
 
 Another potential issue is the "DefaultType" setting in /etc/httpd/conf/httpd.conf. If it's set to text/plain, then kifshare's UI will show up as plain text. If it's set to None, then kifshare's UI works as expected. So, set the DefaultType to None in /etc/httpd/conf/httpd.conf, like in the following:
 
