@@ -9,8 +9,7 @@
          multipart-params
          cookies
          session
-         stacktrace
-         file]
+         stacktrace]
         [slingshot.slingshot :only [try+ throw+]])
   (:require [clojure.tools.cli :as cli]
             [clj-jargon.jargon :as jargon]
@@ -27,6 +26,8 @@
 
 (defroutes kifshare-routes
   (GET "/favicon.ico" [] {:status 404 :body "No favicon for you!"})
+
+  (GET "/robots.txt" [] {:status 200 :body  "User-agent: *\nDisallow: /\n"})
   
   (GET "/d/:ticket-id/:filename" [ticket-id filename]
        (controllers/download-file ticket-id filename))
@@ -47,8 +48,7 @@
       wrap-keyword-params
       wrap-nested-params
       wrap-params
-      wrap-stacktrace
-      (wrap-file "resources/public")))
+      wrap-stacktrace))
 
 (defn parse-args
   [args]
