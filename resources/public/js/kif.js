@@ -14,9 +14,9 @@ $(document).ready(function() {
     var last_mod_date = new Date(Number($('#lastmod').text()));
     $('#lastmod').text(last_mod_date.toString());
     
-    $('.clippy-curl').clippy({clippy_path : '/flash/clippy.swf'});
-    $('.clippy-wget').clippy({clippy_path : '/flash/clippy.swf'});
-    $('.clippy-irods').clippy({clippy_path : '/flash/clippy.swf'});
+    $('.clippy-curl').clippy({clippy_path : 'flash/clippy.swf'});
+    $('.clippy-wget').clippy({clippy_path : 'flash/clippy.swf'});
+    $('.clippy-irods').clippy({clippy_path : 'flash/clippy.swf'});
 
     $('table').css("border-bottom", "2px rgb(210,210,210) solid");
     $('table').css("border-left", "1px rgb(210,210,210) solid");
