@@ -9,7 +9,8 @@
          multipart-params
          cookies
          session
-         stacktrace]
+         stacktrace
+         file]
         [slingshot.slingshot :only [try+ throw+]])
   (:require [clojure.tools.cli :as cli]
             [clj-jargon.jargon :as jargon]
@@ -46,7 +47,8 @@
       wrap-keyword-params
       wrap-nested-params
       wrap-params
-      wrap-stacktrace))
+      wrap-stacktrace
+      (wrap-file "resources/public")))
 
 (defn parse-args
   [args]
