@@ -60,7 +60,6 @@
                     :lastmod   (str (.lastModified jfile))
                     :useslimit (str (.getUsesLimit ticket-obj))
                     :remaining (str (- (.getUsesLimit ticket-obj) (.getUsesCount ticket-obj))))]
-    (println (str "TicketInfo:\n" retval))
     (log/debug "Ticket Info:\n" retval)
     retval))
 

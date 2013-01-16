@@ -86,7 +86,7 @@
   (log/warn "Configuration:")
   (doseq [k (keys @props)]
     (when-not (= k "kifshare.irods.password")
-      (println (str k " = " (get @props k))))))
+      (log/warn (str k " = " (get @props k))))))
 
 (defn init []
   (log/debug "entered kifshare.config/init")
