@@ -1,3 +1,9 @@
+function trimURLPath (pathname) {
+    var split_paths = pathname.split("/");
+    var new_path_array = split_paths.slice(0, split_paths.length - 1);
+    return new_path_array.join("/");
+}
+
 function curlableURL() {
     var a = document.createElement('a');
     a.href = document.URL;
@@ -6,9 +12,11 @@ function curlableURL() {
     retval = retval + a.protocol + "//";
     retval = retval + a.hostname;
 
-    if (a.port != 'undefined' && a.port != '80' && a.port != null) {
+    if (a.port !== 'undefined' && a.port !== '80' && a.port !== null && a.port !== '') {
         retval = retval + ":" + a.port;
     }
+
+    retval = retval + trimURLPath(a.pathname);
     
     return retval; 
 }
