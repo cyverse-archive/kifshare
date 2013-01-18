@@ -3,7 +3,8 @@
         [kifshare.common :only [layout]])
   (:require [kifshare.config :as cfg]
             [clostache.parser :as prs]
-            [clojure.tools.logging :as log])
+            [clojure.tools.logging :as log]
+            [cheshire.core :as json])
   (:import [org.apache.commons.io FileUtils]))
 
 (defn clear
@@ -111,28 +112,40 @@
           :id "download_link"} 
       "Download!"]]]))
 
+(defn ui-ticket-info
+  [ticket-info]
+  (assoc ticket-info
+    :wget_template (cfg/wget-flags)
+    :curl_template (cfg/curl-flags)
+    :iget_template (cfg/iget-flags)
+    :url           (cfg/external-url)))
+
 (defn template-map
   [ticket-info]
   (log/debug "entered kifshare.ui-template/template-map")
-  (merge ticket-info {:url (cfg/external-url)}))
+  (html
+   [:span {:id "ticket_info" :style "display: none;"}
+    [:div {:id "ticket_info_map"}
+     (json/generate-string
+      (ui-ticket-info ticket-info))]]))
 
-(defn wget-str
+#_(defn wget-str
   [ticket-info]
   (log/debug "entered kifshare.ui-template/wget-str")
   (prs/render (cfg/wget-flags) (template-map ticket-info)))
 
-(defn curl-str
+#_(defn curl-str
   [ticket-info]
   (log/debug "entered kifshare.ui-template/curl-str")
   (prs/render (cfg/curl-flags) (template-map ticket-info)))
 
-(defn irods-str
+#_(defn irods-str
   [ticket-info]
   (log/debug "entered kifshare.ui-template/irods-str")
   (prs/render (cfg/iget-flags) (template-map ticket-info)))
 
 (defn input-display
-  [id value]
+  [id]
   (log/debug "entered kifshare.ui-template/input-display")
   
   (html
@@ -142,7 +155,7 @@
      :size 70
      :maxlength 500
      :readonly false
-     :value value}]))
+     :value ""}]))
 
 (defn irods-instr
   [ticket-info]
@@ -155,11 +168,10 @@
     
     [:div {:id "clippy-irods-instrs"}
      "sh> "
-     (input-display "code_irods_instr" (irods-str ticket-info))
+     (input-display "code_irods_instr")
      [:span {:title "copy to clipboard"}
       [:div {:id "clippy-irods-wrapper"
-             :class "clippy-irods"}
-       (irods-str ticket-info)]]]]))
+             :class "clippy-irods"}]]]]))
 
 (defn downloader-instr
   [ticket-id ticket-info]
@@ -171,19 +183,17 @@
      "Using wget or curl"]
     [:div {:id "clippy-wget-instrs"}
      "sh> "
-     (input-display "wget_instr" (wget-str ticket-info))
+     (input-display "wget_instr")
      [:span  {:title "copy to clipboard"}
       [:div {:id "clippy-wget-wrapper"
-             :class "clippy-wget"}
-       (wget-str ticket-info)]]]
+             :class "clippy-wget"}]]]
     
     [:div {:id "clippy-curl-instrs"}
      "sh> "
-     (input-display "curl_instr" (curl-str ticket-info))
+     (input-display "curl_instr")
      [:span {:title "copy to clipboard"}
       [:div {:id "clippy-curl-wrapper"
-             :class "clippy-curl"}
-       (curl-str ticket-info)]]]]))
+             :class "clippy-curl"}]]]]))
 
 (defn alt-downloads
   [ticket-id ticket-info]
@@ -203,6 +213,7 @@
   
   (layout
    (html
+    (template-map ticket-info)
     [:div {:id "file-info-wrapper"}
      [:div {:id "file-info-wrapper-inner"}
       (filename ticket-info)
