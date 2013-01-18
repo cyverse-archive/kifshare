@@ -24,10 +24,6 @@
   []
   (get @props "kifshare.app.iget-flags"))
 
-(defn external-url
-  []
-  (get @props "kifshare.app.external-url"))
-
 (defn username
   []
   (or (get @props "kifshare.irods.user")

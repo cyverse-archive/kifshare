@@ -117,8 +117,7 @@
   (assoc ticket-info
     :wget_template (cfg/wget-flags)
     :curl_template (cfg/curl-flags)
-    :iget_template (cfg/iget-flags)
-    :url           (cfg/external-url)))
+    :iget_template (cfg/iget-flags)))
 
 (defn template-map
   [ticket-info]

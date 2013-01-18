@@ -11,8 +11,6 @@ You'll want Leiningen 2 installed as well. See http://leiningen.org for more det
 
 Create a .properties file using docs/sample.properties as a template.
 
-Worth noting is that the "kifshare.app.external-url" option is used when doing redirects. If you have multiple instances of kifshare set up behind HAProxy, then set this value to the URL that HAProxy is listening on.
-
 # Configuring mod_proxy in Apache for kifshare
 
 All downloads flow through the /d/ endpoint in kifshare. So, to proxy download requests to another box, try the following in one of the httpd config files.
