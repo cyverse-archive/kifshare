@@ -220,10 +220,10 @@
       (lastmod ticket-info)
       (clear)
       (filesize ticket-info)
-      (clear)
-      (uses-limit ticket-info)
-      (clear)
-      (remaining-uses ticket-info)]]
+      #_(clear)
+      #_(uses-limit ticket-info)
+      #_(clear)
+      #_(remaining-uses ticket-info)]]
     (clear)
     (download-button ticket-id (:filename ticket-info))
     (clear)
