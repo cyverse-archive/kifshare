@@ -1,0 +1,138 @@
+@outer-bg-color: rgb(240,240,240) none repeat scroll;
+@border: 1px rgb(215,215,215) solid;
+@border-radius: 4px;
+@inner-bg-color: rgb(255,255,255);
+@label-font: "Helvetica Neue", Arial, sans-serif;
+@margin-padding: 5px;
+
+.bordered (@radius: 4px) {
+    border-radius: @radius;
+}
+
+.bordered-solid (@radius: 4px) {
+    .bordered(@radius);
+    border: @border;
+}
+
+.common-margin-padding {
+    margin-bottom: @margin-padding;
+    padding: @margin-padding;
+}
+
+body, label, textarea, select, button {
+    font-family: @label-font;
+}
+
+#page-wrapper {
+    margin-top: (@margin-padding * 2);
+    margin-bottom: (@margin-padding * 2);
+}
+
+#file-info-wrapper {
+    .bordered;
+    .common-margin-padding;
+    background: @outer-bg-color;
+}
+
+#file-info-wrapper-inner {
+    .bordered-solid;
+    background-color: @inner-bg-color;
+}
+
+#err-wrapper {
+    .bordered;
+    .common-margin-padding;
+    background: @outer-bg-color;
+}
+
+#err-wrapper-inner {
+    .bordered-solid;
+    padding-top: (@margin-padding * 4);
+    padding-bottom: (@margin-padding * 4);
+    font-size: 200%;
+    background: white;
+}
+
+
+.label-settings (@float: left, @width: 33%, @text-align: right) {
+    float: @float;
+    width: @width;
+    text-align: @text-align;
+}
+
+#filename { border-bottom: @border; background: @outer-bg-color; }
+#lastmod, #filesize, #remaining, #uses-limit { float: right; width: 66%; }
+#lastmod-label, #filesize-label, #remaining-label, #useslimit-label { .label-settings; }
+#wrapper_filename { text-align: center; }
+
+div#download_link_div {
+    padding-top: (@margin-padding * 4);
+    padding-bottom: (@margin-padding * 4);
+    margin-left: 0px;
+    margin-right: 0px;
+}
+
+#download_link { padding: 0px; margin: 0px; width: 100%; }
+
+#wrapper_irods_avus {
+    .bordered;
+    margin-bottom: (@margin-padding * 4);
+    background: @outer-bg-color;
+    padding: 4px;
+}
+
+#irods_avus_wrapper { padding-right: 3px; padding-left: 3px; }
+#wrapper_irods_avus_inner { .bordered-solid; background: @outer-bg-color; }
+
+#alternative_downloads {
+    background: @outer-bg-color;
+    padding: 4px;
+    .bordered;
+    margin: 0px;
+}
+
+#clippy-irods-instrs, #clippy-wget-instrs, #clippy-curl-instrs {
+    padding-left: 5px;
+    font-family: monospace;
+}
+
+#alternative_downloads_header { font-size: 125%; }
+#alternative_downloads_inner { background: @outer-bg-color; .bordered-solid; }
+#header_irods_instr, #header_downloader_instr { padding-left: 5px; background: @outer-bg-color; }
+#header_irods_instr { border-bottom: @border; }
+#header_downloader_instr { border-top: @border; border-bottom: @border; }
+input { font-size: 100%; font-family: monospace, monospace; }
+
+.ui-toolbar { padding-left: 3px; }
+.ui-bottonset { margin-right: 2px; }
+
+td, th { padding-left: @margin-padding; padding-right: @margin-padding }
+td { background: @inner-bg-color; border-right: @border; border-left: @border; }
+.ui-widget-content, .ui-state-default, .ui-widget-header { background: @outer-bg-color; }
+.ui-widget-header { padding-top: 2px; padding-bottom: 4px; border: 0px; }
+.ui-corner-tl { bordertop-left-radius: 0px; }
+.ui-corner-tr { border-top-right-radius: 0px; }
+.ui-corner-br { border-bottom-right-radius: 0px; }
+.ui-corder-bl { border-bottom-left-radius: 0px; }
+
+code { margin-left: @margin-padding; font-family: monospace, monospace; font-size: 100%; }
+label { text-align: right; }
+h1 { font-size: 200%; padding: 0px; margin: 0px; }
+
+h3 {
+    font-size: 125%;
+    padding-left: @margin-padding;
+    margin: 0px;
+    background: @outer-bg-color;
+}
+
+.css_right { float: right; }
+
+.ui-button {
+    margin-left: 0px;
+    margin-right: -0.1em !important;
+    margin-top: 1px;
+    padding: 0px 6px;
+}
+
+tbody { border-bottom: 1px rgb(210,210,210) solid; }
