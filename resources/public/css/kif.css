@@ -24,6 +24,25 @@ body, label, textarea, select, button
     border-radius: 4px;
 }
 
+#err-wrapper
+{
+    margin-bottom: 5px;
+    padding: 5px;
+    background: rgb(240,240,240);
+    border-radius: 4px;
+}
+
+#err-wrapper-inner
+{
+    border: 1px rgb(215,215,215) solid;
+    border-radius: 4px;
+    text-align: center;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    font-size: 200%;
+    background: #ffffff;
+}
+
 #filename
 {
     border-bottom: 1px rgb(215,215,215) solid;

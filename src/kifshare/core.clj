@@ -29,11 +29,11 @@
 
   (GET "/robots.txt" [] {:status 200 :body  "User-agent: *\nDisallow: /\n"})
   
-  (GET "/d/:ticket-id/:filename" [ticket-id filename]
-       (controllers/download-file ticket-id filename))
+  (GET "/d/:ticket-id/:filename" [ticket-id filename :as request]
+       (controllers/download-file ticket-id filename request))
 
-  (GET "/d/:ticket-id" [ticket-id]
-       (controllers/download-ticket ticket-id))
+  (GET "/d/:ticket-id" [ticket-id :as request]
+       (controllers/download-ticket ticket-id request))
   
   (GET "/:ticket-id" [ticket-id :as request]
        (controllers/get-ticket ticket-id request))

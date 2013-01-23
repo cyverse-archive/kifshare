@@ -1,5 +1,6 @@
 (ns kifshare.errors
   (:use hiccup.core
+        [kifshare.common :only [layout]]
         [ring.util.response :only [status]]
         [clojure.data.json]))
 
@@ -8,23 +9,39 @@
 (def ERR_TICKET_NOT_FOUND "ERR_TICKET_NOT_FOUND")
 (def ERR_TICKET_NOT_PUBLIC "ERR_TICKET_NOT_PUBLIC")
 
-(defn ticket-expired [{:keys [ticket-id expired-date]}]
-  (html [:div {:id "err-ticket-expired"}
-   "Ticket " ticket-id " expired on " expired-date "."]))
+(defn error-html-page
+  [error-msg]
+  (layout
+   (html
+    [:div {:id "err-wrapper"}
+     [:div {:id "err-wrapper-inner"}
+      error-msg]])))
 
-(defn ticket-used-up [{:keys [ticket-id num-uses]}]
-  (html [:div {:id "err-ticket-used-up"}
-   "Ticket " ticket-id " cannot be used anymore. The maximum number of uses is " num-uses "."]))
-
-(defn ticket-not-found [{:keys [ticket-id]}]
-  (html [:div {:id "err-ticket-not-found"}
-    "Ticket " ticket-id " does not exist."]))
+(defn ticket-expired [] (error-html-page "That ticket has expired."))
+(defn ticket-used-up [] (error-html-page "That ticket cannot be used anymore."))
+(defn ticket-not-found [] (error-html-page "That ticket does not exist."))
 
 (defn default-error [{:as err-map}]
   (html
    [:div {:id "err-default"}
     [:pre
      [:code (with-out-str (pprint-json err-map))]]]))
+
+(defn error-html
+  [err-map]
+  (let [err-code (:error_code err-map)]
+    (cond
+     (= err-code ERR_TICKET_NOT_FOUND)
+     {:status 404 :body (ticket-not-found)}
+
+     (= err-code ERR_TICKET_EXPIRED)
+     {:status 410 :body (ticket-expired)}
+
+     (= err-code ERR_TICKET_USED_UP)
+     {:status 410 :body (ticket-used-up)}
+
+     :else
+     {:status 500 :body (default-error err-map)})))
 
 (defn error-response
   [err-map]
