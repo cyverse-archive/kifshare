@@ -41,9 +41,37 @@ Another potential issue is the "DefaultType" setting in /etc/httpd/conf/httpd.co
 
     DefaultType None
 
-# Running kifshare
+# Building Kifshare For Development
 
-If you're working out of a git checkout, then you can run the following:
+You'll build kifshare with Grunt. Grunt, in turn, calls Leiningen when necessary. 
+
+If you're only working on the Clojure portion of the code, then you only need to call this to build the resources directory:
+
+    grunt build-resources
+
+Then you can use Leiningen as you normally would.
+
+If you want to do a build of both the front-end and the clojure code:
+
+    grunt build-all
+
+If you want to clean everything (including resources):
+
+    grunt clean-all
+
+If you only want to clean the resources directory:
+
+    grunt shell:clean_resources
+
+The following commands are also included:
+
+    grunt shell:lein_clean
+    grunt shell:lein_deps
+    grunt shell:lein_uberjar 
+
+# Running Kifshare
+
+If you're working out of a git checkout, then you can run the following once the resources directory is built (see the preceding section):
 
     lein run --config </path/to/config/file>
 
