@@ -8,12 +8,14 @@ A simple web page that allows users to download publicly available files without
 * Leiningen 2 - http://leiningen.org
 * Node.js - http://nodejs.org/
 * Grunt - http://gruntjs.com/
+* LESS - http://lesscss.org/
 
 On OS X, you'll also want homebrew installed to help with getting Node.js and Grunt up and running. It'll help you stay sane. Once homebrew is installed, do the following on the command-line:
 
     brew install node.js
     <add npm to your $PATH as instructed>
     npm install -g grunt
+    npm install -g less
 
 You'll need an iRODS install that's of version 3.1 or later. It doesn't need to live on the same box as kifshare, but kifshare will need to be able to connect to it.
 
