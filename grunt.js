@@ -34,7 +34,7 @@ module.exports = function(grunt) {
       main: {
         files: [
             {src: ["ui/src/js/jquery*.js", "ui/src/js/json2.js"], dest: "resources/public/js/"},
-            {src: ["ui/src/css/*"], dest: "resources/public/css/"},
+            {src: ["ui/src/css/*.css"], dest: "resources/public/css/"},
             {src: ["ui/src/flash/*"], dest: "resources/public/flash/"}
         ]
       }
@@ -72,6 +72,13 @@ module.exports = function(grunt) {
         command: 'rm -rf resources/'
       }
     },
+    less: {
+      build: {
+        files: {
+          "resources/public/css/kif.css" : "ui/src/css/kif.less"
+        }
+      }
+    },
     watch: {
       files: '<config:lint.files>',
       tasks: 'lint qunit'
@@ -104,9 +111,12 @@ module.exports = function(grunt) {
   grunt.registerTask('default', 'lint qunit concat min');
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-shell');
+  grunt.loadNpmTasks('grunt-contrib-less');
+
   grunt.registerTask('make-resources', 'shell:make_js_resources shell:make_css_resources shell:make_flash_resources shell:make_img_resources');
-  grunt.registerTask('build-resources', 'lint make-resources copy min');
-  grunt.registerTask('build-all', 'lint make-resources copy min shell:lein_clean shell:lein_deps shell:lein_uberjar');
+  grunt.registerTask('build-resources', 'lint make-resources less copy min');
+  grunt.registerTask('build-clj', 'shell:lein_clean shell:lein_deps shell:lein_uberjar'); 
+  grunt.registerTask('build-all', 'build-resources build-clj');
   grunt.registerTask('clean-all', 'shell:lein_clean shell:clean_resources');
 
 };
