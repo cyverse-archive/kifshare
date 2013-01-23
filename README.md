@@ -2,12 +2,24 @@
 
 A simple web page that allows users to download publicly available files without an iPlant account.
 
-# Prerequisites
+# Development Prerequisites
+
+* iRODS 3.1 or later - http://irods.org
+* Leiningen 2 - http://leiningen.org
+* Node.js - http://nodejs.org/
+* Grunt - http://gruntjs.com/
+
+On OS X, you'll also want homebrew installed to help with getting Node.js and Grunt up and running. It'll help you stay sane. Once homebrew is installed, do the following on the command-line:
+
+    brew install node.js
+    <add npm to your $PATH as instructed>
+    npm install -g grunt
+
 You'll need an iRODS install that's of version 3.1 or later. It doesn't need to live on the same box as kifshare, but kifshare will need to be able to connect to it.
 
-You'll want Leiningen 2 installed as well. See http://leiningen.org for more details.
+You'll need Leiningen 2 installed as well. See http://leiningen.org for more details.
 
-# Configuring kifshare
+# Configuring Kifshare For Development
 
 Create a .properties file using docs/sample.properties as a template.
 
