@@ -105,6 +105,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-shell');
   grunt.registerTask('make-resources', 'shell:make_js_resources shell:make_css_resources shell:make_flash_resources shell:make_img_resources');
+  grunt.registerTask('build-resources', 'lint make-resources copy min');
   grunt.registerTask('build-all', 'lint make-resources copy min shell:lein_clean shell:lein_deps shell:lein_uberjar');
   grunt.registerTask('clean-all', 'shell:lein_clean shell:clean_resources');
 
