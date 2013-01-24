@@ -35,7 +35,8 @@ module.exports = function(grunt) {
         files: [
             {src: ["ui/src/js/jquery*.js", "ui/src/js/json2.js"], dest: "resources/public/js/"},
             {src: ["ui/src/css/*.css"], dest: "resources/public/css/"},
-            {src: ["ui/src/flash/*"], dest: "resources/public/flash/"}
+            {src: ["ui/src/flash/*"], dest: "resources/public/flash/"},
+            {src: ["ui/src/img/*"], dest: "resources/public/img/"}
         ]
       }
     },

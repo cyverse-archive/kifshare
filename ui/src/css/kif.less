@@ -8,6 +8,7 @@
 @margin-padding: 5px;
 @de-blue: #7AC9D2;
 @de-panel: #EAEAEA;
+@bg-img: url('../img/background.png') repeat-x top center !important;
 
 .bordered {
     border-radius: @border-radius;
@@ -24,7 +25,7 @@
 }
 
 body {
-    background: #FFFFFF;
+    background: @bg-img;
 }
 
 body, label, textarea, select, button {
