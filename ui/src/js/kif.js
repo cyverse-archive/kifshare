@@ -22,24 +22,12 @@ function curlableURL() {
 }
 
 $(document).ready(function() {
-    // $("#irods-avus-data").dataTable({
-    //     "bJQueryUI" : true,
-    //     "sPaginationType" : "full_numbers",
-    //     "aoColumns" : [
-    //         {"sWidth" : "315px"},
-    //         {"sWidth" : "315px"},
-    //         {"sWidth" : "315px"}
-    //     ]
-    // });
-
-    //Object containing key-value pairs that can be used with Mustache.
     var ticket_info = JSON.parse($('#ticket-info-map').text());
     ticket_info.url = curlableURL();
 
     var last_mod_date = new Date(Number($('#lastmod').text()));
     $('#lastmod').text(last_mod_date.toString());
 
-    //Grab the Mustache template strings from the hidden divs.
     var wget_template = ticket_info.wget_template;
     var curl_template = ticket_info.curl_template;
     var iget_template = ticket_info.iget_template;
