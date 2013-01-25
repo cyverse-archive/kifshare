@@ -116,6 +116,7 @@ module.exports = function(grunt) {
 
   grunt.registerTask('make-resources', 'shell:make_js_resources shell:make_css_resources shell:make_flash_resources shell:make_img_resources');
   grunt.registerTask('build-resources', 'lint make-resources less copy min');
+  grunt.registerTask('build-resources-dev', 'lint make-resources less copy');
   grunt.registerTask('build-clj', 'shell:lein_clean shell:lein_deps shell:lein_uberjar'); 
   grunt.registerTask('build-all', 'build-resources build-clj');
   grunt.registerTask('clean-all', 'shell:lein_clean shell:clean_resources');

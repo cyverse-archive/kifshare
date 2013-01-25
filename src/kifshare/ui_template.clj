@@ -1,5 +1,6 @@
 (ns kifshare.ui-template
   (:use hiccup.core
+        [hiccup.page :only [include-css include-js html5]]
         [kifshare.common :only [layout]])
   (:require [kifshare.config :as cfg]
             [clostache.parser :as prs]
@@ -28,89 +29,40 @@
   
   (if (pos? (count metadata))
     (html
-     [:div {:id "wrapper_irods_avus"}
-      [:div {:id "wrapper_irods_avus_inner"} 
-       [:div {:id "irods_avus_header"}
-        [:h3 "Metadata"]]
-       [:table {:id "irods_avus"}
-        [:thead
-         [:tr 
-          [:th "Attribute"] 
-          [:th "Value"] 
-          [:th "Unit"]]]
-        [:tbody
-         (map irods-avu-row metadata)]]]])))
-
-(defn uses-limit
-  [ticket-info]
-  (log/debug "entered kifshare.ui-template/uses-limit")
-  
-  (html
-   [:div {:id "wrapper_useslimit"}
-    [:div {:id "useslimit-label"}
-     "Uses Limit"]
-    [:div {:id "useslimit"} 
-     (:useslimit ticket-info)]]
-   (clear)))
-
-(defn remaining-uses
-  [ticket-info]
-  (log/debug "entered kifshare.ui-template/remaining-uses")
-  
-  (html
-   [:div {:id "wrapper_remaining"}
-    [:div {:id "remaining-label"}
-     "Remaining"]
-    [:div {:id "remaining"}
-     (:remaining ticket-info)]]
-   (clear)))
-
-(defn filename
-  [ticket-info]
-  (log/debug "entered kifshare.ui-template/filename")
-  
-  (html
-   [:div {:id "wrapper_filename"}
-    [:h1 {:id "filename"} 
-     (:filename ticket-info)]]))
+     [:div {:id "irods-avus"} 
+      [:div {:id "irods-avus-header"}
+       [:h2 "Metadata"]]
+      [:table {:id "irods-avus-data"}
+       [:thead
+        [:tr 
+         [:th "Attribute"] 
+         [:th "Value"] 
+         [:th "Unit"]]]
+       [:tbody
+        (map irods-avu-row metadata)]]])))
 
 (defn lastmod
   [ticket-info]
   (log/debug "entered kifshare.ui-template/lastmod")
   
   (html
-   [:div {:id "wrapper_lastmod"}
+   [:div {:id "lastmod-detail"}
     [:div {:id "lastmod-label"} 
      "Last Modified"]
     [:div {:id "lastmod"} 
-     (:lastmod ticket-info)]]
-   (clear)))
+     (:lastmod ticket-info)]]))
 
 (defn filesize
   [ticket-info]
   (log/debug "entered kifshare.ui-template/filesize")
   
   (html
-   [:div {:id "wrapper_filesize"}
-    [:div {:id "filesize-label"} 
+   [:div {:id "size-detail"}
+    [:div {:id "size-label"} 
      "File Size"]
-    [:div {:id "filesize"} 
+    [:div {:id "size"} 
      (FileUtils/byteCountToDisplaySize 
-      (Long/parseLong (:filesize ticket-info)))]]
-   (clear)))
-
-(defn download-button
-  [ticket-id filename]
-  (log/debug "entered kifshare.ui-template/download-button")
-  
-  (html
-   [:div {:id "download_link_div"
-          :class "grid_12"}
-    [:div {:id "wrapper_download_link"
-           :class "grid_4 push_4"}
-     [:a {:href (str "d/" ticket-id "/" filename)
-          :id "download_link"} 
-      "Download!"]]]))
+      (Long/parseLong (:filesize ticket-info)))]]))
 
 (defn ui-ticket-info
   [ticket-info]
@@ -123,25 +75,10 @@
   [ticket-info]
   (log/debug "entered kifshare.ui-template/template-map")
   (html
-   [:span {:id "ticket_info" :style "display: none;"}
-    [:div {:id "ticket_info_map"}
+   [:span {:id "ticket-info" :style "display: none;"}
+    [:div {:id "ticket-info-map"}
      (json/generate-string
       (ui-ticket-info ticket-info))]]))
-
-#_(defn wget-str
-  [ticket-info]
-  (log/debug "entered kifshare.ui-template/wget-str")
-  (prs/render (cfg/wget-flags) (template-map ticket-info)))
-
-#_(defn curl-str
-  [ticket-info]
-  (log/debug "entered kifshare.ui-template/curl-str")
-  (prs/render (cfg/curl-flags) (template-map ticket-info)))
-
-#_(defn irods-str
-  [ticket-info]
-  (log/debug "entered kifshare.ui-template/irods-str")
-  (prs/render (cfg/iget-flags) (template-map ticket-info)))
 
 (defn input-display
   [id]
@@ -161,13 +98,12 @@
   (log/debug "entered kifshare.ui-template/irods-instr")
   
   (html
-   [:div {:id "irods_instructions"}
-    [:div {:id "header_irods_instr"} 
-     "Using the i-commands"]
+   [:div {:id "irods-instructions"}
+    [:div {:id "irods-instructions-header"} 
+     [:h2 "Using the i-commands"]]
     
-    [:div {:id "clippy-irods-instrs"}
-     "sh> "
-     (input-display "code_irods_instr")
+    [:div {:id "clippy-irods-instructions"}
+     (input-display "irods-command-line")
      [:span {:title "copy to clipboard"}
       [:div {:id "clippy-irods-wrapper"
              :class "clippy-irods"}]]]]))
@@ -177,57 +113,68 @@
   (log/debug "entered kifshare.ui-template/downloader-instr")
   
   (html
-   [:div {:id "downloader_instructions"}
-    [:div {:id "header_downloader_instr"} 
+   [:div {:id "downloader-instructions"}
+    [:div {:id "downloader-instructions-header"} 
      "Using wget or curl"]
-    [:div {:id "clippy-wget-instrs"}
-     "sh> "
-     (input-display "wget_instr")
+    [:div {:id "clippy-wget-instructions"}
+     (input-display "wget-command-line")
      [:span  {:title "copy to clipboard"}
       [:div {:id "clippy-wget-wrapper"
              :class "clippy-wget"}]]]
     
-    [:div {:id "clippy-curl-instrs"}
-     "sh> "
-     (input-display "curl_instr")
+    [:div {:id "clippy-curl-instructions"}
+     (input-display "curl-command-line")
      [:span {:title "copy to clipboard"}
       [:div {:id "clippy-curl-wrapper"
              :class "clippy-curl"}]]]]))
 
+(defn menu
+  [ticket-info]
+  (html
+   [:div {:id "menu"}
+    [:ul
+     [:li [:div {:id "logo-container"}
+           [:img {:id "logo" :src "../img/powered_by_iplant_logo.png"}]]]
+     [:li [:div [:h1 {:id "filename"} (:filename ticket-info)]]]
+     [:li [:div {:id "download-container"}
+           [:a {:href (str "d/" (:ticket-id ticket-info) "/" (:filename ticket-info))
+                :id "download-link"}
+            [:div {:id "download-link-area"}
+             "Download!"]]]]]]))
+
+(defn details
+  [ticket-info]
+  [:div {:id "details"}
+   [:a {:name "details-section"}]
+   [:div {:id "details-header"}
+    [:h2 "File And Ticket Details"]]
+   (lastmod ticket-info)
+   (filesize ticket-info)])
+
 (defn alt-downloads
-  [ticket-id ticket-info]
+  [ticket-info]
   (log/debug "entered kifshare.ui-template/alt-downloads")
   
   (html
-   [:div {:id "alternative_downloads_header"} 
-    "Other ways to download this file..."]
-   [:div {:id "alternative_downloads"}
-    [:div {:id "alternative_downloads_inner"}
-     (irods-instr ticket-info)
-     (downloader-instr ticket-id ticket-info)]]))
+   [:div {:id "alt-downloads-header"} 
+    [:h2 "Downloading From The Command-Line"]]
+   [:div {:id "alt-downloads"}
+    (irods-instr ticket-info)
+    (downloader-instr (:ticket-id ticket-info) ticket-info)]))
 
 (defn landing-page
   [ticket-id metadata ticket-info]
   (log/debug "entered kifshare.ui-template/landing-page")
   
-  (layout
-   (html
+  (html
+   [:head
+    [:title (:filename ticket-info)]
+    (map include-css (cfg/css-files))
+    (map include-js (cfg/javascript-files))]
+   [:body
     (template-map ticket-info)
-    [:div {:id "file-info-wrapper"}
-     [:div {:id "file-info-wrapper-inner"}
-      (filename ticket-info)
-      (clear)
-      (lastmod ticket-info)
-      (clear)
-      (filesize ticket-info)
-      #_(clear)
-      #_(uses-limit ticket-info)
-      #_(clear)
-      #_(remaining-uses ticket-info)]]
-    (clear)
-    (download-button ticket-id (:filename ticket-info))
-    (clear)
-    (irods-avu-table metadata)
-    (clear)
-    (alt-downloads ticket-id ticket-info)
-    (clear))))
+    (menu ticket-info)
+    [:div#wrapper {:id "page-wrapper" :class "container_12"}
+     (details ticket-info)
+     (irods-avu-table metadata)
+     (alt-downloads ticket-info)]]))

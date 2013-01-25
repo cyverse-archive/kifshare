@@ -22,19 +22,22 @@ function curlableURL() {
 }
 
 $(document).ready(function() {
-    $("#irods_avus").dataTable({
-	"bJQueryUI" : true,
-	"sPaginationType" : "full_numbers",
-	"aoColumns" : [
+    $("#irods-avus-data").dataTable({
+        "bJQueryUI" : true,
+        "sPaginationType" : "full_numbers",
+        "aoColumns" : [
             {"sWidth" : "315px"},
             {"sWidth" : "315px"},
             {"sWidth" : "315px"}
-	]
+        ]
     });
 
     //Object containing key-value pairs that can be used with Mustache.
-    var ticket_info = JSON.parse($('#ticket_info_map').text());
+    var ticket_info = JSON.parse($('#ticket-info-map').text());
     ticket_info.url = curlableURL();
+
+    var last_mod_date = new Date(Number($('#lastmod').text()));
+    $('#lastmod').text(last_mod_date.toString());
 
     //Grab the Mustache template strings from the hidden divs.
     var wget_template = ticket_info.wget_template;
@@ -45,17 +48,12 @@ $(document).ready(function() {
     var curl_command = _.unescape(Mustache.render(curl_template, ticket_info));
     var iget_command = _.unescape(Mustache.render(iget_template, ticket_info));
     
-    $('#code_irods_instr').val(iget_command);
-    $('#wget_instr').val(wget_command);
-    $('#curl_instr').val(curl_command);
     $('#clippy-irods-wrapper').text(iget_command);
-    $('#clippy-curl-wrapper').text(curl_command);
     $('#clippy-wget-wrapper').text(wget_command);
-
-    $('#download_link').button();
-    
-    var last_mod_date = new Date(Number($('#lastmod').text()));
-    $('#lastmod').text(last_mod_date.toString());
+    $('#clippy-curl-wrapper').text(curl_command);
+    $('#irods-command-line').val(iget_command);
+    $('#curl-command-line').val(curl_command);
+    $('#wget-command-line').val(wget_command);
     
     $('.clippy-curl').clippy({clippy_path : 'flash/clippy.swf'});
     $('.clippy-wget').clippy({clippy_path : 'flash/clippy.swf'});
