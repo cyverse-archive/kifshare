@@ -177,6 +177,12 @@
     (downloader-instr (:ticket-id ticket-info) ticket-info)
     (section-spacer)]))
 
+(defn footer
+  []
+  (html
+   [:div {:id "footer"}
+    [:p "The iPlant Collaborative is funded by a grant from the National Science Foundation Plant Science Cyberinfrastructure Collaborative (#DBI-0735191)."]]))
+
 (defn landing-page
   [ticket-id metadata ticket-info]
   (log/debug "entered kifshare.ui-template/landing-page")
@@ -192,4 +198,5 @@
     [:div#wrapper {:id "page-wrapper" :class "container_12"}
      (details ticket-info)
      (alt-downloads ticket-info)
-     (irods-avu-table metadata)]]))
+     (irods-avu-table metadata)
+     (footer)]]))
