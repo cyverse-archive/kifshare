@@ -13,6 +13,8 @@
   (log/debug "entered kifshare.ui-template/clear")
   (html [:div {:class "clear"}]))
 
+(defn section-spacer [] (html [:div {:class "section-spacer"}]))
+
 (defn irods-avu-row
   [mmap]
   (log/debug "entered kifshare.ui-template/irods-avu-row")
@@ -39,7 +41,8 @@
          [:th "Value"] 
          [:th "Unit"]]]
        [:tbody
-        (map irods-avu-row metadata)]]])))
+        (map irods-avu-row metadata)]]
+      (section-spacer)])))
 
 (defn lastmod
   [ticket-info]
@@ -48,9 +51,9 @@
   (html
    [:div {:id "lastmod-detail"}
     [:div {:id "lastmod-label"} 
-     "Last Modified"]
+     [:p "Last Modified:"]]
     [:div {:id "lastmod"} 
-     (:lastmod ticket-info)]]))
+     [:p (:lastmod ticket-info)]]]))
 
 (defn filesize
   [ticket-info]
@@ -59,10 +62,10 @@
   (html
    [:div {:id "size-detail"}
     [:div {:id "size-label"} 
-     "File Size"]
+     [:p "File Size:"]]
     [:div {:id "size"} 
-     (FileUtils/byteCountToDisplaySize 
-      (Long/parseLong (:filesize ticket-info)))]]))
+     [:p (FileUtils/byteCountToDisplaySize 
+          (Long/parseLong (:filesize ticket-info)))]]]))
 
 (defn ui-ticket-info
   [ticket-info]
@@ -99,8 +102,8 @@
   
   (html
    [:div {:id "irods-instructions"}
-    [:div {:id "irods-instructions-header"} 
-     [:h2 "Using the i-commands"]]
+    [:div {:id "irods-instructions-label"} 
+     [:h2 "iRODS icommands"]]
     
     [:div {:id "clippy-irods-instructions"}
      (input-display "irods-command-line")
@@ -113,15 +116,18 @@
   (log/debug "entered kifshare.ui-template/downloader-instr")
   
   (html
-   [:div {:id "downloader-instructions"}
-    [:div {:id "downloader-instructions-header"} 
-     "Using wget or curl"]
+   [:div {:id "wget-instructions"}
+    [:div {:id "wget-instructions-label"} 
+     [:p "Wget"]]
     [:div {:id "clippy-wget-instructions"}
      (input-display "wget-command-line")
      [:span  {:title "copy to clipboard"}
       [:div {:id "clippy-wget-wrapper"
-             :class "clippy-wget"}]]]
-    
+             :class "clippy-wget"}]]]]
+
+   [:div {:id "curl-instructions"}
+    [:div {:id "curl-instructions-label"} 
+     [:p "cURL"]]
     [:div {:id "clippy-curl-instructions"}
      (input-display "curl-command-line")
      [:span {:title "copy to clipboard"}
@@ -147,9 +153,10 @@
   [:div {:id "details"}
    [:a {:name "details-section"}]
    [:div {:id "details-header"}
-    [:h2 "File And Ticket Details"]]
+    [:h2 "File Details"]]
    (lastmod ticket-info)
-   (filesize ticket-info)])
+   (filesize ticket-info)
+   (section-spacer)])
 
 (defn alt-downloads
   [ticket-info]
@@ -157,10 +164,11 @@
   
   (html
    [:div {:id "alt-downloads-header"} 
-    [:h2 "Downloading From The Command-Line"]]
+    [:h2 "Downloading Via Command-Line"]]
    [:div {:id "alt-downloads"}
     (irods-instr ticket-info)
-    (downloader-instr (:ticket-id ticket-info) ticket-info)]))
+    (downloader-instr (:ticket-id ticket-info) ticket-info)
+    (section-spacer)]))
 
 (defn landing-page
   [ticket-id metadata ticket-info]
@@ -176,5 +184,5 @@
     (menu ticket-info)
     [:div#wrapper {:id "page-wrapper" :class "container_12"}
      (details ticket-info)
-     (irods-avu-table metadata)
-     (alt-downloads ticket-info)]]))
+     (alt-downloads ticket-info)
+     (irods-avu-table metadata)]]))

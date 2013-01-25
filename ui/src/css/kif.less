@@ -1,16 +1,17 @@
 @import-once "elements.less";
 
 //Menu and body
-@menu-color: #446600;
+@menu-color: #DAF5F8;
 @menu-width: 100%;
 @menu-height: 50px;
-@menu-text-color: #DB6619;
+@menu-text-color: black;
 @menu-position: fixed;
 @img-width: 250px;
 @img-height: 50px;
 @download-text-color: #000000;
-@download-button-color: #DB6619;
-@bg-color: #C4BD8F;
+@download-button-color-start: #6AC8D2;
+@download-button-color-stop: #DCF1F3;
+@bg-color: white;
 
 body { background: @bg-color; }
 
@@ -56,19 +57,28 @@ body { background: @bg-color; }
                     text-decoration: none;
                     #download-link-area {
                         &:hover {
-                            background: darken(@download-button-color, 10%);
+                            .gradient(
+                                lighten(@download-button-color-start, 10%),
+                                lighten(@download-button-color-start, 10%),
+                                lighten(@download-button-color-stop, 10%),
+                            );
                         };
                         &:active {
                             .inner-shadow(2px, 4px, 6px, 0.5);
                         };
                         display: block;
-                        background: @download-button-color;
+                        .gradient(
+                            @download-button-color-start,
+                            @download-button-color-start,
+                            @download-button-color-stop
+                        );
+                        //background: @download-button-color;
                         color: @download-text-color;
                         .bordered(
-                            darken(@download-button-color, 33%), 
-                            darken(@download-button-color, 33%), 
-                            darken(@download-button-color, 33%), 
-                            darken(@download-button-color, 33%)
+                            darken(@download-button-color-start, 33%), 
+                            darken(@download-button-color-start, 33%), 
+                            darken(@download-button-color-start, 33%), 
+                            darken(@download-button-color-start, 33%)
                         );
                         .rounded(10px);
                         text-align: center;
@@ -99,10 +109,21 @@ body { background: @bg-color; }
 
 
 //Details section
-@header-text-color: #DB6619;
+@header-text-color: #4199A9;
+@detail-label-width: 25%;
+@detail-content-width: (100% - @detail-label-width);
+@clippy-width: 14px;
+@command-line-width: (@detail-content-width - @clippy-width);
 
 #details {
     margin-top: 75px;
+}
+
+.section-spacer {
+    float: left;
+    display: block;
+    width: 100%;
+    height: 20px;
 }
 
 .header-style () {
@@ -116,150 +137,134 @@ body { background: @bg-color; }
     }  
 }
 
+.detail-style () {
+    font-size: 125%;
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    color: black;
+}
+
+.detail-label () {
+    float: left;
+    width: @detail-label-width;
+    p {
+        text-align: left;
+        padding-right: 10px;    
+    }
+}
+
+.detail-content () {
+    float: left;
+    width: @detail-content-width;
+    p {
+        text-align: left;
+        padding-right: 10px;
+    }
+}
+
 #details-header { .header-style; }
 #irods-avus-header { .header-style; }
 #alt-downloads-header { .header-style; }
 
-// @outer-bg-color: #5B5C5D;
-// @border: 1px rgb(215,215,215) solid;
-// @border-radius: 0px;
-// @inner-bg-color: rgb(255,255,255);
-// @label-font: "Helvetica Neue", Arial, sans-serif;
-// @margin-padding: 5px;
-// @de-blue: #7AC9D2;
-// @de-panel: #EAEAEA;
-// @bg-img: url('../img/background.png') repeat-x top center !important;
+#lastmod-label {
+    .detail-style;
+    .detail-label;
+}
 
-// .bordered {
-//     border-radius: @border-radius;
-// }
+#lastmod {
+    .detail-style;
+    .detail-content;
+}
 
-// .bordered-solid {
-//     .bordered;
-//     border: @border;
-// }
+#size-label {
+    .detail-style;
+    .detail-label;
+}
 
-// .common-margin-padding {
-//     margin-bottom: @margin-padding;
-//     padding: @margin-padding;
-// }
+#size {
+    .detail-style;
+    .detail-content;
+}
 
-// body {
-//     background: @bg-img;
-// }
+#irods-instructions-label {
+    .detail-style;
+    .detail-label;
+}
 
-// body, label, textarea, select, button {
-//     font-family: @label-font;
-// }
+#irods-command-line {
+    .detail-style;
+    .detail-content;
+    width: @command-line-width;
+}
 
-// #page-wrapper {
-//     margin-top: (@margin-padding * 2);
-//     margin-bottom: (@margin-padding * 2);
-// }
+#wget-instructions-label {
+    .detail-style;
+    .detail-label;
+}
 
-// #wrapper_filename { text-align: center; }
+#wget-command-line {
+    .detail-style;
+    .detail-content;
+    width: @command-line-width;
+}
 
-// #file-info-wrapper {
-//     .bordered;
-//     .common-margin-padding;
-//     background: @outer-bg-color;
-// }
+#curl-instructions-label {
+    .detail-style;
+    .detail-label;
+}
 
-// #file-info-wrapper-inner {
-//     .bordered-solid;
-//     background-color: @inner-bg-color;
-// }
+#curl-command-line {
+    .detail-style;
+    .detail-content;
+    width: @command-line-width;
+}
 
-// #err-wrapper {
-//     .bordered;
-//     .common-margin-padding;
-//     background: @outer-bg-color;
-// }
+#clippy-wget-wrapper, #clippy-curl-wrapper, #clippy-irods-wrapper {
+    .detail-style;
+    .detail-content;
+    width: @clippy-width;
+}
 
-// #err-wrapper-inner {
-//     .bordered-solid;
-//     text-align: center;
-//     padding-top: (@margin-padding * 4);
-//     padding-bottom: (@margin-padding * 4);
-//     font-size: 200%;
-//     background: white;
-// }
+//Metadata table
+@table-border-color: darken(@bg-color, 10%);
+@table-border: 1px solid @table-border-color;
+@table-spacing: 5px;
+@table-header-font: "Helvetica Neue", Arial, sans-serif;
+@table-cell-height: 30px;
 
+#irods-avus {
+    table {
+        .bordered(
+            @table-border-color, 
+            @table-border-color, 
+            @table-border-color, 
+            @table-border-color
+        );
 
-// .label-settings (@float: left, @width: 33%, @text-align: right) {
-//     float: @float;
-//     width: @width;
-//     text-align: @text-align;
-// }
+        width: 100%;
+        margin-top: 5px;
+        margin-bottom: (@table-spacing * 4);
+        background: @bg-color;
+        padding: 4px;
+        border-collapse: collapse;
+        table-layout: fixed;
 
-// #filename { border-bottom: @border; background: @de-panel; }
-// #lastmod, #filesize, #remaining, #uses-limit { float: right; width: 66%; }
-// #lastmod-label, #filesize-label, #remaining-label, #useslimit-label { .label-settings; }
+        tr:hover {
+            background: darken(@bg-color, 10%);
+        }
 
-// div#download_link_div {
-//     padding-top: (@margin-padding * 4);
-//     padding-bottom: (@margin-padding * 4);
-//     margin-left: 0px;
-//     margin-right: 0px;
-// }
+        td, th { 
+            padding-left: @table-spacing; 
+            padding-right: 5px;
+            border: @table-border;
+            text-align: center;
+            width: 33%;
+            height: @table-cell-height;
+        }
 
-
-
-// #wrapper_irods_avus {
-//     .bordered;
-//     margin-bottom: (@margin-padding * 4);
-//     background: @outer-bg-color;
-//     padding: 4px;
-// }
-
-// #wrapper_irods_avus_inner { .bordered-solid; background: @de-panel; }
-// #irods_avus_wrapper { padding-left: 3px; padding-right: 3px; }
-
-// #alternative_downloads {
-//     background: @outer-bg-color;
-//     padding: 4px;
-//     .bordered;
-//     margin: 0px;
-// }
-
-// #clippy-irods-instrs, #clippy-wget-instrs, #clippy-curl-instrs {
-//     padding-left: 5px;
-//     font-family: monospace;
-// }
-
-// #alternative_downloads_header { font-size: 125%; }
-// #alternative_downloads_inner { background: @de-panel; .bordered-solid; }
-// #header_irods_instr, #header_downloader_instr { padding-left: 5px; background: @de-panel; .bordered; }
-// irods_avus_header { background: @de-panel; }
-// input { font-size: 100%; font-family: monospace, monospace; }
-
-// //.ui-toolbar { padding-left: 3px; }
-
-@table-border: 1px rgb(215,215,215) solid;
-.ui-buttonset { margin-right: 3px; }
-td, th { padding-left: 5px; padding-right: 5px; }
-td { background: @bg-color; border-right: @table-border; border-left: @table-border; }
-.ui-widget-content, .ui-state-default, .ui-widget-header { background: @bg-color; }
-.ui-widget-header { padding-top: 2px; padding-bottom: 4px; border: 0px; }
-
-
-// code { margin-left: @margin-padding; font-family: monospace, monospace; font-size: 100%; }
-// label { text-align: right; }
-// h1 { font-size: 200%; padding: 0px; margin: 0px; .bordered; }
-
-// h3 {
-//     font-size: 125%;
-//     padding-left: 3px;
-//     margin: 0px;
-// }
-
-// .css_right { float: right; }
-
-// .ui-button {
-//     margin-left: 0px;
-//     margin-right: -0.1em !important;
-//     margin-top: 1px;
-//     padding: 0px 6px;
-// }
-
-// tbody { border-bottom: 1px rgb(210,210,210) solid; }
+        th {
+            font-family: @table-header-font;
+            font-weight: bold;
+            background: darken(@bg-color, 25%);
+        }
+    }
+}

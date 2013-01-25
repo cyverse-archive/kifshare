@@ -22,15 +22,15 @@ function curlableURL() {
 }
 
 $(document).ready(function() {
-    $("#irods-avus-data").dataTable({
-        "bJQueryUI" : true,
-        "sPaginationType" : "full_numbers",
-        "aoColumns" : [
-            {"sWidth" : "315px"},
-            {"sWidth" : "315px"},
-            {"sWidth" : "315px"}
-        ]
-    });
+    // $("#irods-avus-data").dataTable({
+    //     "bJQueryUI" : true,
+    //     "sPaginationType" : "full_numbers",
+    //     "aoColumns" : [
+    //         {"sWidth" : "315px"},
+    //         {"sWidth" : "315px"},
+    //         {"sWidth" : "315px"}
+    //     ]
+    // });
 
     //Object containing key-value pairs that can be used with Mustache.
     var ticket_info = JSON.parse($('#ticket-info-map').text());
@@ -59,8 +59,8 @@ $(document).ready(function() {
     $('.clippy-wget').clippy({clippy_path : 'flash/clippy.swf'});
     $('.clippy-irods').clippy({clippy_path : 'flash/clippy.swf'});
 
-    $('table').css("border-bottom", "2px rgb(210,210,210) solid");
-    $('table').css("border-left", "1px rgb(210,210,210) solid");
-    $('table').css("border-right", "1px rgb(210,210,210) solid");
-    $('table').css("border-top", "1px rgb(210,210,210) solid");
+    //$('table').css("border-bottom", "2px rgb(210,210,210) solid");
+    //$('table').css("border-left", "1px rgb(210,210,210) solid");
+    //$('table').css("border-right", "1px rgb(210,210,210) solid");
+    //$('table').css("border-top", "1px rgb(210,210,210) solid");
 });
