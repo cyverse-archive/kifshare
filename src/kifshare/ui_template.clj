@@ -88,13 +88,14 @@
   (log/debug "entered kifshare.ui-template/input-display")
   
   (html
-   [:input
-    {:id id
-     :type "text"
-     :size 70
-     :maxlength 500
-     :readonly false
-     :value ""}]))
+   [:div {:id id}]
+   #_[:input
+      {:id id
+       :type "text"
+       :size 70
+       :maxlength 500
+       :readonly false
+       :value ""}]))
 
 (defn irods-instr
   [ticket-info]
@@ -108,8 +109,10 @@
     [:div {:id "clippy-irods-instructions"}
      (input-display "irods-command-line")
      [:span {:title "copy to clipboard"}
-      [:div {:id "clippy-irods-wrapper"
-             :class "clippy-irods"}]]]]))
+      [:button {:id "clippy-irods-wrapper"
+                :class "clippy-irods"
+                :title "Copy"}
+       "Copy"]]]]))
 
 (defn downloader-instr
   [ticket-id ticket-info]
@@ -122,8 +125,10 @@
     [:div {:id "clippy-wget-instructions"}
      (input-display "wget-command-line")
      [:span  {:title "copy to clipboard"}
-      [:div {:id "clippy-wget-wrapper"
-             :class "clippy-wget"}]]]]
+      [:button {:id "clippy-wget-wrapper"
+                :class "clippy-wget"
+                :title "Copy"}
+       "Copy"]]]]
 
    [:div {:id "curl-instructions"}
     [:div {:id "curl-instructions-label"} 
@@ -131,8 +136,10 @@
     [:div {:id "clippy-curl-instructions"}
      (input-display "curl-command-line")
      [:span {:title "copy to clipboard"}
-      [:div {:id "clippy-curl-wrapper"
-             :class "clippy-curl"}]]]]))
+      [:button {:id "clippy-curl-wrapper"
+                :class "clippy-curl"
+                :title "Copy"}
+       "Copy"]]]]))
 
 (defn menu
   [ticket-info]
@@ -164,7 +171,7 @@
   
   (html
    [:div {:id "alt-downloads-header"} 
-    [:h2 "Downloading Via Command-Line"]]
+    [:h2 "Downloading via Command-Line"]]
    [:div {:id "alt-downloads"}
     (irods-instr ticket-info)
     (downloader-instr (:ticket-id ticket-info) ticket-info)

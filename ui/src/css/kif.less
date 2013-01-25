@@ -112,7 +112,7 @@ body { background: @bg-color; }
 @header-text-color: #4199A9;
 @detail-label-width: 25%;
 @detail-content-width: (100% - @detail-label-width);
-@clippy-width: 14px;
+@clippy-width: 10%;
 @command-line-width: (@detail-content-width - @clippy-width);
 
 #details {
@@ -140,6 +140,7 @@ body { background: @bg-color; }
 .detail-style () {
     font-size: 125%;
     font-family: "Helvetica Neue", Arial, sans-serif;
+    height: 30px;
     color: black;
 }
 
@@ -165,63 +166,64 @@ body { background: @bg-color; }
 #irods-avus-header { .header-style; }
 #alt-downloads-header { .header-style; }
 
-#lastmod-label {
-    .detail-style;
-    .detail-label;
-}
-
-#lastmod {
-    .detail-style;
-    .detail-content;
-}
-
-#size-label {
-    .detail-style;
-    .detail-label;
-}
-
-#size {
-    .detail-style;
-    .detail-content;
-}
-
-#irods-instructions-label {
-    .detail-style;
-    .detail-label;
-}
-
-#irods-command-line {
-    .detail-style;
-    .detail-content;
-    width: @command-line-width;
-}
-
-#wget-instructions-label {
-    .detail-style;
-    .detail-label;
-}
-
-#wget-command-line {
-    .detail-style;
-    .detail-content;
-    width: @command-line-width;
-}
-
+#lastmod-label, 
+#size-label, 
+#irods-instructions-label, 
+#wget-instructions-label, 
 #curl-instructions-label {
     .detail-style;
     .detail-label;
 }
 
-#curl-command-line {
+#lastmod, #size {
     .detail-style;
     .detail-content;
+}
+
+#irods-command-line, #wget-command-line, #curl-command-line {
+    .detail-style;
+    .detail-content;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
     width: @command-line-width;
 }
 
 #clippy-wget-wrapper, #clippy-curl-wrapper, #clippy-irods-wrapper {
     .detail-style;
     .detail-content;
+    margin-top: 2px;
     width: @clippy-width;
+    background-color: @download-button-color-start;
+    color: @download-text-color;
+    text-align: center;
+
+    .bordered(
+        darken(@download-button-color-start, 33%), 
+        darken(@download-button-color-start, 33%), 
+        darken(@download-button-color-start, 33%), 
+        darken(@download-button-color-start, 33%)
+    );
+
+    .gradient(
+        @download-button-color-start,
+        @download-button-color-start,
+        @download-button-color-stop
+    );
+
+    .rounded(10px);
+
+    &.zeroclipboard-is-hover {
+        .gradient(
+            lighten(@download-button-color-start, 10%),
+            lighten(@download-button-color-start, 10%),
+            lighten(@download-button-color-stop, 10%),
+        );
+    }
+
+    &.zeroclipboard-is-active {
+        .inner-shadow(2px, 4px, 6px, 0.5);
+    }
 }
 
 //Metadata table

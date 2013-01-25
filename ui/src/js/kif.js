@@ -47,20 +47,16 @@ $(document).ready(function() {
     var wget_command = _.unescape(Mustache.render(wget_template, ticket_info));
     var curl_command = _.unescape(Mustache.render(curl_template, ticket_info));
     var iget_command = _.unescape(Mustache.render(iget_template, ticket_info));
-    
-    $('#clippy-irods-wrapper').text(iget_command);
-    $('#clippy-wget-wrapper').text(wget_command);
-    $('#clippy-curl-wrapper').text(curl_command);
-    $('#irods-command-line').val(iget_command);
-    $('#curl-command-line').val(curl_command);
-    $('#wget-command-line').val(wget_command);
-    
-    $('.clippy-curl').clippy({clippy_path : 'flash/clippy.swf'});
-    $('.clippy-wget').clippy({clippy_path : 'flash/clippy.swf'});
-    $('.clippy-irods').clippy({clippy_path : 'flash/clippy.swf'});
 
-    //$('table').css("border-bottom", "2px rgb(210,210,210) solid");
-    //$('table').css("border-left", "1px rgb(210,210,210) solid");
-    //$('table').css("border-right", "1px rgb(210,210,210) solid");
-    //$('table').css("border-top", "1px rgb(210,210,210) solid");
+    $('#clippy-irods-wrapper').attr('data-clipboard-target', 'irods-command-line');
+    $('#clippy-wget-wrapper').attr('data-clipboard-target', 'wget-command-line' );
+    $('#clippy-curl-wrapper').attr('data-clipboard-target', 'curl-command-line');
+
+    $('#irods-command-line').text(iget_command);
+    $('#curl-command-line').text(curl_command);
+    $('#wget-command-line').text(wget_command);
+
+    var irods_clip = new ZeroClipboard($('#clippy-irods-wrapper'), { moviePath: "flash/ZeroClipboard.swf"});
+    var curl_clip = new ZeroClipboard($('#clippy-curl-wrapper'), { moviePath: "flash/ZeroClipboard.swf"});
+    var wget_clip = new ZeroClipboard($('#clippy-wget-wrapper'), { moviePath: "flash/ZeroClipboard.swf"});
 });

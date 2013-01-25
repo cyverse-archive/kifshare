@@ -33,7 +33,7 @@ module.exports = function(grunt) {
     copy: {
       main: {
         files: [
-            {src: ["ui/src/js/jquery*.js", "ui/src/js/json2.js"], dest: "resources/public/js/"},
+            {src: ["ui/src/js/jquery*.js", "ui/src/js/json2.js", "ui/src/js/ZeroClipboard*.js"], dest: "resources/public/js/"},
             {src: ["ui/src/css/*.css"], dest: "resources/public/css/"},
             {src: ["ui/src/flash/*"], dest: "resources/public/flash/"},
             {src: ["ui/src/img/*"], dest: "resources/public/img/"}
@@ -102,7 +102,8 @@ module.exports = function(grunt) {
         jQuery: true,
         $:true,
         Mustache: true,
-        _: true
+        _: true,
+        ZeroClipboard: true
       }
     },
     uglify: {}
