@@ -145,7 +145,7 @@
    [:div {:id "menu"}
     [:ul
      [:li [:div {:id "logo-container"}
-           [:img {:id "logo" :src "img/powered_by_iplant_logo.png"}]]]
+           [:img {:id "logo" :src "img/iplant-logo-small.png"}]]]
      [:li [:div [:h1 {:id "filename"} (:filename ticket-info)]]]
      [:li [:div {:id "download-container"}
            [:a {:href (str "d/" (:ticket-id ticket-info) "/" (:filename ticket-info))
