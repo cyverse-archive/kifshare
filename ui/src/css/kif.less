@@ -114,6 +114,11 @@ body { background: @bg-color; }
 @detail-content-width: (100% - @detail-label-width);
 @clippy-width: 10%;
 @command-line-width: (@detail-content-width - @clippy-width);
+@command-line-height: 30px;
+@command-line-top-margin: 3px;
+@copy-default: #EEEEEE;
+@copy-bw-start: 210;
+@copy-bw-stop: 230;
 
 #details {
     margin-top: 75px;
@@ -180,19 +185,24 @@ body { background: @bg-color; }
     .detail-content;
 }
 
-#irods-command-line, #wget-command-line, #curl-command-line {
-    .detail-style;
-    .detail-content;
+.ellipsis () {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+}
+
+#irods-command-line, #wget-command-line, #curl-command-line {
+    .detail-style;
+    .detail-content;
+    margin-top: @command-line-top-margin;
     width: @command-line-width;
+    height: @command-line-height;
 }
 
 #clippy-wget-wrapper, #clippy-curl-wrapper, #clippy-irods-wrapper {
     .detail-style;
     .detail-content;
-    margin-top: 2px;
+    margin-top: @command-line-top-margin;
     width: @clippy-width;
     background-color: @download-button-color-start;
     color: @download-text-color;
@@ -205,20 +215,25 @@ body { background: @bg-color; }
         darken(@download-button-color-start, 33%)
     );
 
-    .gradient(
-        @download-button-color-start,
-        @download-button-color-start,
-        @download-button-color-stop
+    .bw-gradient(
+        @copy-default,
+        @copy-bw-start,
+        @copy-bw-stop
     );
 
-    .rounded(10px);
+    .border-radius(10px, 10px, 0px, 0px);
 
     &.zeroclipboard-is-hover {
-        .gradient(
-            lighten(@download-button-color-start, 10%),
-            lighten(@download-button-color-start, 10%),
-            lighten(@download-button-color-stop, 10%),
+        .bw-gradient(
+            lighten(@copy-default, 10%),
+            (@copy-bw-start + (@copy-bw-start/10)),
+            (@copy-bw-stop + (@copy-bw-stop/10))
         );
+        // .gradient(
+        //     lighten(@download-button-color-start, 10%),
+        //     lighten(@download-button-color-start, 10%),
+        //     lighten(@download-button-color-stop, 10%),
+        // );
     }
 
     &.zeroclipboard-is-active {

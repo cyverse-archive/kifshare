@@ -40,9 +40,9 @@ $(document).ready(function() {
     $('#clippy-wget-wrapper').attr('data-clipboard-target', 'wget-command-line' );
     $('#clippy-curl-wrapper').attr('data-clipboard-target', 'curl-command-line');
 
-    $('#irods-command-line').text(iget_command);
-    $('#curl-command-line').text(curl_command);
-    $('#wget-command-line').text(wget_command);
+    $('#irods-command-line').val(iget_command);
+    $('#curl-command-line').val(curl_command);
+    $('#wget-command-line').val(wget_command);
 
     var irods_clip = new ZeroClipboard($('#clippy-irods-wrapper'), { moviePath: "flash/ZeroClipboard.swf"});
     var curl_clip = new ZeroClipboard($('#clippy-curl-wrapper'), { moviePath: "flash/ZeroClipboard.swf"});

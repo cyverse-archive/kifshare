@@ -88,14 +88,12 @@
   (log/debug "entered kifshare.ui-template/input-display")
   
   (html
-   [:div {:id id}]
-   #_[:input
-      {:id id
-       :type "text"
-       :size 70
-       :maxlength 500
-       :readonly false
-       :value ""}]))
+   #_[:div {:id id}]
+   [:input
+    {:id id
+     :type "text"
+     :readonly false
+     :value ""}]))
 
 (defn irods-instr
   [ticket-info]
