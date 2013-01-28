@@ -14,12 +14,21 @@ On OS X, you'll also want homebrew installed to help with getting Node.js and Gr
 
     brew install node.js
     <add npm to your $PATH as instructed>
-    npm install -g grunt
-    npm install -g less
 
 You'll need an iRODS install that's of version 3.1 or later. It doesn't need to live on the same box as kifshare, but kifshare will need to be able to connect to it.
 
 You'll need Leiningen 2 installed as well. See http://leiningen.org for more details.
+
+Once all of the above is downloaded, installed, and configured, go into the projects top directory (the one containing package.json) and run the following:
+
+    npm install
+
+That should download and install the development dependencies. If you have trouble running grunt or lesscss after this, try the following:
+
+    npm install -g grunt
+    npm install -g less
+
+Again, only do that if the bare 'npm install' doesn't work.
 
 # Configuring Kifshare For Development
 
