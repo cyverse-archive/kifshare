@@ -1,0 +1,47 @@
+@import-once "elements.less";
+@import-once "kif-common";
+
+//Metadata table
+@table-border-color: darken(@bg-color, 10%);
+@table-border: 1px solid @table-border-color;
+@table-spacing: 5px;
+@table-header-font: "Helvetica Neue", Arial, sans-serif;
+@table-cell-height: 30px;
+
+#irods-avus {
+    table {
+        .bordered(
+            @table-border-color, 
+            @table-border-color, 
+            @table-border-color, 
+            @table-border-color
+        );
+
+        width: 100%;
+        margin-top: 5px;
+        margin-bottom: (@table-spacing * 4);
+        background: @bg-color;
+        padding: 4px;
+        border-collapse: collapse;
+        table-layout: fixed;
+
+        tr:hover {
+            background: darken(@bg-color, 10%);
+        }
+
+        td, th { 
+            padding-left: @table-spacing; 
+            padding-right: 5px;
+            border: @table-border;
+            text-align: center;
+            width: 33%;
+            height: @table-cell-height;
+        }
+
+        th {
+            font-family: @table-header-font;
+            font-weight: bold;
+            background: darken(@bg-color, 25%);
+        }
+    }
+}
