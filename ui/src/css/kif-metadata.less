@@ -2,13 +2,18 @@
 @import-once "kif-common";
 
 //Metadata table
-@table-border-color: darken(@bg-color, 10%);
-@table-border: 1px solid @table-border-color;
-@table-spacing: 5px;
-@table-header-font: "Helvetica Neue", Arial, sans-serif;
-@table-cell-height: 30px;
-
 #irods-avus {
+    @table-border-color: darken(@bg-color, 10%);
+    @table-border: 1px solid @table-border-color;
+    @table-spacing: 5px;
+    @table-header-font: "Helvetica Neue", Arial, sans-serif;
+    @table-cell-height: 30px;
+    @table-width: 100%;
+    @table-margin-top: 5px;
+    @table-padding: 4px;
+    @table-data-width: 33%;
+    @table-padding-right: 5px;
+
     table {
         .bordered(
             @table-border-color, 
@@ -17,11 +22,11 @@
             @table-border-color
         );
 
-        width: 100%;
-        margin-top: 5px;
+        width: @table-width;
+        margin-top: @table-margin-top;
         margin-bottom: (@table-spacing * 4);
         background: @bg-color;
-        padding: 4px;
+        padding: @table-padding;
         border-collapse: collapse;
         table-layout: fixed;
 
@@ -31,10 +36,10 @@
 
         td, th { 
             padding-left: @table-spacing; 
-            padding-right: 5px;
+            padding-right: @table-padding-right;
             border: @table-border;
             text-align: center;
-            width: 33%;
+            width: @table-data-width;
             height: @table-cell-height;
         }
 

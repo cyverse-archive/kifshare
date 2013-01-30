@@ -13,11 +13,13 @@
 @copy-default: #EEEEEE;
 @copy-bw-start: 210;
 @copy-bw-stop: 230;
+@detail-font: "Helvetica Neue", Arial, sans-serif;
 
 #details {
     margin-top: 75px;
 }
 
+//Provides a little extra space between sections.
 .section-spacer {
     float: left;
     display: block;
@@ -25,20 +27,21 @@
     height: 20px;
 }
 
+//Mixin that styles the Headers for the different sections.
 .header-style () {
     margin-top: 25px;
     border-bottom: 1px solid darken(@bg-color, 20%);
 
     h2 {
         font-size: 200%;
-        font-family: "Helvetica Neue", Arial, sans-serif; 
+        font-family: @detail-font; 
         color: @header-text-color;    
     }  
 }
 
 .detail-style () {
     font-size: 125%;
-    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-family: @detail-font;
     height: 30px;
     color: black;
 }
@@ -61,13 +64,13 @@
     }
 }
 
+//Styling for the File Details section.
 #details-header { .header-style; }
 #irods-avus-header { .header-style; }
 #alt-downloads-header { .header-style; }
 
 #lastmod-label, 
 #size-label, 
-
 #de-import-instructions-label,
 #irods-instructions-label, 
 #wget-instructions-label, 
@@ -81,12 +84,7 @@
     .detail-content;
 }
 
-.ellipsis () {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
+//Styling for the command-line/URL input boxes
 #de-import-url,
 #irods-command-line, 
 #wget-command-line, 
@@ -98,6 +96,7 @@
     height: @command-line-height;
 }
 
+//Styling for the "Copy" buttons
 #clippy-import-wrapper,
 #clippy-wget-wrapper, 
 #clippy-curl-wrapper, 
