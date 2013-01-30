@@ -70,6 +70,7 @@
 (defn ui-ticket-info
   [ticket-info]
   (assoc ticket-info
+    :import_template (cfg/de-import-flags)
     :wget_template (cfg/wget-flags)
     :curl_template (cfg/curl-flags)
     :iget_template (cfg/iget-flags)))
@@ -109,6 +110,22 @@
      [:span {:title "copy to clipboard"}
       [:button {:id "clippy-irods-wrapper"
                 :class "clippy-irods"
+                :title "Copy"}
+       "Copy"]]]]))
+
+(defn de-import-instr
+  [ticket-info]
+  (log/debug "entered kifshare.ui-template/de-import-instr")
+
+  (html
+   [:div {:id "de-import-instructions"}
+    [:div {:id "de-import-instructions-label"}
+     [:h2 "DE Import URL"]]
+    [:div {:id "clippy-import-instructions"}
+     (input-display "de-import-url")
+     [:span {:title "copy to clipboard"}
+      [:button {:id "clippy-import-wrapper"
+                :class "clippy-import"
                 :title "Copy"}
        "Copy"]]]]))
 
@@ -171,6 +188,7 @@
    [:div {:id "alt-downloads-header"} 
     [:h2 "Downloading via Command-Line"]]
    [:div {:id "alt-downloads"}
+    (de-import-instr ticket-info)
     (irods-instr ticket-info)
     (downloader-instr (:ticket-id ticket-info) ticket-info)
     (section-spacer)]))

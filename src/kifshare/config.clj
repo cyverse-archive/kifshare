@@ -12,6 +12,10 @@
   (let [main-props (prps/read-properties local-config-path)]
     (reset! props main-props)))
 
+(defn de-import-flags
+  []
+  (get @props "kifshare.app.de-import-flags"))
+
 (defn curl-flags
   []
   (get @props "kifshare.app.curl-flags"))
