@@ -54,10 +54,8 @@
      
      (let [ticket-info (tickets/ticket-info cm ticket-id)]
        (log/debug "Ticket Info:\n" ticket-info)
-       
-       (let [resp (decide-on-page cm ring-request ticket-id ticket-info)]
-         (log/debug "get-ticket response: " resp)
-         resp))
+
+       {:status 200 :body (show-landing-page cm ticket-id ticket-info)})
      
      (catch error? err
        (log/error (format-exception (:throwable &throw-context)))
