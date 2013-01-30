@@ -197,7 +197,7 @@
   []
   (html
    [:div {:id "footer"}
-    [:p "The iPlant Collaborative is funded by a grant from the National Science Foundation Plant Science Cyberinfrastructure Collaborative (#DBI-0735191)."]]))
+    [:p (cfg/footer-text)]]))
 
 (defn landing-page
   [ticket-id metadata ticket-info]

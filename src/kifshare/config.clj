@@ -16,6 +16,10 @@
   []
   (get @props "kifshare.app.de-import-flags"))
 
+(defn footer-text
+  []
+  (get @props "kifshare.app.footer-text"))
+
 (defn curl-flags
   []
   (get @props "kifshare.app.curl-flags"))
