@@ -7,10 +7,25 @@
 
 (def props (atom nil))
 
+(def robots-txt (atom ""))
+
+(defn robots-txt-path
+  []
+  (get @props "kifshare.app.robots-txt"))
+
+(defn robots-txt-content
+  []
+  @robots-txt)
+
 (defn local-init
   [local-config-path]
   (let [main-props (prps/read-properties local-config-path)]
-    (reset! props main-props)))
+    (reset! props main-props)
+    (reset! robots-txt (slurp (robots-txt-path)))))
+
+(defn logo-path
+  []
+  (get @props "kifshare.app.logo-path"))
 
 (defn de-import-flags
   []
@@ -105,7 +120,8 @@
         (log/error "THIS APPLICATION CANNOT RUN ON THIS MACHINE. SO SAYETH ZOOKEEPER.")
         (log/error "THIS APPLICATION WILL NOT EXECUTE CORRECTLY."))
       
-      (reset! props (cl/properties "kifshare")))) 
+      (reset! props (cl/properties "kifshare"))
+      (reset! robots-txt (slurp (robots-txt-path))))) 
 
   (log-config)
   

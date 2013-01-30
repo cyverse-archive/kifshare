@@ -36,7 +36,8 @@ module.exports = function(grunt) {
             {src: ["ui/src/js/jquery*.js", "ui/src/js/json2.js", "ui/src/js/ZeroClipboard*.js"], dest: "resources/public/js/"},
             {src: ["ui/src/css/*.css"], dest: "resources/public/css/"},
             {src: ["ui/src/flash/*"], dest: "resources/public/flash/"},
-            {src: ["ui/src/img/*"], dest: "resources/public/img/"}
+            {src: ["ui/src/img/*"], dest: "resources/public/img/"},
+            {src: ["ui/src/robots.txt"], dest: "resources/public/"}
         ]
       }
     },

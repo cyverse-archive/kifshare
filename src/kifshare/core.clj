@@ -27,7 +27,7 @@
 (defroutes kifshare-routes
   (GET "/favicon.ico" [] {:status 404 :body "No favicon for you!"})
 
-  (GET "/robots.txt" [] {:status 200 :body  "User-agent: *\nDisallow: /\n"})
+  (GET "/robots.txt" [] {:status 200 :body (cfg/robots-txt-content)})
   
   (GET "/d/:ticket-id/:filename" [ticket-id filename :as request]
        (controllers/download-file ticket-id filename request))

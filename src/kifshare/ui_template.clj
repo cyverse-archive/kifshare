@@ -162,7 +162,7 @@
    [:div {:id "menu"}
     [:ul
      [:li [:div {:id "logo-container"}
-           [:img {:id "logo" :src "img/iplant-logo-small.png"}]]]
+           [:img {:id "logo" :src (cfg/logo-path)}]]]
      [:li [:div [:h1 {:id "filename"} (:filename ticket-info)]]]
      [:li [:div {:id "download-container"}
            [:a {:href (str "d/" (:ticket-id ticket-info) "/" (:filename ticket-info))
