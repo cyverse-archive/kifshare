@@ -93,8 +93,7 @@
    [:input
     {:id id
      :type "text"
-     :readonly false
-     :value ""}]))
+     :readonly false}]))
 
 (defn irods-instr
   [ticket-info]
@@ -121,13 +120,14 @@
    [:div {:id "de-import-instructions"}
     [:div {:id "de-import-instructions-label"}
      [:h2 "DE Import URL"]]
-    [:div {:id "clippy-import-instructions"}
-     (input-display "de-import-url")
-     [:span {:title "copy to clipboard"}
-      [:button {:id "clippy-import-wrapper"
-                :class "clippy-import"
-                :title "Copy"}
-       "Copy"]]]]))
+    [:span {:id "test-import-span"}
+     [:div {:id "clippy-import-instructions"}
+      (input-display "de-import-url")
+      [:span {:title "copy to clipboard"}
+       [:button {:id "clippy-import-wrapper"
+                 :class "clippy-import"
+                 :title "Copy"}
+        "Copy"]]]]]))
 
 (defn downloader-instr
   [ticket-id ticket-info]
