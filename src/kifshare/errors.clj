@@ -1,8 +1,8 @@
 (ns kifshare.errors
   (:use hiccup.core
         [kifshare.common :only [layout]]
-        [ring.util.response :only [status]]
-        [clojure.data.json]))
+        [ring.util.response :only [status]])
+  (:require [cheshire.core :as cheshire]))
 
 (def ERR_TICKET_EXPIRED "ERR_TICKET_EXPIRED")
 (def ERR_TICKET_USED_UP "ERR_TICKET_USED_UP")
@@ -25,7 +25,7 @@
   (html
    [:div {:id "err-default"}
     [:pre
-     [:code (with-out-str (pprint-json err-map))]]]))
+     [:code (cheshire/encode err-map {:pretty true})]]]))
 
 (defn error-html
   [err-map]
@@ -45,16 +45,16 @@
 
 (defn error-response
   [err-map]
-  (let [err-code (:error_code err-map)] 
+  (let [err-code (:error_code err-map)]
     (cond
      (= err-code ERR_TICKET_NOT_FOUND)
      {:status 500 :body (ticket-not-found err-map)}
-     
+
      (= err-code ERR_TICKET_EXPIRED)
      {:status 500 :body (ticket-expired err-map)}
-     
+
      (= err-code ERR_TICKET_USED_UP)
      {:status 500 :body (ticket-used-up err-map)}
-     
+
      :else
      {:status 500 :body (default-error err-map)})))
