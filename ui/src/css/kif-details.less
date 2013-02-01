@@ -124,7 +124,7 @@
 
     .border-radius(10px, 10px, 0px, 0px);
 
-    &:hover {
+    &.zeroclipboard-is-hover {
         .bw-gradient(
             lighten(@copy-default, 10%),
             (@copy-bw-start + (@copy-bw-start/10)),
@@ -132,7 +132,7 @@
         );
     }
 
-    &:active {
+    &.zeroclipboard-is-active {
         .inner-shadow(2px, 4px, 6px, 0.5);
     }
 }
