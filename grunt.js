@@ -104,7 +104,9 @@ module.exports = function(grunt) {
         $:true,
         Mustache: true,
         _: true,
-        ZeroClipboard: true
+        ZeroClipboard: true,
+        zclip: true,
+        alert: true
       }
     },
     uglify: {}

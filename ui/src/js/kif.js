@@ -38,10 +38,10 @@ $(document).ready(function() {
     var curl_command = _.unescape(Mustache.render(curl_template, ticket_info));
     var iget_command = _.unescape(Mustache.render(iget_template, ticket_info));
 
-    $('#clippy-import-wrapper').attr('data-clipboard-target', 'de-import-url');
-    $('#clippy-irods-wrapper').attr('data-clipboard-target', 'irods-command-line');
-    $('#clippy-wget-wrapper').attr('data-clipboard-target', 'wget-command-line' );
-    $('#clippy-curl-wrapper').attr('data-clipboard-target', 'curl-command-line');
+    // $('#clippy-import-wrapper').attr('data-clipboard-target', 'de-import-url');
+    // $('#clippy-irods-wrapper').attr('data-clipboard-target', 'irods-command-line');
+    // $('#clippy-wget-wrapper').attr('data-clipboard-target', 'wget-command-line' );
+    // $('#clippy-curl-wrapper').attr('data-clipboard-target', 'curl-command-line');
 
     $('#de-import-url').val(import_url);
     $('#irods-command-line').val(iget_command);
@@ -49,8 +49,12 @@ $(document).ready(function() {
     $('#wget-command-line').val(wget_command);
 
     var zero_clip_path = "flash/ZeroClipboard.swf";
-    var import_clip = new ZeroClipboard($('#clippy-import-wrapper'), { moviePath: zero_clip_path});
-    var irods_clip = new ZeroClipboard($('#clippy-irods-wrapper'), { moviePath: zero_clip_path});
-    var curl_clip = new ZeroClipboard($('#clippy-curl-wrapper'), { moviePath: zero_clip_path});
-    var wget_clip = new ZeroClipboard($('#clippy-wget-wrapper'), { moviePath: zero_clip_path});
+    $('#clippy-import-wrapper').zclip({
+        path: zero_clip_path,
+        copy: function () { return $('#de-import-url').val(); }
+    });
+
+    // var import_clip = new ZeroClipboard($('#clippy-import-wrapper'), { moviePath: zero_clip_path});
+    // var irods_clip = new ZeroClipboard($('#clippy-irods-wrapper'), { moviePath: zero_clip_path});
+    // var curl_clip = new ZeroClipboard($('#clippy-curl-wrapper'), { moviePath: zero_clip_path});
 });
