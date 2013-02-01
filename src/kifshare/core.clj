@@ -25,7 +25,7 @@
   (:use [clojure-commons.error-codes]))
 
 (defroutes kifshare-routes
-  (GET "/favicon.ico" [] {:status 404 :body "No favicon for you!"})
+  (GET "/favicon.ico" [] (clojure.java.io/file (cfg/favicon-path)))
 
   (GET "/robots.txt" [] {:status 200 :body (cfg/robots-txt-content)})
   

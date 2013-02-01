@@ -5,6 +5,7 @@
         [slingshot.slingshot :only [try+]]
         [clojure-commons.error-codes])
   (:require [kifshare.tickets :as tickets]
+            [compojure.response :as resp]
             [kifshare.common :as common]
             [cheshire.core :as cheshire]
             [clojure.tools.logging :as log]

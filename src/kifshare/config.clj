@@ -27,6 +27,10 @@
   []
   (get @props "kifshare.app.logo-path"))
 
+(defn favicon-path
+  []
+  (get @props "kifshare.app.favicon-path"))
+
 (defn de-import-flags
   []
   (get @props "kifshare.app.de-import-flags"))
