@@ -9,6 +9,7 @@
 @menu-position: fixed;
 @img-width: 194px;
 @img-height: 50px;
+@download-button-width: 300px;
 
 .menu-item () {
     float: left;
@@ -43,7 +44,10 @@
 
             div {
                 .menu-item;
-                h1 { .menu-content;
+
+                h1 { 
+                    .menu-content;
+                    .ellipsis;
                     color: @menu-text-color;
                 }
                 
@@ -78,7 +82,7 @@
                         .rounded(10px);
                         text-align: center;
                         height: 50px;
-                        width: 300px;
+                        width: @download-button-width;
                         float: right;
                         margin-right: 10px;
                     }
