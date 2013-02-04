@@ -82,8 +82,8 @@ module.exports = function(grunt) {
       }
     },
     watch: {
-      files: '<config:lint.files>',
-      tasks: 'lint qunit'
+      files: ["ui/src/js/*.js", "ui/src/css/*.less", "ui/src/img/*", "ui/src/flash/*"],
+      tasks: 'build-resources-dev'
     },
     jshint: {
       options: {
@@ -117,6 +117,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-shell');
   grunt.loadNpmTasks('grunt-contrib-less');
+  //grunt.loadNpmTasks('watch');
 
   grunt.registerTask('make-resources', 'shell:make_js_resources shell:make_css_resources shell:make_flash_resources shell:make_img_resources');
   grunt.registerTask('build-resources', 'lint make-resources less copy min');
