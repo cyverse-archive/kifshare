@@ -84,16 +84,16 @@ lein2 clean
 rm -r $RPM_BUILD_ROOT
 
 %files
-%attr(-,iplant,iplant) /usr/local/lib/kifshare/
-%attr(-,iplant,iplant) /usr/local/lib/kifshare/resources/
-%attr(-,iplant,iplant) /usr/local/lib/kifshare/resources/public/
-%attr(-,iplant,iplant) /usr/local/lib/kifshare/resources/public/css/
-%attr(-,iplant,iplant) /usr/local/lib/kifshare/resources/public/img/
-%attr(-,iplant,iplant) /usr/local/lib/kifshare/resources/public/flash/
+%dir %attr(-,iplant,iplant) /usr/local/lib/kifshare/
+%dir %attr(-,iplant,iplant) /usr/local/lib/kifshare/resources/
+%dir %attr(-,iplant,iplant) /usr/local/lib/kifshare/resources/public/
+%dir %attr(-,iplant,iplant) /usr/local/lib/kifshare/resources/public/css/
+%dir %attr(-,iplant,iplant) /usr/local/lib/kifshare/resources/public/img/
+%dir %attr(-,iplant,iplant) /usr/local/lib/kifshare/resources/public/flash/
 %attr(-,iplant,iplant) /var/run/kifshare/
 %attr(-,iplant,iplant) /var/lock/subsys/kifshare/
 %attr(-,iplant,iplant) /var/log/kifshare/
-%attr(-,iplant,iplant) /etc/kifshare/
+%dir %attr(-,iplant,iplant) /etc/kifshare/
 
 %config %attr(0644,iplant,iplant) /etc/kifshare/log4j.properties
 
