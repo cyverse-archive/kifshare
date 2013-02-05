@@ -4,8 +4,11 @@ ES_NAME=kifshare
 ES_DIRNAME=${ES_NAME}-build
 ES_TARNAME=${ES_DIRNAME}.tar.gz
 
+echo "Remove old build dir"
+rm -rf ${ES_DIRNAME}
+
 echo "Create the build directory"
-mkdir ${ES_DIRNAME}
+mkdir -p ${ES_DIRNAME}/target
 
 echo "Copying in init.d script"
 cp ${ES_NAME} ${ES_DIRNAME}
