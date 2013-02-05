@@ -86,9 +86,10 @@ rm -r $RPM_BUILD_ROOT
 %files
 %attr(-,iplant,iplant) /usr/local/lib/kifshare/
 %attr(-,iplant,iplant) /usr/local/lib/kifshare/resources/
-%attr(-,iplant,iplant) /usr/local/lib/kifshare/resources/css/
-%attr(-,iplant,iplant) /usr/local/lib/kifshare/resources/img/
-%attr(-,iplant,iplant) /usr/local/lib/kifshare/resources/flash/
+%attr(-,iplant,iplant) /usr/local/lib/kifshare/resources/public/
+%attr(-,iplant,iplant) /usr/local/lib/kifshare/resources/public/css/
+%attr(-,iplant,iplant) /usr/local/lib/kifshare/resources/public/img/
+%attr(-,iplant,iplant) /usr/local/lib/kifshare/resources/public/flash/
 %attr(-,iplant,iplant) /var/run/kifshare/
 %attr(-,iplant,iplant) /var/lock/subsys/kifshare/
 %attr(-,iplant,iplant) /var/log/kifshare/
