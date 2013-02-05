@@ -29,7 +29,7 @@ echo "Copying spec file to build tree."
 cp ${ES_NAME}.spec /usr/src/redhat/SPECS/
 
 echo "Copying tarball to SOURCES."
-cp ${ES_NAME} /usr/src/redhat/SOURCES/
+cp ${ES_TARNAME} /usr/src/redhat/SOURCES/
 
 echo "Running rpmbuild..."
 rpmbuild -ba /usr/src/redhat/SPECS/${ES_NAME}.spec
