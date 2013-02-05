@@ -26,7 +26,7 @@ getent passwd iplant > /dev/null || useradd -r -g iplant -md /home/iplant -s /bi
 exit 0
 
 %prep
-%setup -q
+%setup -n %{name}-build
 mkdir -p $RPM_BUILD_ROOT/etc/init.d/
 
 %build
