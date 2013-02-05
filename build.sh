@@ -13,6 +13,9 @@ cp -r target/ ${ES_DIRNAME}
 echo "Copying in config"
 cp -r conf/ ${ES_DIRNAME}
 
+echo "Copying in the build directory, which contains the resources"
+cp -r build/ ${ES_DIRNAME}
+
 echo "Creating tarball."
 tar czf ${ES_TARNAME} ${ES_DIRNAME} 
 
