@@ -4,6 +4,13 @@ ES_NAME=kifshare
 ES_DIRNAME=${ES_NAME}-build
 ES_TARNAME=${ES_DIRNAME}.tar.gz
 
+node --version
+grunt --version
+npm --version
+npm install
+grunt clean-all
+grunt build-resources
+
 echo "Remove old build dir"
 rm -rf ${ES_DIRNAME}
 
@@ -13,8 +20,11 @@ mkdir -p ${ES_DIRNAME}/target
 echo "Copying in init.d script"
 cp ${ES_NAME} ${ES_DIRNAME}
 
-echo "Copying in builds"
-cp ${ES_NAME}-*-standalone.jar ${ES_DIRNAME}/target/
+echo "Copying in the sources"
+cp -r src/ ${ES_DIRNAME}
+
+echo "Copying in the project file"
+cp project.clj ${ES_DIRNAME}
 
 echo "Copying in config"
 cp -r conf/ ${ES_DIRNAME}
