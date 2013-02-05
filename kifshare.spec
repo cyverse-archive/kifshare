@@ -42,6 +42,7 @@ install -d $RPM_BUILD_ROOT/usr/local/lib/kifshare/resources/public/
 install -d $RPM_BUILD_ROOT/usr/local/lib/kifshare/resources/public/css/
 install -d $RPM_BUILD_ROOT/usr/local/lib/kifshare/resources/public/flash/
 install -d $RPM_BUILD_ROOT/usr/local/lib/kifshare/resources/public/js/
+install -d $RPM_BUILD_ROOT/usr/local/lib/kifshare/resources/public/img/
 install -d $RPM_BUILD_ROOT/var/run/kifshare/
 install -d $RPM_BUILD_ROOT/var/lock/subsys/kifshare/
 install -d $RPM_BUILD_ROOT/var/log/kifshare/
