@@ -14,7 +14,7 @@ echo "Copying in init.d script"
 cp ${ES_NAME} ${ES_DIRNAME}
 
 echo "Copying in builds"
-cp -r target/ ${ES_DIRNAME}
+cp ${ES_NAME}-*-standalone.jar ${ES_DIRNAME}/target/
 
 echo "Copying in config"
 cp -r conf/ ${ES_DIRNAME}
