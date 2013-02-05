@@ -17,6 +17,8 @@
   :ring {:init kifshare.config/init
          :handler kifshare.core/app}
 
+  :profiles {:dev {:resource-paths ["build"]}}
+
   :iplant-rpm {:summary "kifshare",
                :dependencies ["iplant-service-config >= 0.1.0-5"],
                :config-files ["log4j.properties"],

@@ -24,6 +24,9 @@
             [clojure.string :as string])
   (:use [clojure-commons.error-codes]))
 
+;;(prps/find-resources-file
+;;                           (cfg/favicon-path))
+
 (defroutes kifshare-routes
   (GET "/favicon.ico" [] (clojure.java.io/file (cfg/favicon-path)))
 

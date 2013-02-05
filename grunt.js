@@ -27,17 +27,17 @@ module.exports = function(grunt) {
     min: {
       dist: {
         src: ['ui/src/js/kif.js'],
-        dest: 'resources/public/js/kif.js'
+        dest: 'build/public/js/kif.js'
       }
     },
     copy: {
       main: {
         files: [
-            {src: ["ui/src/js/jquery*.js", "ui/src/js/json2.js", "ui/src/js/ZeroClipboard*.js"], dest: "resources/public/js/"},
-            {src: ["ui/src/css/*.css"], dest: "resources/public/css/"},
-            {src: ["ui/src/flash/*"], dest: "resources/public/flash/"},
-            {src: ["ui/src/img/*"], dest: "resources/public/img/"},
-            {src: ["ui/src/robots.txt"], dest: "resources/public/"}
+            {src: ["ui/src/js/jquery*.js", "ui/src/js/json2.js", "ui/src/js/ZeroClipboard*.js"], dest: "build/public/js/"},
+            {src: ["ui/src/css/*.css"], dest: "build/public/css/"},
+            {src: ["ui/src/flash/*"], dest: "build/public/flash/"},
+            {src: ["ui/src/img/*"], dest: "build/public/img/"},
+            {src: ["ui/src/robots.txt"], dest: "build/public/"}
         ]
       }
     },
@@ -46,16 +46,16 @@ module.exports = function(grunt) {
         failOnError: true
       },
       make_js_resources: {
-        command: 'mkdir -p resources/public/js'
+        command: 'mkdir -p build/public/js'
       },
       make_css_resources: {
-        command: 'mkdir -p resources/public/css'
+        command: 'mkdir -p build/public/css'
       },
       make_flash_resources: {
-        command: 'mkdir -p resources/public/flash'
+        command: 'mkdir -p build/public/flash'
       },
       make_img_resources: {
-        command: 'mkdir -p resources/public/img'
+        command: 'mkdir -p build/public/img'
       },
       lein_clean: {
         command: 'lein clean'
@@ -71,13 +71,13 @@ module.exports = function(grunt) {
         command: 'lein iplant-rpm'
       },
       clean_resources: {
-        command: 'rm -rf resources/'
+        command: 'rm -rf build/'
       }
     },
     less: {
       build: {
         files: {
-          "resources/public/css/kif.css" : "ui/src/css/kif.less"
+          "build/public/css/kif.css" : "ui/src/css/kif.less"
         }
       }
     },

@@ -48,7 +48,7 @@
   (let [err-code (:error_code err-map)]
     (cond
      (= err-code ERR_TICKET_NOT_FOUND)
-     {:status 500 :body (ticket-not-found err-map)}
+     {:status 500 :body (ticket-not-found)}
 
      (= err-code ERR_TICKET_EXPIRED)
      {:status 500 :body (ticket-expired err-map)}
