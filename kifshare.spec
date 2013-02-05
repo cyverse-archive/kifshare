@@ -15,7 +15,7 @@ BuildRoot: %{_tmppath}/%{name}-%{version}-buildroot
 License: BSD
 Provides: kifshare
 Requires: iplant-service-config >= 0.1.0-5
-Source0: %{name}-%{version}.tar.gz
+Source0: %{name}-build.tar.gz
 
 %description
 iPlant Quickshare for iRODS
