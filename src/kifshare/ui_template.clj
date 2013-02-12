@@ -188,7 +188,7 @@
   
   (html
    [:div {:id "alt-downloads-header"} 
-    [:h2 "Downloading via Command-Line"]]
+    [:h2 "Alternative Download Methods"]]
    [:div {:id "alt-downloads"}
     (de-import-instr ticket-info)
     (irods-instr ticket-info)
