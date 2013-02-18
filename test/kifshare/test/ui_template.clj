@@ -17,4 +17,110 @@
 
 (fact "AVU table"
       (irods-avu-table [{:attr "attr" :value "value" :unit "unit"}]) =>
-      "<div id=\"irods-avus\"><div id=\"irods-avus-header\"><h2>Metadata</h2></div><table id=\"irods-avus-data\"><thead><tr><th>Attribute</th><th>Value</th><th>Unit</th></tr></thead><tbody><tr><td>attr</td><td>value</td><td>unit</td></tr></tbody></table><div class=\"section-spacer\"></div></div>")
+      (str "<div id=\"irods-avus\">"
+             "<div id=\"irods-avus-header\">"
+               "<h2>Metadata</h2>"
+             "</div>"
+             "<table id=\"irods-avus-data\">"
+               "<thead>"
+                 "<tr>"
+                   "<th>Attribute</th>"
+                   "<th>Value</th>"
+                   "<th>Unit</th>"
+                 "</tr>"
+               "</thead>"
+               "<tbody>"
+                 "<tr>"
+                   "<td>attr</td>"
+                   "<td>value</td>"
+                   "<td>unit</td>"
+                 "</tr>"
+               "</tbody>"
+             "</table>"
+             "<div class=\"section-spacer\"></div>"
+           "</div>"))
+
+(fact "Last modified date"
+      (lastmod {:lastmod "foo-blippy-bar"}) =>
+      (str "<div id=\"lastmod-detail\">"
+             "<div id=\"lastmod-label\">"
+               "<p>Last Modified:</p>"
+             "</div>"
+             "<div id=\"lastmod\">"
+               "<p>foo-blippy-bar</p>"
+             "</div>"
+           "</div>"))
+
+(fact "Calculate file size"
+      (calc-filesize {:filesize "1024"}) => "1 KB")
+
+(fact "File size details"
+      (filesize {:filesize "1024"}) =>
+      (str "<div id=\"size-detail\">"
+             "<div id=\"size-label\">"
+               "<p>File Size:</p>"
+             "</div>"
+             "<div id=\"size\">"
+               "<p>1 KB</p>"
+             "</div>"
+           "</div>"))
+
+(fact "input display"
+      (input-display "foo") =>
+      "<input id=\"foo\" type=\"text\" value=\"\" />")
+
+(fact "iRODs instructions"
+  (irods-instr {}) =>
+  (str
+   "<div id=\"irods-instructions\">"
+     "<div id=\"irods-instructions-label\">"
+       "<h2>iRODS icommands</h2>"
+     "</div>"
+     "<div id=\"clippy-irods-instructions\">"
+       "<input id=\"irods-command-line\" type=\"text\" value=\"\" />"
+       "<span title=\"copy to clipboard\">"
+         "<button class=\"clippy-irods\" id=\"clippy-irods-wrapper\" title=\"Copy\">Copy</button>"
+       "</span>"
+     "</div>"
+   "</div>"))
+
+(fact "URL import instructions"
+  (de-import-instr {}) =>
+  (str
+   "<div id=\"de-import-instructions\">"
+     "<div id=\"de-import-instructions-label\">"
+       "<h2>DE Import URL</h2>"
+     "</div>"
+     "<div id=\"clippy-import-instructions\">"
+       "<input id=\"de-import-url\" type=\"text\" value=\"\" />"
+       "<span title=\"copy to clipboard\">"
+         "<button class=\"clippy-import\" id=\"clippy-import-wrapper\" title=\"Copy\">Copy</button>"
+       "</span>"
+     "</div>"
+   "</div>"))
+
+(fact "downloader instructions"
+  (downloader-instr "lol-id" {}) =>
+  (str
+   "<div id=\"wget-instructions\">"
+     "<div id=\"wget-instructions-label\">"
+       "<p>Wget</p>"
+     "</div>"
+     "<div id=\"clippy-wget-instructions\">"
+       "<input id=\"wget-command-line\" type=\"text\" value=\"\" />"
+       "<span title=\"copy to clipboard\">"
+         "<button class=\"clippy-wget\" id=\"clippy-wget-wrapper\" title=\"Copy\">Copy</button>"
+       "</span>"
+     "</div>"
+   "</div>"
+   "<div id=\"curl-instructions\">"
+     "<div id=\"curl-instructions-label\">"
+       "<p>cURL</p>"
+     "</div>"
+     "<div id=\"clippy-curl-instructions\">"
+       "<input id=\"curl-command-line\" type=\"text\" value=\"\" />"
+       "<span title=\"copy to clipboard\">"
+         "<button class=\"clippy-curl\" id=\"clippy-curl-wrapper\" title=\"Copy\">Copy</button>"
+       "</span>"
+     "</div>"
+   "</div>"))
