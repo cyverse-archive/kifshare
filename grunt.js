@@ -39,6 +39,11 @@ module.exports = function(grunt) {
             {src: ["ui/src/img/*"], dest: "build/public/img/"},
             {src: ["ui/src/robots.txt"], dest: "build/public/"}
         ]
+      },
+      kifjs: {
+        files: [
+          {src: ["ui/src/js/kif.js"], dest: "build/public/js/"}
+        ]
       }
     },
     shell: {
@@ -83,7 +88,7 @@ module.exports = function(grunt) {
     },
     watch: {
       files: ["ui/src/js/*.js", "ui/src/css/*.less", "ui/src/img/*", "ui/src/flash/*"],
-      tasks: 'build-resources'
+      tasks: ['build-resources-dev', 'copy:kifjs']
     },
     jshint: {
       options: {
@@ -121,7 +126,7 @@ module.exports = function(grunt) {
 
   grunt.registerTask('make-resources', 'shell:make_js_resources shell:make_css_resources shell:make_flash_resources shell:make_img_resources');
   grunt.registerTask('build-resources', 'lint make-resources less copy min');
-  grunt.registerTask('build-resources-dev', 'lint make-resources less copy min');
+  grunt.registerTask('build-resources-dev', 'lint make-resources less copy');
   grunt.registerTask('build-clj', 'shell:lein_clean shell:lein_deps shell:lein_uberjar'); 
   grunt.registerTask('build-all', 'build-resources build-clj');
   grunt.registerTask('clean-all', 'shell:lein_clean shell:clean_resources');
