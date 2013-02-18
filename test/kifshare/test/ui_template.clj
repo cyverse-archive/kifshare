@@ -1,6 +1,7 @@
 (ns kifshare.test.ui-template
   (:use [kifshare.ui-template]
-        [midje.sweet]))
+        [midje.sweet])
+  (:require [kifshare.config :as cfg]))
 
 (fact "test-unit-test"
       (+ 1 1) => 2)
@@ -63,7 +64,18 @@
              "<div id=\"size\">"
                "<p>1 KB</p>"
              "</div>"
-           "</div>"))
+             "</div>"))
+
+(fact "ticket info map"
+      (with-redefs [cfg/de-import-flags #(str "import flags!")
+                    cfg/wget-flags #(str "wget flags!")
+                    cfg/curl-flags #(str "curl flags!")
+                    cfg/iget-flags #(str "iget flags!")]
+        (ui-ticket-info {}) =>
+        {:import_template "import flags!"
+         :wget_template "wget flags!"
+         :curl_template "curl flags!"
+         :iget_template "iget flags!"}))
 
 (fact "input display"
       (input-display "foo") =>
@@ -123,4 +135,30 @@
          "<button class=\"clippy-curl\" id=\"clippy-curl-wrapper\" title=\"Copy\">Copy</button>"
        "</span>"
      "</div>"
-   "</div>"))
+     "</div>"))
+
+(fact "menu generation"
+  (with-redefs [cfg/logo-path (fn [] "/tmp/logo-path")]
+    (menu {:filename "foo" :ticket-id "a-ticket"})) =>
+    (str
+     "<div id=\"menu\">"
+       "<ul>"
+         "<li>"
+           "<div id=\"logo-container\">"
+             "<img id=\"logo\" src=\"/tmp/logo-path\" />"
+           "</div>"
+         "</li>"
+         "<li>"
+           "<div>"
+             "<h1 id=\"filename\" title=\"foo\">foo</h1>"
+           "</div>"
+         "</li>"
+         "<li>"
+           "<div id=\"download-container\">"
+             "<a href=\"d/a-ticket/foo\" id=\"download-link\">"
+               "<div id=\"download-link-area\">Download!</div>"
+             "</a>"
+           "</div>"
+         "</li>"
+       "</ul>"
+     "</div>"))
