@@ -77,6 +77,19 @@
          :curl_template "curl flags!"
          :iget_template "iget flags!"}))
 
+(fact "template map: JSON is not generated in a predictable way, so we're using a regex to test"
+      (with-redefs [cfg/de-import-flags #(str "import flags!")
+                    cfg/wget-flags #(str "wget flags!")
+                    cfg/curl-flags #(str "curl flags!")
+                    cfg/iget-flags #(str "iget flags!")]
+        (template-map {}) =>
+        (re-pattern (str
+                     "<span id=\"ticket-info\" style=\"display: none;\">"
+                     "<div id=\"ticket-info-map\">"
+                     ".*"
+                     "</div>"
+                     "</span>"))))
+
 (fact "input display"
       (input-display "foo") =>
       "<input id=\"foo\" type=\"text\" value=\"\" />")
@@ -161,4 +174,60 @@
            "</div>"
          "</li>"
        "</ul>"
-     "</div>"))
+       "</div>"))
+
+(fact "details section"
+  (details {:filesize "1024" :lastmod "1024"}) =>
+  (re-pattern
+   (str
+    "<div id=\"details\">"
+      "<a name=\"details-section\"></a>"
+      "<div id=\"details-header\">"
+        "<h2>File Details</h2>"
+        ".*"
+      "</div>"
+      "<div class=\"section-spacer\"></div>"
+    "</div>")))
+
+(fact "alternative downloads section"
+  (alt-downloads {}) =>
+  (re-pattern
+   (str
+    "<div id=\"alt-downloads-header\">"
+      "<h2>Alternative Download Methods</h2>"
+    "</div>"
+    "<div id=\"alt-downloads\">"
+      "<div id=\"de-import-instructions\">"
+        ".*"
+      "</div>"
+      "<div id=\"irods-instructions\">"
+        ".*"
+      "</div>"
+      "<div id=\"wget-instructions\">"
+        ".*"
+      "</div>"
+      "<div id=\"curl-instructions\">"
+        ".*"
+      "</div>"
+    "</div>")))
+
+(fact "footer test"
+      (with-redefs [cfg/footer-text #(str "footer!")]
+        (footer) =>
+        (str "<div id=\"footer\">"
+               "<p>footer!</p>"
+             "</div>")))
+
+#_(fact "twitter title"
+      (twitter-title {:filename "filename"} {}) => "filename")
+
+#_(fact "twitter description"
+      (twitter-description {:filesize "1024" :lastmod "last!"} {}) =>
+      "File Size: 1 KB\nLast Modified: last!")
+
+
+#_(fact "twitter card"
+  (twitter-card {:filesize "1024" :lastmod "last!" :filename "filename"} {}) =>
+  (str "<meta content=\"summary\" name=\"twitter:card\" />"
+       "<meta content=\"filename\" name=\"twitter:title\" />"
+       "<meta content=\"File Size: 1 KB\nLast Modified: last!\" name=\"twitter:description\" />"))
