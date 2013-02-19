@@ -38,6 +38,8 @@ $(document).ready(function() {
     var curl_command = _.unescape(Mustache.render(curl_template, ticket_info));
     var iget_command = _.unescape(Mustache.render(iget_template, ticket_info));
 
+    $('head').append('<meta name="twitter:url" content="' + document.URL + '">');
+
     $('#de-import-url').val(import_url);
     $('#irods-command-line').val(iget_command);
     $('#curl-command-line').val(curl_command);
