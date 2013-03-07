@@ -16,9 +16,9 @@
 
     table {
         .bordered(
-            @table-border-color, 
-            @table-border-color, 
-            @table-border-color, 
+            @table-border-color,
+            @table-border-color,
+            @table-border-color,
             @table-border-color
         );
 
@@ -34,8 +34,9 @@
             background: darken(@bg-color, 10%);
         }
 
-        td, th { 
-            padding-left: @table-spacing; 
+        td, th {
+            .ellipsis;
+            padding-left: @table-spacing;
             padding-right: @table-padding-right;
             border: @table-border;
             text-align: center;
