@@ -103,8 +103,8 @@
   (html
    [:div {:id "irods-instructions"}
     [:div {:id "irods-instructions-label"}
-     [:h2 [:a {:href (cfg/irods-url)} "iRODS icommands"] ":"]]
-
+     [:h2 {:title "iRODS icommands"}
+      [:a {:href (cfg/irods-url)} "iRODS icommands"] ":"]]
     [:div {:id "clippy-irods-instructions"}
      (input-display "irods-command-line")
      [:span {:title "copy to clipboard"}
@@ -120,7 +120,8 @@
   (html
    [:div {:id "de-import-instructions"}
     [:div {:id "de-import-instructions-label"}
-     [:h2 [:a {:href (cfg/de-url)} "DE Import URL"] ":"]]
+     [:h2 {:title "Discovery Environment Import URL"}
+      [:a {:href (cfg/de-url)} "DE Import URL"] ":"]]
     [:div {:id "clippy-import-instructions"}
      (input-display "de-import-url")
      [:span {:title "copy to clipboard"}
