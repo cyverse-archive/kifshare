@@ -120,7 +120,7 @@
   (html
    [:div {:id "de-import-instructions"}
     [:div {:id "de-import-instructions-label"}
-     [:h2 "DE Import URL"]]
+     [:a {:href (cfg/de-url)} [:h2 "DE Import URL"]]]
     [:div {:id "clippy-import-instructions"}
      (input-display "de-import-url")
      [:span {:title "copy to clipboard"}
