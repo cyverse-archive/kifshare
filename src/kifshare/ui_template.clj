@@ -103,7 +103,7 @@
   (html
    [:div {:id "irods-instructions"}
     [:div {:id "irods-instructions-label"}
-     [:a {:href (cfg/irods-url)} [:h2 "iRODS icommands"]]]
+     [:h2 [:a {:href (cfg/irods-url)} "iRODS icommands"] ":"]]
 
     [:div {:id "clippy-irods-instructions"}
      (input-display "irods-command-line")
@@ -120,7 +120,7 @@
   (html
    [:div {:id "de-import-instructions"}
     [:div {:id "de-import-instructions-label"}
-     [:a {:href (cfg/de-url)} [:h2 "DE Import URL"]]]
+     [:h2 [:a {:href (cfg/de-url)} "DE Import URL"] ":"]]
     [:div {:id "clippy-import-instructions"}
      (input-display "de-import-url")
      [:span {:title "copy to clipboard"}
@@ -136,7 +136,7 @@
   (html
    [:div {:id "wget-instructions"}
     [:div {:id "wget-instructions-label"}
-     [:p "Wget"]]
+     [:p "Wget:"]]
     [:div {:id "clippy-wget-instructions"}
      (input-display "wget-command-line")
      [:span  {:title "copy to clipboard"}
@@ -147,7 +147,7 @@
 
    [:div {:id "curl-instructions"}
     [:div {:id "curl-instructions-label"}
-     [:p "cURL"]]
+     [:p "cURL:"]]
     [:div {:id "clippy-curl-instructions"}
      (input-display "curl-command-line")
      [:span {:title "copy to clipboard"}
