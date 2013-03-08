@@ -103,7 +103,7 @@
   (html
    [:div {:id "irods-instructions"}
     [:div {:id "irods-instructions-label"}
-     [:h2 "iRODS icommands"]]
+     [:a {:href (cfg/irods-url)} [:h2 "iRODS icommands"]]]
 
     [:div {:id "clippy-irods-instructions"}
      (input-display "irods-command-line")

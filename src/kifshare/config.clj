@@ -27,6 +27,10 @@
   []
   (get @props "kifshare.app.de-url"))
 
+(defn irods-url
+  []
+  (get @props "kifshare.app.irods-url"))
+
 (defn logo-path
   []
   (get @props "kifshare.app.logo-path"))
