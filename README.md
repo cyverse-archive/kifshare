@@ -54,7 +54,7 @@ Another potential issue is the "DefaultType" setting in /etc/httpd/conf/httpd.co
 
 # Building Kifshare For Development
 
-You'll build kifshare with Grunt. Grunt, in turn, calls Leiningen when necessary. 
+You'll build kifshare with Grunt. Grunt, in turn, calls Leiningen when necessary.
 
 If you're only working on the Clojure portion of the code, then you only need to call this to build the resources directory:
 
@@ -78,7 +78,7 @@ The following commands are also included:
 
     grunt shell:lein_clean
     grunt shell:lein_deps
-    grunt shell:lein_uberjar 
+    grunt shell:lein_uberjar
 
 # Running Kifshare
 
@@ -104,19 +104,6 @@ Once the kifshare page comes up, click on the big "Download" button.
 
 # Downloading with curl
 
-You can download with curl in two different ways. Firstly, you can hit the same page that you hit with a browser. Make sure you include -L in the curl options, non-html accepting clients are redirected to the actual download location.
-
-    curl -L http://<kifshare-host>:<kifshare-port>/<ticket-name>
-
-You can also hit another URL, but this one requires you to know the name of the file referred to by the ticket.
+This requires you to know the name of the file referred to by the ticket.
 
     curl http://<kifshare-host>:<kifshare-port>/<ticket-name>/<filename>
-
-If you want to download the download page and not the file, then you need to set the Accept header in the curl command to allow "text/html".
-
-    curl -H "Accept:text/html" http://<kifshare-host>:<kifshare-port>/<ticket-name>
-
-
-
-
-
