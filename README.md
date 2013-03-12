@@ -106,4 +106,4 @@ Once the kifshare page comes up, click on the big "Download" button.
 
 This requires you to know the name of the file referred to by the ticket.
 
-    curl http://<kifshare-host>:<kifshare-port>/<ticket-name>/<filename>
+    curl http://<kifshare-host>:<kifshare-port>/d/<ticket-name>/<filename>
