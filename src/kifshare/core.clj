@@ -31,18 +31,18 @@
   (GET "/favicon.ico" [] (clojure.java.io/file (cfg/favicon-path)))
 
   (GET "/robots.txt" [] {:status 200 :body (cfg/robots-txt-content)})
-  
+
   (GET "/d/:ticket-id/:filename" [ticket-id filename :as request]
        (controllers/download-file ticket-id filename request))
 
   (GET "/d/:ticket-id" [ticket-id :as request]
        (controllers/download-ticket ticket-id request))
-  
+
   (GET "/:ticket-id" [ticket-id :as request]
        (controllers/get-ticket ticket-id request))
 
   (route/resources "/")
-  
+
   (route/not-found "Not found!"))
 
 (defn site-handler [routes]
@@ -56,15 +56,15 @@
 (defn parse-args
   [args]
   (log/debug "entered kifshare.core/parse-args")
-  
+
   (cli/cli
    args
-    ["-c" "--config" 
-     "Set the local config file to read from. Bypasses Zookeeper" 
+    ["-c" "--config"
+     "Set the local config file to read from. Bypasses Zookeeper"
      :default nil]
-    ["-h" "--help" 
-     "Show help." 
-     :default false 
+    ["-h" "--help"
+     "Show help."
+     :default false
      :flag true]))
 
 (def app
@@ -73,22 +73,24 @@
 (defn -main
   [& args]
   (log/debug "entered kifshare.core/-main")
-  
+
   (let [[opts args help-str] (parse-args args)]
-    (cond      
+    (cond
       (:help opts)
       (do (println help-str)
         (System/exit 0))
-      
+
       (:config opts)
       (do
         (log/warn "Reading local config: " (:config opts))
         (cfg/local-init (:config opts))
         (cfg/jargon-init))
-      
+
       :else
       (init))
-    
+
+    (controllers/start-provenance-thread)
+
     (let [port (Integer/parseInt (string/trim (get @cfg/props "kifshare.app.port")))]
       (log/warn "Configured listen port is: " port)
       (jetty/run-jetty app {:port port}))))

@@ -13,9 +13,17 @@
   []
   (get @props "kifshare.app.robots-txt"))
 
-(defn morbixon-base-url
+(defn morbixon-url
   []
   (get @props "kifshare.app.morbixon-url"))
+
+(defn service-name
+  []
+  (get @props "kifshare.app.service-name"))
+
+(defn service-version
+  []
+  (get @props "kifshare.app.service-version"))
 
 (defn robots-txt-content
   []
