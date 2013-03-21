@@ -33,7 +33,11 @@
   [local-config-path]
   (let [main-props (prps/read-properties local-config-path)]
     (reset! props main-props)
-    (reset! robots-txt (slurp (robots-txt-path)))))
+    #_(reset! robots-txt (slurp (robots-txt-path)))))
+
+(defn resources-root
+  []
+  (get @props "kifshare.app.resources-root"))
 
 (defn de-url
   []

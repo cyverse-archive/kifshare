@@ -19,6 +19,7 @@
             [compojure.route :as route]
             [compojure.handler :as handler]
             [ring.adapter.jetty :as jetty]
+            [ring.util.response :as resp]
             [kifshare.config :as cfg]
             [kifshare.controllers :as controllers]
             [clojure.string :as string])
@@ -28,9 +29,19 @@
 ;;                           (cfg/favicon-path))
 
 (defroutes kifshare-routes
-  (GET "/favicon.ico" [] (clojure.java.io/file (cfg/favicon-path)))
 
-  (GET "/robots.txt" [] {:status 200 :body (cfg/robots-txt-content)})
+
+  (GET "/favicon.ico"
+       []
+       (resp/file-response (cfg/favicon-path) {:root (cfg/resources-root)}))
+
+  (GET "/resources/:rsc-path"
+       [rsc-path]
+       (resp/file-response rsc-path {:root (cfg/resources-root)}))
+
+  (GET "/robots.txt"
+       []
+       (resp/file-response (cfg/robots-txt-path) {:root (cfg/resources-root)}))
 
   (GET "/d/:ticket-id/:filename" [ticket-id filename :as request]
        (controllers/download-file ticket-id filename request))
