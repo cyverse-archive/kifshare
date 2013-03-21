@@ -1,10 +1,10 @@
-(defproject kifshare "0.1.1-SNAPSHOT"
+(defproject kifshare "0.1.2-SNAPSHOT"
   :description "iPlant Quickshare for iRODS"
-  :dependencies [[org.clojure/clojure "1.4.0"]
+  :dependencies [[org.clojure/clojure "1.5.1"]
                  [org.clojure/tools.cli "0.2.1"]
                  [org.clojure/tools.logging "0.2.3"]
-                 [org.iplantc/clj-jargon "0.2.2-SNAPSHOT"]
-                 [org.iplantc/clojure-commons "1.4.0-SNAPSHOT"]
+                 [org.iplantc/clj-jargon "0.2.4-SNAPSHOT"]
+                 [org.iplantc/clojure-commons "1.4.1-SNAPSHOT"]
                  [org.slf4j/slf4j-log4j12 "1.6.6"]
                  [cheshire "5.0.1"]
                  [slingshot "0.10.1"]
@@ -29,7 +29,7 @@
                :config-path "conf"}
 
   :plugins [[lein-ring "0.7.5"]
-            [org.iplantc/lein-iplant-rpm "1.4.0-SNAPSHOT"]]
+            [org.iplantc/lein-iplant-rpm "1.4.1-SNAPSHOT"]]
 
   :repositories {"iplantCollaborative"
                  "http://projects.iplantcollaborative.org/archiva/repository/internal/",
