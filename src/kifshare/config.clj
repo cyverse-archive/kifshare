@@ -39,6 +39,22 @@
   []
   (get @props "kifshare.app.resources-root"))
 
+(defn js-dir
+  []
+  (get @props "kifshare.app.js-dir"))
+
+(defn img-dir
+  []
+  (get @props "kifshare.app.images-dir"))
+
+(defn css-dir
+  []
+  (get @props "kifshare.app.css-dir"))
+
+(defn flash-dir
+  []
+  (get @props "kifshare.app.flash-dir"))
+
 (defn de-url
   []
   (get @props "kifshare.app.de-url"))

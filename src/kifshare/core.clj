@@ -15,6 +15,7 @@
             [clj-jargon.jargon :as jargon]
             [clojure-commons.clavin-client :as cl]
             [clojure-commons.props :as prps]
+            [clojure-commons.file-utils :as ft]
             [clojure.tools.logging :as log]
             [compojure.route :as route]
             [compojure.handler :as handler]
@@ -29,15 +30,33 @@
 ;;                           (cfg/favicon-path))
 
 (defroutes kifshare-routes
-
-
   (GET "/favicon.ico"
        []
        (resp/file-response (cfg/favicon-path) {:root (cfg/resources-root)}))
 
-  (GET "/resources/:rsc-path"
-       [rsc-path]
-       (resp/file-response rsc-path {:root (cfg/resources-root)}))
+  (GET "/resources/:rsc-name"
+       [rsc-name]
+       (resp/file-response rsc-name {:root (cfg/resources-root)}))
+
+  (GET "/resources/css/:rsc-name"
+       [rsc-name]
+       (let [resource-root (ft/path-join (cfg/resources-root) (cfg/css-dir))]
+         (resp/file-response rsc-name {:root resource-root})))
+
+  (GET "/resources/js/:rsc-name"
+       [rsc-name]
+       (let [resource-root (ft/path-join (cfg/resources-root) (cfg/js-dir))]
+         (resp/file-response rsc-name {:root resource-root})))
+
+  (GET "/resources/flash/:rsc-name"
+       [rsc-name]
+       (let [resource-root (ft/path-join (cfg/resources-root) (cfg/flash-dir))]
+         (resp/file-response rsc-name {:root resource-root})))
+
+  (GET "/resources/img/:rsc-name"
+       [rsc-name]
+       (let [resource-root (ft/path-join (cfg/resources-root) (cfg/img-dir))]
+         (resp/file-response rsc-name {:root resource-root})))
 
   (GET "/robots.txt"
        []
