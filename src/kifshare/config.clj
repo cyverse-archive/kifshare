@@ -25,6 +25,14 @@
   []
   (get @props "kifshare.app.service-version"))
 
+(defn client-cache-scope
+  []
+  (get @props "kifshare.app.client-cache-scope"))
+
+(defn client-cache-max-age
+  []
+  (get @props "kifshare.app.client-cache-max-age"))
+
 (defn robots-txt-content
   []
   @robots-txt)

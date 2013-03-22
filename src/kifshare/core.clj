@@ -12,6 +12,7 @@
          stacktrace]
         [slingshot.slingshot :only [try+ throw+]])
   (:require [clojure.tools.cli :as cli]
+            [clojure.java.io :as io]
             [clj-jargon.jargon :as jargon]
             [clojure-commons.clavin-client :as cl]
             [clojure-commons.props :as prps]
@@ -29,38 +30,54 @@
 ;;(prps/find-resources-file
 ;;                           (cfg/favicon-path))
 
+(defn keep-alive
+  [resp]
+  (assoc-in resp [:headers "Connection"] "keep-alive"))
+
+(defn caching
+  [resp]
+  (assoc-in resp [:headers "Cache-Control"]
+            (str (cfg/client-cache-scope) ", max-age=" (cfg/client-cache-max-age))))
+
+(defn kif-static-resp
+  [req resp]
+  (-> resp
+      keep-alive
+      caching))
+
 (defroutes kifshare-routes
   (GET "/favicon.ico"
-       []
-       (resp/file-response (cfg/favicon-path) {:root (cfg/resources-root)}))
+       req
+       (kif-static-resp req (resp/file-response (cfg/favicon-path) {:root (cfg/resources-root)})))
 
   (GET "/resources/:rsc-name"
-       [rsc-name]
-       (resp/file-response rsc-name {:root (cfg/resources-root)}))
+       [rsc-name :as req]
+       (kif-static-resp req (resp/file-response rsc-name {:root (cfg/resources-root)})))
 
   (GET "/resources/css/:rsc-name"
-       [rsc-name]
+       [rsc-name :as req]
        (let [resource-root (ft/path-join (cfg/resources-root) (cfg/css-dir))]
-         (resp/file-response rsc-name {:root resource-root})))
+         (kif-static-resp req (resp/file-response rsc-name {:root resource-root}))))
 
   (GET "/resources/js/:rsc-name"
-       [rsc-name]
+       [rsc-name :as req]
        (let [resource-root (ft/path-join (cfg/resources-root) (cfg/js-dir))]
-         (resp/file-response rsc-name {:root resource-root})))
+         (kif-static-resp req (resp/file-response rsc-name {:root resource-root}))))
 
   (GET "/resources/flash/:rsc-name"
-       [rsc-name]
+       [rsc-name :as req]
        (let [resource-root (ft/path-join (cfg/resources-root) (cfg/flash-dir))]
-         (resp/file-response rsc-name {:root resource-root})))
+         (kif-static-resp req (resp/file-response rsc-name {:root resource-root}))))
 
   (GET "/resources/img/:rsc-name"
-       [rsc-name]
+       [rsc-name :as req]
        (let [resource-root (ft/path-join (cfg/resources-root) (cfg/img-dir))]
-         (resp/file-response rsc-name {:root resource-root})))
+         (kif-static-resp req (resp/file-response rsc-name {:root resource-root}))))
 
   (GET "/robots.txt"
-       []
-       (resp/file-response (cfg/robots-txt-path) {:root (cfg/resources-root)}))
+       req
+       (kif-static-resp req
+                        (resp/file-response (cfg/robots-txt-path) {:root (cfg/resources-root)})))
 
   (GET "/d/:ticket-id/:filename" [ticket-id filename :as request]
        (controllers/download-file ticket-id filename request))
