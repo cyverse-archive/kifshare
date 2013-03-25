@@ -40,16 +40,11 @@
   (assoc-in resp [:headers "Cache-Control"]
             (str (cfg/client-cache-scope) ", max-age=" (cfg/client-cache-max-age))))
 
-(defn kif-static-resp
+(defn static-resp
   [file-path & {:keys [root] :or {root (cfg/resources-root)}}]
-  (let [body           (slurp (ft/path-join root file-path))
-        content-length (count body)]
-    (-> (resp/response body)
-        (assoc-in [:headers "Content-Length"] (str content-length))
-        caching
-        keep-alive)))
-
-(def static-resp (memoize kif-static-resp))
+  (-> (resp/file-response file-path {:root root})
+      caching
+      keep-alive))
 
 (defroutes kifshare-routes
   (GET "/favicon.ico"
