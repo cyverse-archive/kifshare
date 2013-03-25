@@ -32,7 +32,7 @@
 
 (defn keep-alive
   [resp]
-  (assoc-in resp [:headers "Connection"] "keep-alive"))
+  (assoc-in resp [:headers "Connection"] "Keep-Alive"))
 
 (defn caching
   [resp]
@@ -41,9 +41,7 @@
 
 (defn kif-static-resp
   [req resp]
-  (-> resp
-      keep-alive
-      caching))
+  (caching (keep-alive resp)))
 
 (defroutes kifshare-routes
   (GET "/favicon.ico"

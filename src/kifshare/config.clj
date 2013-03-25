@@ -40,8 +40,7 @@
 (defn local-init
   [local-config-path]
   (let [main-props (prps/read-properties local-config-path)]
-    (reset! props main-props)
-    #_(reset! robots-txt (slurp (robots-txt-path)))))
+    (reset! props main-props)))
 
 (defn resources-root
   []
@@ -172,8 +171,7 @@
         (log/error "THIS APPLICATION CANNOT RUN ON THIS MACHINE. SO SAYETH ZOOKEEPER.")
         (log/error "THIS APPLICATION WILL NOT EXECUTE CORRECTLY."))
 
-      (reset! props (cl/properties "kifshare"))
-      (reset! robots-txt (slurp (robots-txt-path)))))
+      (reset! props (cl/properties "kifshare"))))
 
   (log-config)
 
