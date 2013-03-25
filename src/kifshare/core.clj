@@ -42,9 +42,12 @@
 
 (defn kif-static-resp
   [file-path & {:keys [root] :or {root (cfg/resources-root)}}]
-  (-> (resp/file-response file-path {:root root})
-      caching
-      keep-alive))
+  (let [body           (slurp (ft/path-join root file-path))
+        content-length (count body)]
+    (-> (resp/response body)
+        (assoc-in [:headers "Content-Length"] (str content-length))
+        caching
+        keep-alive)))
 
 (def static-resp (memoize kif-static-resp))
 
