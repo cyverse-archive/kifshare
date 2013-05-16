@@ -11,7 +11,7 @@
 (defn public-ticket?
   [cm user ticket-id]
   (log/debug "entered kifshare.tickets/public-ticket?")
-  
+
   (let [tas    (jargon/ticket-admin-service cm user)
         groups (.listAllGroupRestrictionsForSpecifiedTicket tas ticket-id 0)]
     (if (contains? (set groups) "public")
@@ -26,18 +26,18 @@
   (log/debug "entered kifshare.tickets/check-ticket")
 
   (if-not (jargon/ticket? cm (username) ticket-id)
-    (throw+ {:error_code ERR_TICKET_NOT_FOUND 
+    (throw+ {:error_code ERR_TICKET_NOT_FOUND
              :ticket-id ticket-id})
-    
-    (let [ticket-obj (jargon/ticket-by-id cm (username) ticket-id)] 
+
+    (let [ticket-obj (jargon/ticket-by-id cm (username) ticket-id)]
       (cond
         (jargon/ticket-expired? ticket-obj)
-        (throw+ {:error_code  ERR_TICKET_EXPIRED 
+        (throw+ {:error_code  ERR_TICKET_EXPIRED
                  :ticket-id ticket-id
                  :expired-date (str (.. ticket-obj getExpireTime getTime))})
-        
+
         (jargon/ticket-used-up? ticket-obj)
-        (throw+ {:error_code ERR_TICKET_USED_UP 
+        (throw+ {:error_code ERR_TICKET_USED_UP
                  :ticket-id ticket-id
                  :num-uses (str (.getUsesLimit ticket-obj))})
 
@@ -48,7 +48,9 @@
 (defn ticket-info
   [cm ticket-id]
   (log/debug "entered kifshare.tickets/ticket-info")
-  
+
+  (check-ticket cm ticket-id)
+
   (let [ticket-obj (jargon/ticket-by-id cm (username) ticket-id)
         abs-path   (.getIrodsAbsolutePath ticket-obj)
         jfile      (jargon/file cm abs-path)
@@ -73,7 +75,7 @@
    input-stream to the file associated with the ticket."
   [cm ticket-id]
   (log/debug "entered kifshare.tickets/download")
-  
+
   (check-ticket cm ticket-id)
 
   (let [ti (ticket-info cm ticket-id)]

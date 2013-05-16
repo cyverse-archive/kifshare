@@ -48,13 +48,13 @@
   (let [err-code (:error_code err-map)]
     (cond
      (= err-code ERR_TICKET_NOT_FOUND)
-     {:status 500 :body (ticket-not-found)}
+     {:status 404 :body (ticket-not-found)}
 
      (= err-code ERR_TICKET_EXPIRED)
-     {:status 500 :body (ticket-expired err-map)}
+     {:status 410 :body (ticket-expired err-map)}
 
      (= err-code ERR_TICKET_USED_UP)
-     {:status 500 :body (ticket-used-up err-map)}
+     {:status 410 :body (ticket-used-up err-map)}
 
      :else
      {:status 500 :body (default-error err-map)})))

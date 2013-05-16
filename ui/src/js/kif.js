@@ -1,3 +1,10 @@
+function encodeFilename (file_url) {
+    var split_paths = file_url.split("/");
+    var file_index = split_paths.length - 1;
+    split_paths[file_index] = encodeURIComponent(split_paths[file_index]);
+    return split_paths.join("/");
+}
+
 function trimURLPath (pathname) {
     var split_paths = pathname.split("/");
     var new_path_array = split_paths.slice(0, split_paths.length - 1);
@@ -17,8 +24,8 @@ function curlableURL() {
     }
 
     retval = retval + trimURLPath(a.pathname);
-    
-    return retval; 
+
+    return retval;
 }
 
 $(document).ready(function() {
@@ -33,7 +40,7 @@ $(document).ready(function() {
     var curl_template = ticket_info.curl_template;
     var iget_template = ticket_info.iget_template;
 
-    var import_url = _.unescape(Mustache.render(import_template, ticket_info));
+    var import_url = encodeFilename(_.unescape(Mustache.render(import_template, ticket_info)));
     var wget_command = _.unescape(Mustache.render(wget_template, ticket_info));
     var curl_command = _.unescape(Mustache.render(curl_template, ticket_info));
     var iget_command = _.unescape(Mustache.render(iget_template, ticket_info));

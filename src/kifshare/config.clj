@@ -13,6 +13,26 @@
   []
   (get @props "kifshare.app.robots-txt"))
 
+(defn morbixon-url
+  []
+  (get @props "kifshare.app.morbixon-url"))
+
+(defn service-name
+  []
+  (get @props "kifshare.app.service-name"))
+
+(defn service-version
+  []
+  (get @props "kifshare.app.service-version"))
+
+(defn client-cache-scope
+  []
+  (get @props "kifshare.app.client-cache-scope"))
+
+(defn client-cache-max-age
+  []
+  (get @props "kifshare.app.client-cache-max-age"))
+
 (defn robots-txt-content
   []
   @robots-txt)
@@ -20,8 +40,35 @@
 (defn local-init
   [local-config-path]
   (let [main-props (prps/read-properties local-config-path)]
-    (reset! props main-props)
-    (reset! robots-txt (slurp (robots-txt-path)))))
+    (reset! props main-props)))
+
+(defn resources-root
+  []
+  (get @props "kifshare.app.resources-root"))
+
+(defn js-dir
+  []
+  (get @props "kifshare.app.js-dir"))
+
+(defn img-dir
+  []
+  (get @props "kifshare.app.images-dir"))
+
+(defn css-dir
+  []
+  (get @props "kifshare.app.css-dir"))
+
+(defn flash-dir
+  []
+  (get @props "kifshare.app.flash-dir"))
+
+(defn de-url
+  []
+  (get @props "kifshare.app.de-url"))
+
+(defn irods-url
+  []
+  (get @props "kifshare.app.irods-url"))
 
 (defn logo-path
   []
@@ -90,18 +137,18 @@
 
 (defn css-files
   []
-  (mapv 
-    string/trim 
-    (string/split 
-      (get @props "kifshare.app.css-files") 
+  (mapv
+    string/trim
+    (string/split
+      (get @props "kifshare.app.css-files")
       #",")))
 
 (defn javascript-files
   []
-  (mapv 
-    string/trim 
-    (string/split 
-      (get @props "kifshare.app.javascript-files") 
+  (mapv
+    string/trim
+    (string/split
+      (get @props "kifshare.app.javascript-files")
       #",")))
 
 (defn log-config
@@ -113,7 +160,7 @@
 
 (defn init []
   (log/debug "entered kifshare.config/init")
-  
+
   (let [tmp-props (prps/parse-properties "zkhosts.properties")
         zkurl (get tmp-props "zookeeper")]
     (log/warn "zookeeper URL: " zkurl)
@@ -123,11 +170,10 @@
       (when-not (cl/can-run?)
         (log/error "THIS APPLICATION CANNOT RUN ON THIS MACHINE. SO SAYETH ZOOKEEPER.")
         (log/error "THIS APPLICATION WILL NOT EXECUTE CORRECTLY."))
-      
-      (reset! props (cl/properties "kifshare"))
-      (reset! robots-txt (slurp (robots-txt-path))))) 
+
+      (reset! props (cl/properties "kifshare"))))
 
   (log-config)
-  
+
   ; Sets up the connection to iRODS through jargon-core.
   (jargon-init))

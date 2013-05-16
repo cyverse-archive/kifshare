@@ -18,27 +18,27 @@
 (defn irods-avu-row
   [mmap]
   (log/debug "entered kifshare.ui-template/irods-avu-row")
-  
+
   (html
-   [:tr 
-    [:td (:attr mmap)] 
-    [:td (:value mmap)] 
-    [:td (:unit mmap)]]))
+   [:tr
+    [:td {:title (:attr mmap)} (:attr mmap)]
+    [:td {:title (:value mmap)} (:value mmap)]
+    [:td {:title (:unit mmap)} (:unit mmap)]]))
 
 (defn irods-avu-table
   [metadata]
   (log/debug "entered kifshare.ui-template/irods-avu-table")
-  
+
   (if (pos? (count metadata))
     (html
-     [:div {:id "irods-avus"} 
+     [:div {:id "irods-avus"}
       [:div {:id "irods-avus-header"}
        [:h2 "Metadata"]]
       [:table {:id "irods-avus-data"}
        [:thead
-        [:tr 
-         [:th "Attribute"] 
-         [:th "Value"] 
+        [:tr
+         [:th "Attribute"]
+         [:th "Value"]
          [:th "Unit"]]]
        [:tbody
         (map irods-avu-row metadata)]]
@@ -47,24 +47,24 @@
 (defn lastmod
   [ticket-info]
   (log/debug "entered kifshare.ui-template/lastmod")
-  
+
   (html
    [:div {:id "lastmod-detail"}
-    [:div {:id "lastmod-label"} 
+    [:div {:id "lastmod-label"}
      [:p "Last Modified:"]]
-    [:div {:id "lastmod"} 
+    [:div {:id "lastmod"}
      [:p (:lastmod ticket-info)]]]))
 
 (defn filesize
   [ticket-info]
   (log/debug "entered kifshare.ui-template/filesize")
-  
+
   (html
    [:div {:id "size-detail"}
-    [:div {:id "size-label"} 
+    [:div {:id "size-label"}
      [:p "File Size:"]]
-    [:div {:id "size"} 
-     [:p (FileUtils/byteCountToDisplaySize 
+    [:div {:id "size"}
+     [:p (FileUtils/byteCountToDisplaySize
           (Long/parseLong (:filesize ticket-info)))]]]))
 
 (defn ui-ticket-info
@@ -87,7 +87,7 @@
 (defn input-display
   [id]
   (log/debug "entered kifshare.ui-template/input-display")
-  
+
   (html
    #_[:div {:id id}]
    [:input
@@ -99,12 +99,12 @@
 (defn irods-instr
   [ticket-info]
   (log/debug "entered kifshare.ui-template/irods-instr")
-  
+
   (html
    [:div {:id "irods-instructions"}
-    [:div {:id "irods-instructions-label"} 
-     [:h2 "iRODS icommands"]]
-    
+    [:div {:id "irods-instructions-label"}
+     [:h2 {:title "iRODS icommands"}
+      [:a {:href (cfg/irods-url)} "iRODS icommands"] ":"]]
     [:div {:id "clippy-irods-instructions"}
      (input-display "irods-command-line")
      [:span {:title "copy to clipboard"}
@@ -120,7 +120,8 @@
   (html
    [:div {:id "de-import-instructions"}
     [:div {:id "de-import-instructions-label"}
-     [:h2 "DE Import URL"]]
+     [:h2 {:title "Discovery Environment Import URL"}
+      [:a {:href (cfg/de-url)} "DE Import URL"] ":"]]
     [:div {:id "clippy-import-instructions"}
      (input-display "de-import-url")
      [:span {:title "copy to clipboard"}
@@ -132,11 +133,11 @@
 (defn downloader-instr
   [ticket-id ticket-info]
   (log/debug "entered kifshare.ui-template/downloader-instr")
-  
+
   (html
    [:div {:id "wget-instructions"}
-    [:div {:id "wget-instructions-label"} 
-     [:p "Wget"]]
+    [:div {:id "wget-instructions-label"}
+     [:p "Wget:"]]
     [:div {:id "clippy-wget-instructions"}
      (input-display "wget-command-line")
      [:span  {:title "copy to clipboard"}
@@ -146,8 +147,8 @@
        "Copy"]]]]
 
    [:div {:id "curl-instructions"}
-    [:div {:id "curl-instructions-label"} 
-     [:p "cURL"]]
+    [:div {:id "curl-instructions-label"}
+     [:p "cURL:"]]
     [:div {:id "clippy-curl-instructions"}
      (input-display "curl-command-line")
      [:span {:title "copy to clipboard"}
@@ -185,9 +186,9 @@
 (defn alt-downloads
   [ticket-info]
   (log/debug "entered kifshare.ui-template/alt-downloads")
-  
+
   (html
-   [:div {:id "alt-downloads-header"} 
+   [:div {:id "alt-downloads-header"}
     [:h2 "Alternative Download Methods"]]
    [:div {:id "alt-downloads"}
     (de-import-instr ticket-info)
@@ -204,7 +205,7 @@
 (defn landing-page
   [ticket-id metadata ticket-info]
   (log/debug "entered kifshare.ui-template/landing-page")
-  
+
   (html
    [:head
     [:title (:filename ticket-info)]

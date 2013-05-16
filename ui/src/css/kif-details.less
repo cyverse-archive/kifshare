@@ -4,7 +4,7 @@
 
 //Details section
 @header-text-color: #4199A9;
-@detail-label-width: 25%;
+@detail-label-width: 20%;
 @detail-content-width: (100% - @detail-label-width);
 @clippy-width: 10%;
 @command-line-width: (@detail-content-width - @clippy-width);
@@ -34,9 +34,9 @@
 
     h2 {
         font-size: 200%;
-        font-family: @detail-font; 
-        color: @header-text-color;    
-    }  
+        font-family: @detail-font;
+        color: @header-text-color;
+    }
 }
 
 .detail-style () {
@@ -49,9 +49,14 @@
 .detail-label () {
     float: left;
     width: @detail-label-width;
+    h2 {
+        text-align: right;
+        padding-right: 10px;
+    }
+
     p {
-        text-align: left;
-        padding-right: 10px;    
+        text-align: right;
+        padding-right: 10px;
     }
 }
 
@@ -69,11 +74,11 @@
 #irods-avus-header { .header-style; }
 #alt-downloads-header { .header-style; }
 
-#lastmod-label, 
-#size-label, 
+#lastmod-label,
+#size-label,
 #de-import-instructions-label,
-#irods-instructions-label, 
-#wget-instructions-label, 
+#irods-instructions-label,
+#wget-instructions-label,
 #curl-instructions-label {
     .detail-style;
     .detail-label;
@@ -86,8 +91,8 @@
 
 //Styling for the command-line/URL input boxes
 #de-import-url,
-#irods-command-line, 
-#wget-command-line, 
+#irods-command-line,
+#wget-command-line,
 #curl-command-line {
     .detail-style;
     .detail-content;
@@ -98,8 +103,8 @@
 
 //Styling for the "Copy" buttons
 #clippy-import-wrapper,
-#clippy-wget-wrapper, 
-#clippy-curl-wrapper, 
+#clippy-wget-wrapper,
+#clippy-curl-wrapper,
 #clippy-irods-wrapper {
     .detail-style;
     .detail-content;
@@ -110,9 +115,9 @@
     text-align: center;
 
     .bordered(
-        darken(@download-button-color-start, 33%), 
-        darken(@download-button-color-start, 33%), 
-        darken(@download-button-color-start, 33%), 
+        darken(@download-button-color-start, 33%),
+        darken(@download-button-color-start, 33%),
+        darken(@download-button-color-start, 33%),
         darken(@download-button-color-start, 33%)
     );
 
