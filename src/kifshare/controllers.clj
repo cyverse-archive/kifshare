@@ -108,7 +108,7 @@
   (log/debug "entered page kifshare.controllers/download-file")
 
   (try+
-    (jargon/with-jargon (jargon-config) [cm]
+    (jargon/with-jargon (jargon-config) [cm :auto-close false]
       (let [ticket-info (tickets/ticket-info cm ticket-id)]
         (log/warn "Downloading " ticket-id " as " filename)
         (provenance ticket-id "download-file" :data {:ticket-info ticket-info})
