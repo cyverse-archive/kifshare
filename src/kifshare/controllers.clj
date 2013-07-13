@@ -13,7 +13,8 @@
             [clj-jargon.jargon :as jargon]
             [kifshare.errors :as errors]
             [kifshare.config :as cfg]
-            [clj-http.client :as http]))
+            [clj-http.client :as http]
+            [clojure.string :as string]))
 
 (def morbixon-channel (channel))
 
@@ -22,28 +23,30 @@
                 :or {user (cfg/username)
                      category "tickets"
                      data event}}]
-  (let [svc-name    (or (cfg/service-name) "kifshare")
-        svc-version (or (cfg/service-version) "0.1.0")
-        prov-map    {:service svc-name
-                     :version svc-version
-                     :events [{:uid uid
-                               :event event
-                               :user user
-                               :category category
-                               :data data}]}]
-    (enqueue morbixon-channel prov-map)))
+  (when-not (string/blank? (cfg/morbixon-url))
+    (let [svc-name    (or (cfg/service-name) "kifshare")
+          svc-version (or (cfg/service-version) "0.1.0")
+          prov-map    {:service svc-name
+                       :version svc-version
+                       :events [{:uid uid
+                                 :event event
+                                 :user user
+                                 :category category
+                                 :data data}]}]
+      (enqueue morbixon-channel prov-map))))
 
 (defn start-provenance-thread
   []
-  (.start
-   (Thread.
-    (fn []
-      (loop []
-        (http/post
-         (cfg/morbixon-url)
-         {:body (cheshire/generate-string @(read-channel morbixon-channel))
-          :content-type :json})
-        (recur))))))
+  (when-not (string/blank? (cfg/morbixon-url))
+    (.start
+     (Thread.
+      (fn []
+        (loop []
+          (http/post
+           (cfg/morbixon-url)
+           {:body (cheshire/generate-string @(read-channel morbixon-channel))
+            :content-type :json})
+          (recur)))))))
 
 (defn object-metadata
   [cm abspath]
