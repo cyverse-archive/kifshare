@@ -51,11 +51,41 @@ module.exports = function(grunt) {
     copy: {
       main: {
         files: [
-            {src: ["ui/src/js/jquery*.js", "ui/src/js/json2.js", "ui/src/js/ZeroClipboard*.js"], dest: "build/public/js/"},
-            {src: ["ui/src/css/*.css"], dest: "build/public/css/"},
-            {src: ["ui/src/flash/*"], dest: "build/public/flash/"},
-            {src: ["ui/src/img/*"], dest: "build/public/img/"},
-            {src: ["ui/src/robots.txt"], dest: "build/public/"}
+            {
+              expand: true,
+              flatten: true,
+              cwd: 'ui/src/js/',
+              src: ["jquery*.js", "json2.js", "ZeroClipboard*.js"],
+              dest: "build/public/js/"
+            },
+            {
+              expand: true,
+              flatten: true,
+              cwd: 'ui/src/css/',
+              src: ['*.css'],
+              dest: "build/public/css/"
+            },
+            {
+              expand: true,
+              flatten: true,
+              cwd: 'ui/src/flash/',
+              src: ['*'],
+              dest: "build/public/flash/"
+            },
+            {
+              expand: true,
+              flatten: true,
+              cwd: 'ui/src/img',
+              src: ['*'],
+              dest: "build/public/img/"
+            },
+            {
+              expand: true,
+              flatten: true,
+              cwd: 'ui/src/img',
+              src: ["ui/src/robots.txt"],
+              dest: "build/public/"
+            }
         ]
       },
       kifjs: {

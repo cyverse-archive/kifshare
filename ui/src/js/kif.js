@@ -37,6 +37,13 @@
         return info;
     }
 
+    //Taken from StackOverflow because I'm lazy: http://stackoverflow.com/a/1912522
+    function htmlDecode(input) {
+        var e = document.createElement('div');
+        e.innerHTML = input;
+        return e.childNodes.length === 0 ? "" : e.childNodes[0].nodeValue;
+    }
+
     $(document).ready(function() {
         var ticket_info = get_ticket_info(),
             last_mod_date = new Date(Number($('#lastmod').text())),
@@ -44,10 +51,10 @@
             wget_template = ticket_info.wget_template,
             curl_template = ticket_info.curl_template,
             iget_template = ticket_info.iget_template,
-            import_url = encodeFilename(decodeURIComponent(Mustache.render(import_template, ticket_info))),
-            wget_command = decodeURIComponent(Mustache.render(wget_template, ticket_info)),
-            curl_command = decodeURIComponent(Mustache.render(curl_template, ticket_info)),
-            iget_command = decodeURIComponent(Mustache.render(iget_template, ticket_info)),
+            import_url = encodeFilename(htmlDecode(Mustache.render(import_template, ticket_info))),
+            wget_command = htmlDecode(Mustache.render(wget_template, ticket_info)),
+            curl_command = htmlDecode(Mustache.render(curl_template, ticket_info)),
+            iget_command = htmlDecode(Mustache.render(iget_template, ticket_info)),
 
             copy_func = function (selector) {
                 return $(selector).val();
