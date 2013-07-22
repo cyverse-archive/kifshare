@@ -3,6 +3,7 @@ module.exports = function(grunt) {
 
   // Project configuration.
   grunt.initConfig({
+    pkg: grunt.file.readJSON('package.json'),
     meta: {
       version: '0.1.0',
       banner: '/*! PROJECT_NAME - v<%= meta.version %> - ' +
@@ -12,8 +13,19 @@ module.exports = function(grunt) {
         'YOUR_NAME; Licensed MIT */'
     },
 
-    lint: {
-      files: ['grunt.js', 'ui/src/js/kif.js', 'test/**/*.js']
+    jslint: {
+      files: ['grunt.js', 'ui/src/js/kif.js', 'test/**/*.js'],
+      directives : {
+        predef: [
+          'jQuery',
+          '$', 
+          'Mustache',
+          '_',
+          'ZeroClipboard',
+          'zclip',
+          'alert'
+        ]
+      }
     },
     qunit: {
       files: ['test/**/*.html']
@@ -24,10 +36,11 @@ module.exports = function(grunt) {
         dest: 'dist/FILE_NAME.js'
       }
     },
-    min: {
+    uglify: {
       dist: {
-        src: ['ui/src/js/kif.js'],
-        dest: 'build/public/js/kif.js'
+        files : {
+            "build/public/js/kif.js" : ["ui/src/js/kif.js"]
+        }
       }
     },
     copy: {
@@ -114,21 +127,24 @@ module.exports = function(grunt) {
         alert: true
       }
     },
-    uglify: {}
   });
 
+
+
   // Default task.
-  grunt.registerTask('default', 'lint qunit concat min');
-  grunt.loadNpmTasks('grunt-contrib-copy');
-  grunt.loadNpmTasks('grunt-shell');
+  grunt.loadNpmTasks('grunt-jslint');
   grunt.loadNpmTasks('grunt-contrib-less');
+  grunt.loadNpmTasks('grunt-shell');
+  grunt.loadNpmTasks('grunt-contrib-copy');
+  grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.registerTask('default', ['jslint', 'qunit', 'concat', 'uglify']);
   //grunt.loadNpmTasks('watch');
 
-  grunt.registerTask('make-resources', 'shell:make_js_resources shell:make_css_resources shell:make_flash_resources shell:make_img_resources');
-  grunt.registerTask('build-resources', 'lint make-resources less copy min');
-  grunt.registerTask('build-resources-dev', 'lint make-resources less copy');
-  grunt.registerTask('build-clj', 'shell:lein_clean shell:lein_deps shell:lein_uberjar'); 
-  grunt.registerTask('build-all', 'build-resources build-clj');
-  grunt.registerTask('clean-all', 'shell:lein_clean shell:clean_resources');
+  grunt.registerTask('make-resources', ['shell:make_js_resources', 'shell:make_css_resources', 'shell:make_flash_resources', 'shell:make_img_resources']);
+  grunt.registerTask('build-resources', ['jslint', 'make-resources', 'less', 'copy', 'uglify']);
+  grunt.registerTask('build-resources-dev', ['jslint', 'make-resources', 'less', 'copy']);
+  grunt.registerTask('build-clj', ['shell:lein_clean', 'shell:lein_deps', 'shell:lein_uberjar']); 
+  grunt.registerTask('build-all', ['build-resources', 'build-clj']);
+  grunt.registerTask('clean-all', ['shell:lein_clean', 'shell:clean_resources']);
 
 };
