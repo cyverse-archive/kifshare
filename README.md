@@ -25,10 +25,16 @@ Once all of the above is downloaded, installed, and configured, go into the proj
 
 That should download and install the development dependencies. If you have trouble running grunt or lesscss after this, try the following:
 
-    npm install -g grunt
+    npm install -g grunt-cli
     npm install -g less
 
 Again, only do that if the bare 'npm install' doesn't work.
+
+# Upgrading to Grunt 0.4.X
+
+We're now using Grunt 0.4.X for Kifshare, so you'll want to upgrade if you can. Upgrade instructions are available here:
+
+    http://gruntjs.com/getting-started#grunt-0.3-notes
 
 # Configuring Kifshare For Development
 
