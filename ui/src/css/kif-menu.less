@@ -1,5 +1,5 @@
-@import-once "elements.less";
-@import-once "kif-common";
+@import "elements.less";
+@import "kif-common";
 
 //Menu and body
 @menu-color: #DAF5F8;
@@ -45,13 +45,13 @@
             div {
                 .menu-item;
 
-                h1 { 
+                h1 {
                     .menu-content;
                     .ellipsis;
                     color: @menu-text-color;
                 }
-                
-                a { 
+
+                a {
                     .menu-content;
                     text-decoration: none;
                     #download-link-area {
@@ -74,9 +74,9 @@
                         //background: @download-button-color;
                         color: @download-text-color;
                         .bordered(
-                            darken(@download-button-color-start, 33%), 
-                            darken(@download-button-color-start, 33%), 
-                            darken(@download-button-color-start, 33%), 
+                            darken(@download-button-color-start, 33%),
+                            darken(@download-button-color-start, 33%),
+                            darken(@download-button-color-start, 33%),
                             darken(@download-button-color-start, 33%)
                         );
                         .rounded(10px);
@@ -88,9 +88,9 @@
                     }
                 }
 
-                img { 
-                    .menu-content; 
-                    width: @img-width; 
+                img {
+                    .menu-content;
+                    width: @img-width;
                     height: @img-height;
                     margin-left: 10px;
                 }
@@ -101,7 +101,7 @@
     }
 }
 
-.ui-corner-all { 
+.ui-corner-all {
     border-radius: 0px;
     border: none;
 }
