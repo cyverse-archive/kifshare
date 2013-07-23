@@ -82,8 +82,8 @@ module.exports = function(grunt) {
             {
               expand: true,
               flatten: true,
-              cwd: 'ui/src/img',
-              src: ["ui/src/robots.txt"],
+              cwd: 'ui/src',
+              src: ["robots.txt"],
               dest: "build/public/"
             }
         ]
