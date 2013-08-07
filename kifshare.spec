@@ -7,7 +7,7 @@
 Summary: kifshare
 Name: kifshare
 Version: 0.1.2
-Release: 35
+Release: 36
 Epoch: 0
 BuildArchitectures: noarch
 Group: Applications
@@ -15,6 +15,7 @@ BuildRoot: %{_tmppath}/%{name}-%{version}-buildroot
 License: BSD
 Provides: kifshare
 Requires: iplant-service-config >= 0.1.0-5
+Requires: iplant-clavin
 Source0: %{name}-build.tar.gz
 
 %description
@@ -113,5 +114,3 @@ rm -r $RPM_BUILD_ROOT
 %attr(0644,iplant,iplant) /usr/local/lib/kifshare/resources/public/js/jquery.zclip.min.js
 %attr(0644,iplant,iplant) /usr/local/lib/kifshare/resources/public/js/json2.js
 %attr(0644,iplant,iplant) /usr/local/lib/kifshare/resources/public/js/kif.js
-
-
