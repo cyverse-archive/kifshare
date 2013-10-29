@@ -5,7 +5,7 @@
                  [org.clojure/tools.logging "0.2.3"]
                  [org.clojure/core.memoize "0.5.3"]
                  [org.iplantc/clj-jargon "0.2.9-SNAPSHOT"]
-                 [org.iplantc/clojure-commons "1.4.1-SNAPSHOT"]
+                 [org.iplantc/clojure-commons "1.4.5-SNAPSHOT"]
                  [cheshire "5.0.1"]
                  [slingshot "0.10.1"]
                  [compojure "1.1.3"]

@@ -3,6 +3,7 @@
             [clj-jargon.jargon :as jargon]
             [clojure-commons.clavin-client :as cl]
             [clojure-commons.props :as prps]
+            [clojure-commons.config as cc]
             [clojure.tools.logging :as log]))
 
 (def props (atom nil))
@@ -154,9 +155,7 @@
 (defn log-config
   []
   (log/warn "Configuration:")
-  (doseq [k (keys @props)]
-    (when-not (= k "kifshare.irods.password")
-      (log/warn (str k " = " (get @props k))))))
+  (cc/log-config @props :filters [#"irods\.user"]))
 
 (defn init []
   (log/debug "entered kifshare.config/init")
