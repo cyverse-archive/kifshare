@@ -4,6 +4,7 @@
             [clojure-commons.clavin-client :as cl]
             [clojure-commons.props :as prps]
             [clojure-commons.config :as cc]
+            [clojure-commons.error-codes :as ce]
             [clojure.tools.logging :as log]))
 
 (def props (atom nil))
@@ -152,6 +153,16 @@
       (get @props "kifshare.app.javascript-files")
       #",")))
 
+(defn- exception-filters
+  []
+  (mapv #(re-pattern (str %)) 
+        [(get @props "kifshare.irods.user")
+         (get @props "kifshare.irods.password")]))
+
+(defn register-exception-filters
+  []
+  (ce/register-filters (exception-filters)))
+
 (defn log-config
   []
   (log/warn "Configuration:")
@@ -173,6 +184,7 @@
       (reset! props (cl/properties "kifshare"))))
 
   (log-config)
-
+  (register-exception-filters)
+  
   ; Sets up the connection to iRODS through jargon-core.
   (jargon-init))
