@@ -1,5 +1,5 @@
 (ns kifshare.ui-template
-  (:use hiccup.core
+  (:use [hiccup.core]
         [hiccup.page :only [include-css include-js html5]]
         [kifshare.common :only [layout]])
   (:require [kifshare.config :as cfg]

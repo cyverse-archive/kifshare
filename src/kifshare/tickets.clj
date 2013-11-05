@@ -1,5 +1,7 @@
 (ns kifshare.tickets
   (:require [clj-jargon.jargon :as jargon]
+            [clj-jargon.tickets :as jtickets]
+            [clj-jargon.item-info :as jinfo]
             [clojure-commons.file-utils :as ft]
             [clojure.tools.logging :as log])
   (:use [slingshot.slingshot :only [try+ throw+]]
@@ -12,7 +14,7 @@
   [cm user ticket-id]
   (log/debug "entered kifshare.tickets/public-ticket?")
 
-  (let [tas    (jargon/ticket-admin-service cm user)
+  (let [tas    (jtickets/ticket-admin-service cm user)
         groups (.listAllGroupRestrictionsForSpecifiedTicket tas ticket-id 0)]
     (if (contains? (set groups) "public")
       true
@@ -25,18 +27,18 @@
   [cm ticket-id]
   (log/debug "entered kifshare.tickets/check-ticket")
 
-  (if-not (jargon/ticket? cm (username) ticket-id)
+  (if-not (jtickets/ticket? cm (username) ticket-id)
     (throw+ {:error_code ERR_TICKET_NOT_FOUND
              :ticket-id ticket-id})
 
-    (let [ticket-obj (jargon/ticket-by-id cm (username) ticket-id)]
+    (let [ticket-obj (jtickets/ticket-by-id cm (username) ticket-id)]
       (cond
-        (jargon/ticket-expired? ticket-obj)
+        (jtickets/ticket-expired? ticket-obj)
         (throw+ {:error_code  ERR_TICKET_EXPIRED
                  :ticket-id ticket-id
                  :expired-date (str (.. ticket-obj getExpireTime getTime))})
 
-        (jargon/ticket-used-up? ticket-obj)
+        (jtickets/ticket-used-up? ticket-obj)
         (throw+ {:error_code ERR_TICKET_USED_UP
                  :ticket-id ticket-id
                  :num-uses (str (.getUsesLimit ticket-obj))})
@@ -51,9 +53,9 @@
 
   (check-ticket cm ticket-id)
 
-  (let [ticket-obj (jargon/ticket-by-id cm (username) ticket-id)
+  (let [ticket-obj (jtickets/ticket-by-id cm (username) ticket-id)
         abs-path   (.getIrodsAbsolutePath ticket-obj)
-        jfile      (jargon/file cm abs-path)
+        jfile      (jinfo/file cm abs-path)
         retval     (hash-map
                     :ticket-id ticket-id
                     :abspath   abs-path
@@ -68,7 +70,7 @@
 (defn ticket-abs-path
   [cm ticket-id]
   (log/debug "entered kifshare.tickets/ticket-abs-path")
-  (.getIrodsAbsolutePath (jargon/ticket-by-id cm (username) ticket-id)))
+  (.getIrodsAbsolutePath (jtickets/ticket-by-id cm (username) ticket-id)))
 
 (defn download
   "Calls (check-ticket) and returns a response map containing an
@@ -81,5 +83,5 @@
   (let [ti (ticket-info cm ticket-id)]
     (log/warn "Dowloading file associated with ticket " ticket-id)
     (assoc-in
-     {:status 200 :body (jargon/ticket-proxy-input-stream cm (username) ticket-id)}
+     {:status 200 :body (jtickets/ticket-proxy-input-stream cm (username) ticket-id)}
      [:headers "Content-Disposition"] (str "attachment; filename=\"" (:filename ti)  "\""))))

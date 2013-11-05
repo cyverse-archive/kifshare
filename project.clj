@@ -1,11 +1,11 @@
-(defproject kifshare "0.1.2-SNAPSHOT"
+(defproject kifshare "0.1.3"
   :description "iPlant Quickshare for iRODS"
   :dependencies [[org.clojure/clojure "1.5.1"]
                  [org.clojure/tools.cli "0.2.1"]
                  [org.clojure/tools.logging "0.2.3"]
                  [org.clojure/core.memoize "0.5.3"]
-                 [org.iplantc/clj-jargon "0.2.9-SNAPSHOT"]
-                 [org.iplantc/clojure-commons "1.4.6-SNAPSHOT"]
+                 [org.iplantc/clj-jargon "0.3.1"]
+                 [org.iplantc/clojure-commons "1.4.7"]
                  [cheshire "5.0.1"]
                  [slingshot "0.10.1"]
                  [compojure "1.1.3"]

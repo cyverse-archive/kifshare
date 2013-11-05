@@ -14,7 +14,6 @@
         [slingshot.slingshot :only [try+ throw+]])
   (:require [clojure.tools.cli :as cli]
             [clojure.java.io :as io]
-            [clj-jargon.jargon :as jargon]
             [clojure-commons.clavin-client :as cl]
             [clojure-commons.props :as prps]
             [clojure-commons.file-utils :as ft]

@@ -1,6 +1,6 @@
 (ns kifshare.config
   (:require [clojure.string :as string]
-            [clj-jargon.jargon :as jargon]
+            [clj-jargon.init :as jinit]
             [clojure-commons.clavin-client :as cl]
             [clojure-commons.props :as prps]
             [clojure-commons.config :as cc]
@@ -128,7 +128,7 @@
 (defn jargon-init
   []
   (reset! jgcfg
-          (jargon/init
+          (jinit/init
            (get @props "kifshare.irods.host")
            (get @props "kifshare.irods.port")
            (get @props "kifshare.irods.user")

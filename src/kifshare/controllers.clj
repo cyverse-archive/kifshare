@@ -10,7 +10,8 @@
             [kifshare.common :as common]
             [cheshire.core :as cheshire]
             [clojure.tools.logging :as log]
-            [clj-jargon.jargon :as jargon]
+            [clj-jargon.metadata :as jmeta]
+            [clj-jargon.init :as jinit]
             [kifshare.errors :as errors]
             [kifshare.config :as cfg]
             [clj-http.client :as http]
@@ -54,7 +55,7 @@
 
   (filterv
    #(not= (:unit %1) "ipc-system-avu")
-   (jargon/get-metadata cm abspath)))
+   (jmeta/get-metadata cm abspath)))
 
 (defn show-landing-page
   "Handles error checking and decides whether to show the
@@ -85,7 +86,7 @@
   [ticket-id ring-request]
   (log/debug "entered page kifshare.controllers/get-ticket")
 
-  (jargon/with-jargon (jargon-config) [cm]
+  (jinit/with-jargon (jargon-config) [cm]
     (try+
      (tickets/check-ticket cm ticket-id)
 
@@ -111,7 +112,7 @@
   (log/debug "entered page kifshare.controllers/download-file")
 
   (try+
-    (jargon/with-jargon (jargon-config) [cm :auto-close false]
+    (jinit/with-jargon (jargon-config) [cm :auto-close false]
       (let [ticket-info (tickets/ticket-info cm ticket-id)]
         (log/warn "Downloading " ticket-id " as " filename)
         (provenance ticket-id "download-file" :data {:ticket-info ticket-info})
@@ -134,7 +135,7 @@
   (log/debug "entered page kifshare.controllers/download-ticket")
 
   (try+
-   (jargon/with-jargon (jargon-config) [cm]
+   (jinit/with-jargon (jargon-config) [cm]
      (let [ticket-info (tickets/ticket-info cm ticket-id)]
        (log/warn "Redirecting download for " ticket-id " to the /d/:ticket-id/:filename page.")
        (provenance ticket-id "download-by-ticket" :data {:ticket-info ticket-info})
