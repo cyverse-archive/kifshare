@@ -7,7 +7,7 @@
 Summary: kifshare
 Name: kifshare
 Version: 0.1.3
-Release: 39
+Release: 40
 Epoch: 0
 BuildArchitectures: noarch
 Group: Applications
