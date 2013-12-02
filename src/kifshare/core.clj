@@ -135,8 +135,6 @@
       :else
       (init))
 
-    (controllers/start-provenance-thread)
-
     (let [port (Integer/parseInt (string/trim (get @cfg/props "kifshare.app.port")))]
       (log/warn "Configured listen port is: " port)
       (jetty/run-jetty app {:port port}))))

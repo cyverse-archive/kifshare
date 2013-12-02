@@ -15,10 +15,6 @@
   []
   (get @props "kifshare.app.robots-txt"))
 
-(defn morbixon-url
-  []
-  (get @props "kifshare.app.morbixon-url"))
-
 (defn service-name
   []
   (get @props "kifshare.app.service-name"))
@@ -105,22 +101,6 @@
   (or (get @props "kifshare.irods.user")
       "public"))
 
-(defn prov-url
-  []
-  (get @props "kifshare.provenance.base-url"))
-
-(defn prov-lookup-endpoint
-  []
-  (get @props "kifshare.provenance.lookup"))
-
-(defn prov-register-endpoint
-  []
-  (get @props "kifshare.provenance.register"))
-
-(defn prov-logging-endpoint
-  []
-  (get @props "kifshare.provenance.logging"))
-
 (def jgcfg (atom nil))
 
 (defn jargon-config [] @jgcfg)
@@ -155,7 +135,7 @@
 
 (defn- exception-filters
   []
-  (mapv #(re-pattern (str %)) 
+  (mapv #(re-pattern (str %))
         [(get @props "kifshare.irods.user")
          (get @props "kifshare.irods.password")]))
 
@@ -185,6 +165,6 @@
 
   (log-config)
   (register-exception-filters)
-  
+
   ; Sets up the connection to iRODS through jargon-core.
   (jargon-init))
