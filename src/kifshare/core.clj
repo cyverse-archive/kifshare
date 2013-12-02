@@ -116,25 +116,31 @@
 (def app
   (site-handler kifshare-routes))
 
+(defn- override-buffer-size
+  [opts]
+  (or (:buffer-size opts)
+      (* 1024 (Integer/parseInt (get @cfg/props "kifshare.app.download-buffer-size")))))
+
 (defn -main
   [& args]
   (log/debug "entered kifshare.core/-main")
 
   (let [[opts args help-str] (parse-args args)]
     (cond
-      (:help opts)
-      (do (println help-str)
-        (System/exit 0))
+     (:help opts)
+     (do (println help-str)
+         (System/exit 0))
 
-      (:config opts)
-      (do
-        (log/warn "Reading local config: " (:config opts))
-        (cfg/local-init (:config opts))
-        (cfg/jargon-init))
+     (:config opts)
+     (do
+       (log/warn "Reading local config: " (:config opts))
+       (cfg/local-init (:config opts))
+       (cfg/jargon-init))
 
-      :else
-      (init))
+     :else
+     (init))
 
-    (let [port (Integer/parseInt (string/trim (get @cfg/props "kifshare.app.port")))]
-      (log/warn "Configured listen port is: " port)
-      (jetty/run-jetty app {:port port}))))
+    (with-redefs [clojure.java.io/buffer-size override-buffer-size]
+      (let [port (Integer/parseInt (string/trim (get @cfg/props "kifshare.app.port")))]
+        (log/warn "Configured listen port is: " port)
+        (jetty/run-jetty app {:port port})))))
