@@ -78,8 +78,14 @@
        req
        (static-resp (cfg/robots-txt-path)))
 
+  (HEAD "/d/:ticket-id/:filename" [ticket-id filename as request]
+        (controllers/file-info ticket-id filename request))
+
   (GET "/d/:ticket-id/:filename" [ticket-id filename :as request]
        (controllers/download-file ticket-id filename request))
+
+  (HEAD "/d/:ticket-id" [ticket-id :as request]
+        (controllers/file-info ticket-id request))
 
   (GET "/d/:ticket-id" [ticket-id :as request]
        (controllers/download-ticket ticket-id request))
