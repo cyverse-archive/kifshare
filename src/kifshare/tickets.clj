@@ -2,6 +2,7 @@
   (:require [clj-jargon.jargon :as jargon]
             [clj-jargon.tickets :as jtickets]
             [clj-jargon.item-info :as jinfo]
+            [clj-jargon.paging :as paging]
             [clojure-commons.file-utils :as ft]
             [clojure.tools.logging :as log])
   (:use [slingshot.slingshot :only [try+ throw+]]
@@ -85,3 +86,23 @@
     (assoc-in
      {:status 200 :body (jtickets/ticket-proxy-input-stream cm (username) ticket-id)}
      [:headers "Content-Disposition"] (str "attachment; filename=\"" (:filename ti)  "\""))))
+
+(defn download-byte-range
+  "Calls (check-ticket and returns a response map containing a byte range from a file."
+  [cm ticket-id start-byte end-byte]
+  (log/debug "entered kifshare.tickets/download")
+
+  (check-ticket cm ticket-id)
+
+  (let [ti         (ticket-info cm ticket-id)
+        abs-path   (:abspath ti)
+        byte-range (paging/read-at-position cm abs-path start-byte (- end-byte start-byte) false)]
+    (log/warn "Download file range " start-byte "-" end-byte "for ticket" ticket-id)
+    (-> {:status 200
+         :body   (java.io.ByteArrayInputStream. byte-range)}
+        (assoc-in
+         [:headers "Content-Range"]
+         (str "Content-Range: bytes " start-byte "-" end-byte "/" (:filesize ti)))
+        (assoc-in
+         [:headers "Accept-Ranges"]
+         (str "Accept-Ranges: bytes")))))

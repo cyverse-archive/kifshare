@@ -69,6 +69,32 @@
        (log/error (format-exception (:throwable &throw-context)))
        (errors/error-response (unchecked &throw-context))))))
 
+(defn range-request?
+  [ring-request]
+  (and (contains? ring-request :headers)
+       (contains? (:headers ring-request) "range")))
+
+(def range-regex #"\s*(bytes)\s*=\s*([0-9]+)\s*\-\s*([0-9]+)\s*")
+
+(defn valid-range?
+  [ring-request]
+  (re-seq range-regex (get-in ring-request [:headers "range"])))
+
+(defn extract-range
+  [ring-request]
+  (let [range-header  (get-in ring-request [:headers "range"])
+        range-matches (re-matches range-regex range-header)]
+    [(nth range-matches 2) (nth range-matches 3)]))
+
+(defn longify
+  [str-long]
+  (Long/parseLong str-long))
+
+(defn download-range
+  [cm ticket-id ring-request]
+  (let [[start-byte end-byte] (extract-range ring-request)]
+    (tickets/download-byte-range cm ticket-id (longify start-byte) (longify end-byte))))
+
 (defn download-file
   "Allows the caller to download a file associated with a ticket."
   [ticket-id filename ring-request]
@@ -78,7 +104,9 @@
     (jinit/with-jargon (jargon-config) [cm :auto-close false]
       (let [ticket-info (tickets/ticket-info cm ticket-id)]
         (log/warn "Downloading " ticket-id " as " filename)
-        (tickets/download cm ticket-id)))
+        (if (and (range-request? ring-request) (valid-range? ring-request))
+          (download-range cm ticket-id ring-request)
+          (tickets/download cm ticket-id))))
 
     (catch error? err
       (log/error (format-exception (:throwable &throw-context)))
