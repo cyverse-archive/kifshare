@@ -1,4 +1,4 @@
-(defproject kifshare "0.1.4-SNAPSHOT"
+(defproject org.iplantc/kifshare "0.1.4-SNAPSHOT"
   :description "iPlant Quickshare for iRODS"
   :url "http://www.iplantcollaborative.org"
 
