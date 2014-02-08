@@ -1,11 +1,24 @@
-(defproject kifshare "0.1.3"
+(defproject kifshare "0.1.4-SNAPSHOT"
   :description "iPlant Quickshare for iRODS"
+  :url "http://www.iplantcollaborative.org"
+
+  :license {:name "BSD"
+            :url "http://iplantcollaborative.org/sites/default/files/iPLANT-LICENSE.txt"}
+
+  :scm {:connection "scm:git:git@github.com:iPlantCollaborativeOpenSource/kifshare.git"
+        :developerConnection "scm:git:git@github.com:iPlantCollaborativeOpenSource/kifshare.git"
+        :url "git@github.com:iPlantCollaborativeOpenSource/kifshare.git"}
+
+  :pom-addition [:developers
+                 [:developer
+                  [:url "https://github.com/orgs/iPlantCollaborativeOpenSource/teams/iplant-devs"]]]
+
   :dependencies [[org.clojure/clojure "1.5.1"]
                  [org.clojure/tools.cli "0.2.1"]
                  [org.clojure/tools.logging "0.2.3"]
                  [org.clojure/core.memoize "0.5.3"]
-                 [org.iplantc/clj-jargon "0.3.1"]
-                 [org.iplantc/clojure-commons "1.4.7"]
+                 [org.iplantc/clj-jargon "0.4.2-SNAPSHOT"]
+                 [org.iplantc/clojure-commons "1.4.8-SNAPSHOT"]
                  [cheshire "5.0.1"]
                  [slingshot "0.10.1"]
                  [compojure "1.1.3"]
@@ -29,16 +42,16 @@
                :config-path "conf"}
 
   :plugins [[lein-ring "0.7.5"]
-            [org.iplantc/lein-iplant-rpm "1.4.1-SNAPSHOT"]]
+            [org.iplantc/lein-iplant-rpm "1.4.3-SNAPSHOT"]]
 
-  :repositories {"iplantCollaborative"
-                 "http://projects.iplantcollaborative.org/archiva/repository/internal/",
+  :repositories [["sonatype-nexus-snapshots"
+                  {:url "https://oss.sonatype.org/content/repositories/snapshots"}]
 
-                 "renci.repository"
-                 "http://ci-dev.renci.org/nexus/content/repositories/snapshots/",
+                 ["renci.repository"
+                  {:url "http://ci-dev.renci.org/nexus/content/repositories/snapshots/"}]]
 
-                 "sonatype"
-                 "http://oss.sonatype.org/content/repositories/releases"}
+  :deploy-repositories [["sonatype-nexus-staging"
+                         {:url "https://oss.sonatype.org/service/local/staging/deploy/maven2/"}]]
 
   :aot [kifshare.core]
   :main kifshare.core)
